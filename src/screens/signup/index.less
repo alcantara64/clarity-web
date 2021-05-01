@@ -1,0 +1,94 @@
+@import "../../theme/variables.less";
+@import "../../theme/typography.less";
+
+#signup-page {
+  width: 90%;
+  padding-top: 80px;
+  padding-bottom: 20px;
+  background-color: @black6;
+  width: 100%;
+  padding-left: 30px;
+  padding-right: 30px;
+
+  .signup-container {
+    .signup-logo-container {
+      text-align: center;
+    }
+
+    .header {
+      .h4Text();
+      color: @greenPrimary;
+      display: inline-block;
+      margin-left: 10px;
+      text-align: center;
+    }
+
+    .signup-form-container {
+      padding: 32px 48px;
+      background-color: @white;
+      box-shadow: 0px 10px 50px rgba(1, 83, 85, 0.05);
+      border-radius: 20px;
+      margin-top: 30px;
+      .form-group {
+        margin-bottom: 24px;
+      }
+
+      .title {
+        .h4Text();
+        color: @black1;
+        text-align: center;
+        margin-bottom: 32px;
+      }
+
+      .terms-container {
+        text-align: center;
+        .terms {
+          .body1Text();
+
+          .privacy {
+            color: @green1;
+          }
+        }
+      }
+
+      .footer {
+        text-align: center;
+
+        .create-account-button {
+          width: 50%;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .have-account {
+          margin-top: 40px;
+          .body2Text();
+          color: @black1;
+
+          .link {
+            color: @green1;
+          }
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 30px;
+
+    .signup-container {
+      .signup-form-container {
+        .title {
+          .h5Text();
+        }
+        .footer {
+          .create-account-button {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

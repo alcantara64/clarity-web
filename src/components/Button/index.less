@@ -1,0 +1,25 @@
+@import "../../theme/variables.less";
+@import "../../theme/typography.less";
+
+.app-button {
+  .buttonText();
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  color: @white;
+  background: @greenPrimary;
+  // display: block;
+  //   margin-top: 25px;
+  height: 56px;
+  border-radius: 10px;
+  border: 0;
+  width: 100%;
+
+  &:hover {
+    background: @greenPrimary;
+  }
+
+  &.button-disabled {
+    background-color: @black4;
+  }
+}
