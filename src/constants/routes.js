@@ -5,6 +5,7 @@ export const ROUTES = {
 
   appBase: "/app",
   dashboard: "/app/dashboard",
+  healthData: "/app/healthData",
   patientData: "/app/patient-data",
   oauth: "/app/oauth",
   timeLine: "/app/timeline",

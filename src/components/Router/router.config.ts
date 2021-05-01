@@ -46,14 +46,14 @@ export const appRouters = [
     isLayout: true,
     showInMenu: false,
   },
-  // {
-  //   path: ROUTES.dashboard,
-  //   name: "dashboard",
-  //   title: "dashboard",
-  //   component: LoadableComponent(() => import("../../screens/Dashboard")),
-  //   isLayout: false,
-  //   showInMenu: false,
-  //   exact: true,
-  // },
+  {
+    path: ROUTES.healthData,
+    name: "My Health Data",
+    title: "My Health Data",
+    component: LoadableComponent(() => import("../../screens/healthData")),
+    isLayout: false,
+    showInMenu: false,
+    exact: true,
+  },
 ];
 export const routers = [...appRouters, ...userRouter];

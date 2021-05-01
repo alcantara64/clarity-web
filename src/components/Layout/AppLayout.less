@@ -3,6 +3,22 @@
 
 #app-layout {
   height: 100%;
+
+  background-color: @black6;
+
+  #app-main {
+    padding-left: 240px;
+
+    &.sideBarCollapsed {
+      padding-left: 75px;
+    }
+  }
   @media only screen and (max-width: 600px) {
+    #app-main {
+      padding-left: 75px;
+      &.sideBarCollapsed {
+        padding-left: 75px;
+      }
+    }
   }
 }
