@@ -55,5 +55,32 @@ export const appRouters = [
     showInMenu: false,
     exact: true,
   },
+  {
+    path: ROUTES.profile,
+    name: "Profile",
+    title: "Profile",
+    component: LoadableComponent(() => import("../../screens/profile")),
+    isLayout: false,
+    showInMenu: false,
+    exact: true,
+  },
+  {
+    path: ROUTES.connections,
+    name: "Connections",
+    title: "Connections",
+    component: LoadableComponent(() => import("../../screens/connections")),
+    isLayout: false,
+    showInMenu: false,
+    exact: true,
+  },
+  {
+    path: ROUTES.settings,
+    name: "Settings",
+    title: "Settings",
+    component: LoadableComponent(() => import("../../screens/settings")),
+    isLayout: false,
+    showInMenu: false,
+    exact: true,
+  },
 ];
 export const routers = [...appRouters, ...userRouter];

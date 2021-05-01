@@ -17,18 +17,26 @@ import sideBarConnections from "../../images/sideBarConnections.svg";
 import sideBarSettingsIcon from "../../images/sideBarSettingsIcon.svg";
 import onyxLogo from "../../images/Onyx.svg";
 import logoutIcon from "../../images/logout-icon.svg";
+import sideBarIndicatorActive from "../../images/sidebar-indicator-active.svg";
 
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 
 import "./index.less";
 import { ROUTES } from "../../constants/routes";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
+import classNames from "classnames";
 
 const AppSideBar = ({ onSidebartoggle }: any) => {
   const [sideBarCollapsed, setSideBarCollapsed] = useState(isMobile);
 
   const history = useHistory();
+  const location = useLocation();
 
+  const isActiveRouteClass = (key: string) => {
+    return classNames({
+      activeRoute: location.pathname == key,
+    });
+  };
   return (
     <ClickOutside
       onClickOutside={() => {
@@ -44,6 +52,11 @@ const AppSideBar = ({ onSidebartoggle }: any) => {
 
           if (onSidebartoggle) {
             onSidebartoggle(expanded);
+          }
+        }}
+        onSelect={(selected: any) => {
+          if (location.pathname !== selected) {
+            history.push(selected);
           }
         }}
         className="side-nav"
@@ -68,7 +81,9 @@ const AppSideBar = ({ onSidebartoggle }: any) => {
 
         <SideNav.Nav defaultSelected={`${ROUTES.healthData}`}>
           <NavItem
-            navitemClassName="nav-item"
+            navitemClassName={`nav-item ${isActiveRouteClass(
+              ROUTES.healthData
+            )}`}
             eventKey={`${ROUTES.healthData}`}
           >
             <NavIcon>
@@ -77,17 +92,24 @@ const AppSideBar = ({ onSidebartoggle }: any) => {
             <NavText>
               <span className="nav-text">MyHealthData</span>
             </NavText>
+            <img src={sideBarIndicatorActive} className="active-indicator" />
           </NavItem>
-          <NavItem navitemClassName="nav-item" eventKey={`${ROUTES.profile}`}>
+          <NavItem
+            navitemClassName={`nav-item ${isActiveRouteClass(ROUTES.profile)}`}
+            eventKey={`${ROUTES.profile}`}
+          >
             <NavIcon>
               <img src={sidearProfileIcon} />
             </NavIcon>
             <NavText>
               <span className="nav-text">Profile</span>
             </NavText>
+            <img src={sideBarIndicatorActive} className="active-indicator" />
           </NavItem>
           <NavItem
-            navitemClassName="nav-item"
+            navitemClassName={`nav-item ${isActiveRouteClass(
+              ROUTES.connections
+            )}`}
             eventKey={`${ROUTES.connections}`}
           >
             <NavIcon>
@@ -96,14 +118,19 @@ const AppSideBar = ({ onSidebartoggle }: any) => {
             <NavText>
               <span className="nav-text">Connections</span>
             </NavText>
+            <img src={sideBarIndicatorActive} className="active-indicator" />
           </NavItem>
-          <NavItem navitemClassName="nav-item" eventKey={`${ROUTES.settings}`}>
+          <NavItem
+            navitemClassName={`nav-item ${isActiveRouteClass(ROUTES.settings)}`}
+            eventKey={`${ROUTES.settings}`}
+          >
             <NavIcon>
               <img src={sideBarSettingsIcon} />
             </NavIcon>
             <NavText>
               <span className="nav-text">Settings</span>
             </NavText>
+            <img src={sideBarIndicatorActive} className="active-indicator" />
           </NavItem>
 
           <div className="bottom-container">

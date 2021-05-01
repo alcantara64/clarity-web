@@ -49,6 +49,19 @@
         margin-left: 15px;
         .body1Text();
       }
+
+      .active-indicator {
+        position: absolute;
+        right: 10px;
+        display: none;
+      }
+
+      &.activeRoute {
+        background-color: @green5;
+        .active-indicator {
+          display: inline-block;
+        }
+      }
     }
 
     .nav-item-power {
