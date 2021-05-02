@@ -1,0 +1,37 @@
+@import "../../theme/variables.less";
+@import "../../theme/typography.less";
+
+#oauth-page {
+  display: flex;
+  height: 100%;
+
+  justify-content: center;
+  align-items: center;
+
+  .oauth-step2-container {
+    width: 60%;
+    padding-top: 30px;
+  }
+  .oauth-step1-container {
+    width: 50%;
+    padding-top: 30px;
+  }
+
+  .oauth-loading-container {
+    padding-top: 30px;
+  }
+
+  @media (max-width: 767.98px) {
+    .oauth-step1-container {
+      width: 90%;
+    }
+
+    .oauth-step2-container {
+      width: 90%;
+    }
+
+    .oauth-loading-container {
+      width: 90%;
+    }
+  }
+}

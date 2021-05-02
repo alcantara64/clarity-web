@@ -1,0 +1,37 @@
+@import "../../theme/variables";
+@import "../../theme/typography";
+
+#oauth-loading {
+  background-color: @white;
+  box-shadow: 0px 10px 50px rgba(1, 83, 85, 0.05);
+  border-radius: 20px;
+  padding: 48px;
+
+  text-align: center;
+
+  .wait-text {
+    margin-top: 32px;
+    .h5Text();
+  }
+
+  .description-text {
+    margin-top: 16px;
+    .body1Text();
+    color: @black2;
+  }
+
+  .spinner-loader {
+    color: @greenPrimary;
+    width: 50px;
+    height: 50px;
+    border-width: 5px;
+  }
+
+  @media (max-width: 767.98px) {
+    padding: 10px;
+
+    .description-text {
+      font-size: 14px;
+    }
+  }
+}

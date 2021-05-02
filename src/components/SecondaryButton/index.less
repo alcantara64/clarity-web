@@ -1,0 +1,41 @@
+@import "../../theme/variables";
+@import "../../theme/typography";
+
+.secondary-button {
+  .buttonText();
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  color: @green1;
+  background: @white;
+  // display: block;
+  //   margin-top: 25px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid @greenPrimary;
+  width: 100%;
+
+  &:hover {
+    background: @white;
+    .buttonText();
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    color: @green1;
+    background: @white;
+    // display: block;
+    //   margin-top: 25px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid @greenPrimary;
+    width: 100%;
+  }
+
+  &.button-disabled {
+    background-color: @white;
+  }
+
+  .icon {
+    margin-right: 15px;
+  }
+}
