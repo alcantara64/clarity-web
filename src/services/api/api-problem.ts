@@ -1,6 +1,7 @@
 // import ToastService from "../../utils/ToastService"
 import * as storage from "../../factories/utils/storage";
 import { AxiosResponse } from "axios";
+import { ROUTES } from "../../constants/routes";
 
 export type GeneralApiProblem =
   /**
@@ -59,7 +60,7 @@ export function getGeneralApiProblem(
       return { kind: "bad-data", data: response.data };
     case 401:
       window.localStorage.clear();
-      window.location.href = "/";
+      window.location.href = ROUTES.loginPage;
       return { kind: "unauthorized", data: response.data };
     case 403:
       return { kind: "forbidden", data: response.data };

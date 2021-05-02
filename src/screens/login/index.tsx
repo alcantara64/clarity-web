@@ -12,6 +12,7 @@ import { ROUTES } from "../../constants/routes";
 
 import "./index.less";
 import { useStores } from "../../models";
+import Loading from "../../components/Loading";
 
 const Login = () => {
   const location = useLocation();
@@ -56,6 +57,7 @@ const Login = () => {
       id="login-page"
       className=" d-flex align-items-center justify-content-center"
     >
+      {isLoading && <Loading />}
       <div className="login-container">
         <div className="logo-container">
           <img src={appLogo} />
@@ -64,9 +66,7 @@ const Login = () => {
         </div>
 
         <div className="login-form-container">
-          <h4 className="title">
-            Login to Clarity {isLoading && <Spinner animation="grow" />}
-          </h4>
+          <h4 className="title">Login to Clarity</h4>
           <Form onSubmit={() => submit()}>
             <Form.Group className="form-group" controlId="formBasicEmail">
               <FormLabel>Email address</FormLabel>
