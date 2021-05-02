@@ -66,3 +66,11 @@ export const hexToRGB = (hex: any, alpha: any) => {
     return `rgba(${r}, ${g}, ${b})`;
   }
 };
+
+export const getNameAlias = (name: string) => {
+  const matches = name.match(/\b(\w)/g);
+
+  const alias = (matches && (matches[0] || "") + (matches[1] || "")) || "";
+
+  return alias;
+};

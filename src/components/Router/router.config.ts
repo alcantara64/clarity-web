@@ -47,6 +47,15 @@ export const appRouters = [
     showInMenu: false,
   },
   {
+    path: ROUTES.oauth,
+    name: "My Health Data",
+    title: "oauth",
+    component: LoadableComponent(() => import("../../screens/oauth")),
+    isLayout: false,
+    showInMenu: false,
+    exact: true,
+  },
+  {
     path: ROUTES.healthData,
     name: "My Health Data",
     title: "My Health Data",

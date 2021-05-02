@@ -16,6 +16,7 @@ const AppLayout = () => {
 
   const sideBarClass = classNames({
     sideBarCollapsed: sideBarCollapsed,
+    sideBarOpen: !sideBarCollapsed,
   });
 
   return (
@@ -27,19 +28,22 @@ const AppLayout = () => {
       />
       <div id="app-main" className={`${sideBarClass}`}>
         <AppHeader />
-        <Switch>
-          {appRouters
-            .filter((item: any) => !item.isLayout)
-            .map((item, index) => (
-              <Route
-                key={index}
-                path={item.path}
-                component={item.component}
-                exact={item.exact}
-              />
-            ))}
-        </Switch>
-        <Redirect from="/" to={`${ROUTES.healthData}`} />
+        <main id="app-main-content">
+          <div className="height-padder"></div>
+          <Switch>
+            {appRouters
+              .filter((item: any) => !item.isLayout)
+              .map((item, index) => (
+                <Route
+                  key={index}
+                  path={item.path}
+                  component={item.component}
+                  exact={item.exact}
+                />
+              ))}
+          </Switch>
+          <Redirect from="/" to={`${ROUTES.oauth}`} />
+        </main>
       </div>
     </div>
   );

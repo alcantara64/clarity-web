@@ -6,11 +6,13 @@ import classNames from "classnames";
 
 const Button = ({
   label,
+  Icon = null,
   type = null,
   className = "",
-  onClick = () => {},
+  onClick = (e) => {},
   disabled = false,
   children = null,
+
   ...rest
 }) => {
   const buttonClass = classNames({
@@ -23,6 +25,8 @@ const Button = ({
       {...rest}
     >
       {children || label}
+
+      {Icon}
     </BSButton>
   );
 };

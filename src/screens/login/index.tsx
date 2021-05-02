@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form } from "react-bootstrap";
+import { Form, Spinner } from "react-bootstrap";
 
 import appLogo from "../../images/app-logo.svg";
 
@@ -11,11 +11,45 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 
 import "./index.less";
+import { useStores } from "../../models";
 
 const Login = () => {
   const location = useLocation();
 
   const history = useHistory();
+
+  const { authStore, userStore } = useStores();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onEmailChange = (e: any) => {
+    setEmail(e.target.value);
+  };
+
+  const onPasswordChange = (e: any) => {
+    setPassword(e.target.value);
+  };
+
+  const submit = async () => {
+    setIsLoading(true);
+
+    const payload = {
+      email,
+      password,
+      device_type: "android", // temp solution
+      device_id: "web", // temp solution
+    };
+
+    const resp = await authStore.userLogin(payload).catch((ex) => {});
+    setIsLoading(false);
+    if (resp.kind == "ok") {
+      userStore.fetchProfile().catch((ex) => {});
+      history.push(ROUTES.oauth);
+    }
+  };
 
   return (
     <div
@@ -30,25 +64,33 @@ const Login = () => {
         </div>
 
         <div className="login-form-container">
-          <h4 className="title">Login to Clarity</h4>
-          <Form>
+          <h4 className="title">
+            Login to Clarity {isLoading && <Spinner animation="grow" />}
+          </h4>
+          <Form onSubmit={() => submit()}>
             <Form.Group className="form-group" controlId="formBasicEmail">
               <FormLabel>Email address</FormLabel>
-              <FormInput type="email" placeholder="Enter email" />
+              <FormInput
+                type="email"
+                placeholder="Enter email"
+                onChange={onEmailChange}
+              />
             </Form.Group>
 
             <Form.Group className="form-group" controlId="formBasicPassword">
               <FormLabel>Password</FormLabel>
-              <FormPasswordInput type="password" placeholder="Password" />
+              <FormPasswordInput
+                type="password"
+                placeholder="Password"
+                onChange={onPasswordChange}
+              />
             </Form.Group>
 
             <Button
               label="Login"
               variant="primary"
               type="submit"
-              onClick={() => {
-                history.push(ROUTES.dashboard);
-              }}
+              onClick={() => submit()}
             />
 
             <div className="footer">

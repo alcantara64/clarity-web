@@ -40,7 +40,15 @@ const AppSideBar = ({ onSidebartoggle }: any) => {
   return (
     <ClickOutside
       onClickOutside={() => {
-        setSideBarCollapsed(false);
+        if (!isMobile) {
+          return;
+        }
+
+        setSideBarCollapsed(true);
+
+        if (onSidebartoggle) {
+          onSidebartoggle(true);
+        }
       }}
       id="app-side-bar"
     >
