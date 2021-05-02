@@ -2,4 +2,159 @@
 @import "../../theme/typography.less";
 
 #settings-page {
+  padding-top: 22px;
+  padding-left: 30px;
+  height: 100%;
+
+  .settings-content {
+    height: 100%;
+  }
+  .option-item {
+    height: 85px;
+    background-color: @white;
+    margin-bottom: 16px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+    cursor: pointer;
+
+    .title {
+      .body2Text();
+    }
+
+    &.optionItemSelected {
+      background-color: @greenPrimary;
+      color: @white;
+
+      .title {
+        color: @white;
+      }
+
+      .icon-container {
+        color: @greenPrimary;
+        background-color: @white;
+      }
+    }
+
+    .icon-container {
+      width: 30px;
+      height: 30px;
+      border-radius: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: @white;
+      background-color: @greenPrimary;
+    }
+  }
+
+  .about-us-container {
+    background-color: @white;
+    box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.07);
+    padding: 24px;
+
+    .header-title {
+      .h6Text();
+    }
+
+    .logo-container {
+      margin-top: 25px;
+      .title {
+        .h5Text();
+        color: @greenPrimary;
+        margin-left: 10px;
+      }
+    }
+
+    .description-container {
+      margin-top: 24px;
+      .body1Text();
+
+      .visit-link {
+        color: @greenPrimary;
+      }
+    }
+
+    .brand-container {
+      margin-top: 40px;
+      text-align: center;
+      .power-text {
+        .h6Text();
+        font-weight: normal;
+        opacity: 0.5;
+      }
+    }
+  }
+
+  .privacy-container {
+    background-color: @white;
+    box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.07);
+    padding: 24px;
+    // height: 500px;
+
+    iframe {
+      border: 0;
+    }
+  }
+
+  .settings-accordion {
+    .card-header {
+      padding: 0;
+    }
+    .toggle-header {
+      background-color: @white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-left: 10px;
+      padding-right: 10px;
+      height: 70px;
+      .captionText();
+
+      &.optionItemSelected {
+        background-color: @greenPrimary;
+        color: @white;
+
+        .title {
+          color: @white;
+        }
+
+        .icon-container {
+          color: @greenPrimary;
+          background-color: @white;
+        }
+      }
+
+      .icon-container {
+        width: 30px;
+        height: 30px;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: @white;
+        background-color: @greenPrimary;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    padding-left: 0px;
+
+    .about-us-container {
+      padding: 5px;
+      .description-container {
+        .captionText();
+      }
+    }
+
+    .settings-accordion {
+      .card-body {
+        padding: 0px;
+      }
+    }
+  }
 }

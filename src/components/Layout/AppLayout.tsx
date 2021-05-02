@@ -10,6 +10,7 @@ import AppSideBar from "../SideBar";
 import classNames from "classnames";
 import { isMobile } from "react-device-detect";
 import AppHeader from "../Header";
+import { Container } from "react-bootstrap";
 
 const AppLayout = () => {
   const [sideBarCollapsed, setSideBarCollapsed] = useState(isMobile);
@@ -28,21 +29,24 @@ const AppLayout = () => {
       />
       <div id="app-main" className={`${sideBarClass}`}>
         <AppHeader />
+
         <main id="app-main-content">
-          <div className="height-padder"></div>
-          <Switch>
-            {appRouters
-              .filter((item: any) => !item.isLayout)
-              .map((item, index) => (
-                <Route
-                  key={index}
-                  path={item.path}
-                  component={item.component}
-                  exact={item.exact}
-                />
-              ))}
-          </Switch>
-          <Redirect from="/" to={`${ROUTES.oauth}`} />
+          <Container>
+            <div className="height-padder"></div>
+            <Switch>
+              {appRouters
+                .filter((item: any) => !item.isLayout)
+                .map((item, index) => (
+                  <Route
+                    key={index}
+                    path={item.path}
+                    component={item.component}
+                    exact={item.exact}
+                  />
+                ))}
+            </Switch>
+            <Redirect from="/" to={`${ROUTES.oauth}`} />
+          </Container>
         </main>
       </div>
     </div>
