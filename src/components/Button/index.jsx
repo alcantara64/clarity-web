@@ -22,6 +22,7 @@ const Button = ({
     <BSButton
       className={`app-button ${buttonClass} ${className}`}
       onClick={onClick}
+      type={type}
       {...rest}
     >
       {children || label}

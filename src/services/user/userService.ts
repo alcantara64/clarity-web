@@ -14,4 +14,12 @@ export class UserService {
 
     return response;
   }
+
+  async signUp(payload: any): Promise<ApiResponse> {
+    const httpService: HttpService = new HttpService();
+
+    const response = await httpService.post("/user", payload);
+
+    return response;
+  }
 }

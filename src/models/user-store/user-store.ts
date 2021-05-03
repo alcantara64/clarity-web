@@ -35,18 +35,29 @@ export const UserStoreModel = types
   }))
 
   .actions((self) => ({
-    userSignUp: flow(function* (payload) {
-      // const result: any = yield self.environment.api.userSignUp(payload);
-      // if (result && result.kind == "ok") {
-      //   if (result.data) {
-      //     console.log("result", result.data.data);
-      //     self.setUser(result.data.data.data);
-      //     NotificationService.show("Account created successfully!", "success");
-      //   }
-      // } else {
-      //   NotificationService.show(result.data.message, "error");
-      // }
-      // return result;
+    userSignUp: flow(function* (payload: any) {
+      const userService: UserService = new UserService();
+
+      const result = yield userService.signUp(payload);
+
+      if (result && result.kind == "ok") {
+        if (result.data) {
+          const { token } = result.data;
+
+          const { authStore } = self.rootStore;
+
+          authStore.setAuthToken(token);
+        } else {
+          console.log(result);
+        }
+      } else {
+        console.log(result);
+        NotificationService.show(
+          result?.data?.message || result?.data,
+          "error"
+        );
+      }
+      return result;
     }),
 
     fetchProfile: flow(function* () {
