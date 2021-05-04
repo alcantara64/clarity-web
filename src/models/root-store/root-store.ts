@@ -1,3 +1,4 @@
+import { PatientStoreModel } from "./../patient-store/patient-store";
 import { PayerStoreModel } from "./../payer-store/payer-store";
 import { AuthStoreModel } from "./../auth-store/auth-store";
 import { EventStoreModel } from "./../event-store/event-store";
@@ -11,7 +12,8 @@ export const RootStoreModel = types
     userStore: types.optional(UserStoreModel, {}),
     eventStore: types.optional(EventStoreModel,{}),
     authStore: types.optional(AuthStoreModel, {}),
-    payerStore: types.optional(PayerStoreModel,{})
+    payerStore: types.optional(PayerStoreModel,{}),
+    patientStore: types.optional(PatientStoreModel,{})
   })
   .actions((self) => ({}));
 

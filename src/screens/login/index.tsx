@@ -34,7 +34,9 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const submit = async () => {
+  const submit = async (event: any) => {
+    event.preventDefault();
+
     setIsLoading(true);
 
     const payload = {
@@ -67,7 +69,7 @@ const Login = () => {
 
         <div className="login-form-container">
           <h4 className="title">Login to Clarity</h4>
-          <Form onSubmit={() => submit()}>
+          <Form onSubmit={(e) => submit(e)}>
             <Form.Group className="form-group" controlId="formBasicEmail">
               <FormLabel>Email address</FormLabel>
               <FormInput
@@ -86,12 +88,7 @@ const Login = () => {
               />
             </Form.Group>
 
-            <Button
-              label="Login"
-              variant="primary"
-              type="submit"
-              onClick={() => submit()}
-            />
+            <Button label="Login" variant="primary" type="submit" />
 
             <div className="footer">
               Don’t have an account?{" "}

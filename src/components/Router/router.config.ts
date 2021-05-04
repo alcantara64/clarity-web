@@ -83,6 +83,15 @@ export const appRouters = [
     exact: true,
   },
   {
+    path: ROUTES.timeLine,
+    name: "MyHealthData",
+    title: "Timeline",
+    component: LoadableComponent(() => import("../../screens/timeline")),
+    isLayout: false,
+    showInMenu: false,
+    exact: true,
+  },
+  {
     path: ROUTES.settings,
     name: "Settings",
     title: "Settings",
