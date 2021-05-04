@@ -73,7 +73,9 @@ const TimelineDetails = () => {
         <Modal.Header closeButton>
           <Modal.Title className="header-title">Raw JSON Output</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="body-content">{content}</Modal.Body>
+        <Modal.Body className="modal-body">
+          <div className="body-content">{content}</div>
+        </Modal.Body>
       </Modal>
     );
   };
