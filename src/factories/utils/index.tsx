@@ -3,6 +3,7 @@ import * as React from "react";
 import { Route, Switch } from "react-router-dom";
 import moment from "moment";
 import { APPNAME } from "../../constants";
+import { TimelineResources } from "../../constants/constants";
 const { routers } = require("../../components/Router/router.config");
 
 export const getRoute = (path: any) => {
@@ -73,4 +74,8 @@ export const getNameAlias = (name: string) => {
   const alias = (matches && (matches[0] || "") + (matches[1] || "")) || "";
 
   return alias;
+};
+
+export const getTimelineNameResource = (resourceName: string) => {
+  return TimelineResources?.find((x) => x.resource == resourceName)?.name;
 };

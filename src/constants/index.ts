@@ -1,1 +1,1 @@
-export const APPNAME = "MyCareLite";
+export const APPNAME = "CareLite";

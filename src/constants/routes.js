@@ -9,6 +9,7 @@ export const ROUTES = {
   patientData: "/app/patient-data",
   oauth: "/app/oauth",
   timeLine: "/app/timeline",
+  timeLineDetails: "/app/timeline/timeline-details",
   profile: "/app/profile",
   connections: "/app/connections",
   settings: "/app/settings",

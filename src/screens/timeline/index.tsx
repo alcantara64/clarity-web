@@ -14,90 +14,17 @@ import carePlanIcon from "../../images/careplan-icon.svg";
 import diagnosticIcon from "../../images/diagnostic-icon.svg";
 import documentIcon from "../../images/document-icon.svg";
 import encounterIcon from "../../images/encounter-icon.svg";
-import { CLAIMS_AND_CLINICAL_RESOURCE } from "../../constants/constants";
+
+import {
+  CLAIMS_AND_CLINICAL_RESOURCE,
+  TimelineResources,
+} from "../../constants/constants";
 
 import "./index.less";
 import TimelineList from "../../components/TimelineList";
-
-const resources = [
-  {
-    name: "Claims",
-    color: "#6BE38D",
-    resource: "ExplanationOfBenefit",
-    displayKeys: ["Substance", "Date"],
-    screen: "ClaimsScreen",
-  },
-  {
-    name: "Allergy",
-    color: "#FFC657",
-    resource: "AllergyIntolerance",
-    displayKeys: ["Substance", "Date"],
-    screen: "AllergyScreen",
-  },
-  {
-    name: "Procedures",
-    color: "#FF7C53",
-    resource: "Procedures",
-    displayKeys: ["Name", "Date Performed"],
-    screen: "ProcedureScreen",
-  },
-  {
-    name: "Immunizations",
-    color: "#FFC657",
-    resource: "Immunization",
-    displayKeys: ["Vaccine Code", "Date Administered"],
-    screen: "ImmunizationScreen",
-  },
-  {
-    name: "Conditions",
-    color: "#A56BD2",
-    resource: "Condition",
-    displayKeys: ["Condition", "Date"],
-    screen: "ConditionScreen",
-  },
-  {
-    name: "Medication",
-    color: "#6BE38D",
-    resource: "MedicationStatement",
-    displayKeys: ["Medication", "Date Prescribed"],
-    screen: "MedicationScreen",
-  },
-  {
-    name: "Prescription",
-    color: "#FF7C53",
-    resource: "MedicationRequest",
-    displayKeys: ["Medication", "Date Prescribed"],
-    screen: "PrescriptionScreen",
-  },
-  {
-    name: "Observation",
-    color: "#FFC657",
-    resource: "Observation",
-    displayKeys: ["Date observed", ""],
-    screen: "ObservationScreen",
-  },
-  {
-    name: "CarePlan",
-    color: "#A56BD2",
-    resource: "CarePlan",
-    displayKeys: ["Activities", "Timing"],
-    screen: "CareplanScreen",
-  },
-  {
-    name: "DiagnosticReport",
-    color: "#6BE38D",
-    resource: "DiagnosticReport",
-    displayKeys: ["Category", "Date"],
-    screen: "DiagnosticReportScreen",
-  },
-  {
-    name: "DocumentReference",
-    color: "#FF7C53",
-    resource: "DocumentReference",
-    displayKeys: ["Category", "Date Created"],
-    screen: "DocumentReferenceScreen",
-  },
-];
+import { useHistory } from "react-router";
+import { ROUTES } from "../../constants/routes";
+import { getTimelineNameResource } from "../../factories/utils";
 
 const TimeLine = () => {
   const { patientStore, payerStore } = useStores();
@@ -109,6 +36,8 @@ const TimeLine = () => {
   );
 
   const [resourceData, setResourceData]: any = useState(null);
+
+  const history = useHistory();
 
   useEffect(() => {
     (async () => {
@@ -155,10 +84,6 @@ const TimeLine = () => {
     return "";
   };
 
-  const getNameResource = (resourceName: string) => {
-    return resources?.find((x) => x.resource == resourceName)?.name;
-  };
-
   const ResourceItem = ({
     name,
     color,
@@ -183,6 +108,12 @@ const TimeLine = () => {
     );
   };
 
+  const onTimelineClick = (item: any) => {
+    history.push(ROUTES.timeLineDetails, {
+      timelineData: item,
+    });
+  };
+
   if (isLoading) {
     return <Loading />;
   }
@@ -190,7 +121,7 @@ const TimeLine = () => {
   return (
     <div id="app-timeline">
       <div className="resource-container">
-        {resources.map((item) => (
+        {TimelineResources.map((item) => (
           <ResourceItem
             key={item.name}
             resourceName={item.resource}
@@ -205,9 +136,14 @@ const TimeLine = () => {
       </div>
 
       <div className="timeline-content">
-        <h5 className="timeline-title">{getNameResource(currentResource)}</h5>
+        <h5 className="timeline-title">
+          {getTimelineNameResource(currentResource)}
+        </h5>
 
-        <TimelineList data={resourceData?.entry || []} resourceName={""} />
+        <TimelineList
+          data={resourceData?.entry || []}
+          itemClick={onTimelineClick}
+        />
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 import "./index.less";
 
-const TimelineList = ({ data, resourceName }: any) => {
+const TimelineList = ({ data, itemClick = (item: any) => {} }: any) => {
   const getItemDisplay = (entry: any) => {
     let resourceDate = "";
     if (
@@ -109,9 +109,9 @@ const TimelineList = ({ data, resourceName }: any) => {
     );
   };
 
-  const TimelineItem = ({ item }: any) => {
+  const TimelineItem = ({ item, onClick = () => {} }: any) => {
     return (
-      <div className="timeline-item">
+      <div className="timeline-item" onClick={onClick}>
         <p className="timeline-date">{getItemDisplay(item)}</p>
         <div
           className="timeline-status-container"
@@ -133,7 +133,13 @@ const TimelineList = ({ data, resourceName }: any) => {
   return (
     <div id="timeline-list">
       {data.map((item: any, index: any) => (
-        <TimelineItem key={index} item={item} />
+        <TimelineItem
+          key={index}
+          item={item}
+          onClick={() => {
+            itemClick(item);
+          }}
+        />
       ))}
     </div>
   );
