@@ -41,10 +41,10 @@ export const PatientStoreModel = types
         }
       } else {
         console.log(result);
-        NotificationService.show(
-          result?.data?.message || result?.data,
-          "error"
-        );
+        // NotificationService.show(
+        //   result?.data?.message || result?.data,
+        //   "error"
+        // );
       }
       return result;
     }),
