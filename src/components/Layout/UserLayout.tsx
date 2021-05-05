@@ -96,7 +96,7 @@ const UserLayout = () => {
                 />
               ))}
 
-            <Redirect from="/" to={`${ROUTES.dashboard}`} />
+            <Redirect from="/" to={`${ROUTES.oauth}`} />
           </Switch>
         </div>
       </>
