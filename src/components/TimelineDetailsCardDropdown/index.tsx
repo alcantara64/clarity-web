@@ -42,8 +42,8 @@ const TimelineDetailsCardDropdown = ({ items, header }: any) => {
 
       <Accordion.Collapse eventKey="1">
         <div className="dropdown-content">
-          {items?.map((x: any) => (
-            <p>{x}</p>
+          {items?.map((x: any, index: any) => (
+            <div key={index}>{x}</div>
           ))}
         </div>
       </Accordion.Collapse>
