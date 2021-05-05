@@ -140,13 +140,6 @@ const AppSideBar = ({ onSidebartoggle }: any) => {
           </NavItem>
 
           <div className="bottom-container">
-            {!sideBarCollapsed && (
-              <div className="nav-item-power">
-                <h5 className="power-text">Powered By</h5>
-                <img src={onyxLogo} />
-              </div>
-            )}
-
             <div
               className="logout-container"
               onClick={() => {
@@ -156,6 +149,12 @@ const AppSideBar = ({ onSidebartoggle }: any) => {
               {!sideBarCollapsed && <span>Log Out</span>}
               <img src={logoutIcon} />
             </div>
+            {!sideBarCollapsed && (
+              <div className="nav-item-power">
+                <h5 className="power-text">Powered By</h5>
+                <img src={onyxLogo} />
+              </div>
+            )}
           </div>
         </SideNav.Nav>
       </SideNav>
