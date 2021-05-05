@@ -82,7 +82,7 @@ export const PayerStoreModel = types
       } else {
         console.log(result);
         NotificationService.show(
-          result?.data?.message || result?.data,
+         "Fetching Data failed" || result?.data?.message || result?.data,
           "error"
         );
       }

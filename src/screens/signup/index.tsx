@@ -30,7 +30,10 @@ const signUpFormSchema = yup.object().shape({
   firstName: yup.string().required(),
   lastName: yup.string().required(),
   email: yup.string().email().required(),
-  password: yup.string().required(),
+  password: yup.string().required().matches(
+    /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
+    "Password must contain at least 8 characters, one uppercase, one number and one special case character"
+  ),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match"),
@@ -66,7 +69,7 @@ const SignUpPage = () => {
       lastName: data.lastName,
       notification_token:
         "e0gPcEwU_MQ:APA91bF6ysYBupCqTkLgVjy1lDA77YxF-QEP24e4IzM6dsseIiXN7tnCygXeiKmfmV0UOOBz3cihm5-SY29791cZvbnaAcaikVulgf5X2z3BpPqrCU2mMpEgkeOHmt48HdlzY35IgPGc",
-      device_type: "android", // temp solution
+      device_type: "web", // temp solution
       device_id: "web", // temp solution
       regCode: "46677757",
     };

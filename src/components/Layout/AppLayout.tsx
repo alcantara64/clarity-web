@@ -45,7 +45,7 @@ const AppLayout = () => {
                   />
                 ))}
             </Switch>
-            <Redirect from="/" to={`${ROUTES.oauth}`} exact={true} />
+            {/* <Redirect from="/" to={`${ROUTES.oauth}`} exact={true} /> */}
           </Container>
         </main>
       </div>
