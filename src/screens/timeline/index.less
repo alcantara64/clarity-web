@@ -1,0 +1,48 @@
+@import "../../theme/variables.less";
+@import "../../theme/typography.less";
+
+#app-timeline {
+  padding-top: 30px;
+  .resource-container {
+    background-color: @white;
+    box-shadow: 0px 10px 50px rgba(1, 83, 85, 0.05);
+    border-radius: 20px 0px 0px 20px;
+    padding: 24px;
+
+    display: flex;
+    overflow-x: scroll;
+
+    .resource-item {
+      margin-right: 10px;
+      text-align: center;
+
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+
+      cursor: pointer;
+      .resource-image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 64px;
+        height: 65px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .resource-name {
+        .body2Text();
+        margin-top: 10px;
+      }
+    }
+  }
+
+  .timeline-content {
+    padding-top: 60px;
+    .timeline-title {
+      .h5Text();
+    }
+  }
+}

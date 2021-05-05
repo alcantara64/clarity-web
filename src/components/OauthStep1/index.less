@@ -1,0 +1,76 @@
+@import "../../theme/variables";
+@import "../../theme/typography";
+
+#oauth-step-1 {
+  background-color: @white;
+  box-shadow: 0px 10px 50px rgba(1, 83, 85, 0.05);
+  border-radius: 20px;
+  text-align: center;
+  padding: 40px;
+
+  //   width: 450px;
+  //   height: 430px;
+
+  .logo {
+    height: 120px;
+    width: 100px;
+    object-fit: contain;
+  }
+
+  .glad-text {
+    .h6Text();
+    color: @green1;
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .todo-text {
+    .h5Text();
+    color: @black2;
+    margin-top: 8px;
+  }
+
+  .todo-details {
+    .body1Text();
+    margin-top: 40px;
+  }
+  .logo-hand {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+  }
+
+  .connect-button {
+    margin-top: 40px;
+  }
+
+  @media (max-width: 767.98px) {
+    padding: 10px;
+
+    .logo {
+      width: 60px;
+    }
+    .glad-text {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    .todo-text {
+      .h6Text();
+      color: @black2;
+      margin-top: 8px;
+      font-size: 18px;
+    }
+
+    .todo-details {
+      font-size: 10px;
+      margin-top: 30px;
+    }
+
+    .logo-hand {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+  }
+}

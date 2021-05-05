@@ -1,0 +1,56 @@
+@import "../../theme/typography.less";
+@import "../../theme/variables.less";
+
+#app-user-layout {
+  padding-left: 0px;
+  padding-right: 0px;
+
+  background-color: @black6;
+  height: 100%;
+
+  .carousel-container {
+    position: fixed;
+    width: 400px;
+    .carousel-image {
+      height: 100vh;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .carousel-header {
+      .h3Text();
+      color: @white;
+      text-align: left;
+    }
+
+    .carousel-description {
+      .h6Text();
+      color: @white;
+      text-align: left;
+    }
+
+    .carousel-indicators {
+      li {
+        background-color: @white;
+        &.active {
+          background-color: @greenPrimary;
+        }
+      }
+    }
+  }
+
+  .user-content {
+    margin-left: 400px;
+    height: 100%;
+    background-color: @black6;
+    padding-bottom: 20px;
+  }
+
+  @media (max-width: 767.98px) {
+    .user-content {
+      margin-left: 0px;
+    }
+    // padding-top: 30px;
+    // width: 90%;
+  }
+}

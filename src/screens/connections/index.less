@@ -1,0 +1,35 @@
+@import "../../theme/variables.less";
+@import "../../theme/typography.less";
+
+#connections-page {
+  padding-left: 15px;
+
+  .oauth-step2-container {
+    width: 60%;
+    padding-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .oauth-step1-container {
+    width: 50%;
+    padding-top: 30px;
+  }
+
+  .oauth-loading-container {
+    padding-top: 30px;
+  }
+
+  @media (max-width: 767.98px) {
+    .oauth-step1-container {
+      width: 90%;
+    }
+
+    .oauth-step2-container {
+      width: 90%;
+    }
+
+    .oauth-loading-container {
+      width: 90%;
+    }
+  }
+}

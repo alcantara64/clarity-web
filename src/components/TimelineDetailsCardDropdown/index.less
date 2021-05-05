@@ -1,0 +1,35 @@
+@import "../../theme/typography.less";
+@import "../../theme/variables.less";
+
+#timeline-details-dropdown-item {
+  border-radius: 10px;
+  background-color: @black6;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-bottom: 5px;
+
+  .toggle-header {
+    display: flex;
+    align-items: center;
+
+    .toggle-icon {
+      margin-right: 10px;
+    }
+  }
+
+  .header-title {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    .body1Text();
+    color: @greenPrimary;
+  }
+
+  .dropdown-content {
+    .body1Text();
+  }
+
+  @media (max-width: 767.98px) {
+    padding-left: 5px;
+  }
+}

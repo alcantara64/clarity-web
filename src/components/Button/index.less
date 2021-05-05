@@ -1,0 +1,31 @@
+@import "../../theme/variables.less";
+@import "../../theme/typography.less";
+
+.app-button {
+  .buttonText();
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  color: @white;
+  background: @greenPrimary;
+  // display: block;
+  //   margin-top: 25px;
+  height: 56px;
+  border-radius: 10px;
+  border: 0;
+  width: 100%;
+
+  &:active, &:hover, &:focus, &:focus-within {
+    background: @greenPrimary !important;
+    border-color: @lemon2 !important;
+
+  }
+  &:focus {
+    box-shadow: 0 0 0 0.2rem @lemon2;
+}
+
+
+  &.button-disabled {
+    background-color: @black4;
+  }
+}
