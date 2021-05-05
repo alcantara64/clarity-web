@@ -25,7 +25,7 @@ const AppRouter = () => {
             path="/app"
             render={(props: any) => <AppLayout {...props} />}
           />
-          <Route path="/" render={(props) => <UserLayout {...props} />} />
+          <Route  path="/" render={(props) => <UserLayout {...props} />} />
         </Switch>
       </div>
     </DocumentTitle>

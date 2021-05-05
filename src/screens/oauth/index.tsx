@@ -57,6 +57,8 @@ const OauthPage = () => {
             if (resp.kind == "ok") {
               setGettingPayer(false);
               history?.push(`${ROUTES.timeLine}`);
+            }else{
+              setGettingPayer(false);
             }
           } else {
             setGettingPayer(false);

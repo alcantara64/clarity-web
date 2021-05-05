@@ -41,6 +41,12 @@ const TimeLine = observer(() => {
   const [resourceData, setResourceData]: any = useState(null);
 
   const history = useHistory();
+  useEffect(() =>{
+    const defaultPayer = payerStore.defaultPayer();
+    if(!defaultPayer?.is_connected){
+      history.push(ROUTES.oauth)
+    }
+  },[])
 
   useEffect(() => {
     (async () => {
