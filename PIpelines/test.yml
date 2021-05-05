@@ -1,0 +1,148 @@
+trigger:
+- release
+stages: 
+  # - stage: BuildAndTest
+  #   displayName: Build and Unit Test Application
+  #   jobs: 
+  #     - job: 'Build'
+  #       displayName: 'Build job'
+  #       pool:
+  #         vmImage: 'ubuntu-latest'
+  #       variables:
+  #         - group: Clarity-Liteweb-BuildandValidation-DEV
+  #       steps:
+  #         - task: Npm@1
+  #           displayName: 'npm install'
+  #           inputs:
+  #             verbose: false
+
+
+  #         - task: SonarSource.sonarcloud.14d9cde6-c1da-4d55-aa01-2965cd301255.SonarCloudPrepare@1
+  #           displayName: 'Prepare analysis on SonarCloud'
+  #           inputs:
+  #             SonarCloud: mynewSonarNW19
+  #             organization: $(sonarorg)
+  #             scannerMode: CLI
+  #             configMode: manual
+  #             cliProjectKey: '$(sonarclikey)'
+  #             cliProjectName: '$(sonarprojectname)'
+  #             cliSources: src
+  #             extraProperties: |
+  #               sonar.exclusions=bower_components/**/*, node_modules/**/*, **/*test*/**, migrations/*, api/models/*, App/Config/*, themes/*, **/Tests/**
+  #               sonar.javascript.lcov.reportPaths=coverage/lcov.info                 
+  #         - task: Bash@3
+  #           displayName: 'Update snapshot and run tests'  
+  #           inputs:
+  #             targetType: 'inline'
+  #             script: |
+  #                 export BASEDIR=`pwd`
+  #                 echo BASEDIR=${BASEDIR}
+  #                 npm run test
+  #         - task: Bash@3
+  #           displayName: 'Run LCOV' 
+  #           inputs:
+  #             targetType: 'inline'
+  #             script: |
+  #                 export BASEDIR=`pwd`
+  #                 echo BASEDIR=${BASEDIR}
+  #                 npm run test:coverage  
+  #         - task: PublishTestResults@2
+  #           displayName: 'Publish Test Results **/*.xml'
+  #         - task: SonarCloudAnalyze@1
+  #           displayName: 'Run Code Analysis DEV'
+  #         # - task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
+  #         #   displayName: 'Run Code Analysis DEV'
+
+  #         - task: SonarSource.sonarcloud.38b27399-a642-40af-bb7d-9971f69712e8.SonarCloudPublish@1
+  #           displayName: 'Publish Quality Gate Result DEV'
+
+  #         - task: Dealogic.webpack-vsts-extension.webpack.webpack@4
+  #           displayName: webpack
+
+
+  #         - task: PublishBuildArtifacts@1
+  #           displayName: 'Publish Artifact: drop.zip'
+  #           inputs:
+  #             PathtoPublish: src
+  #             ArtifactName: drop.zip
+
+  #         - task: mspremier.PostBuildCleanup.PostBuildCleanup-task.PostBuildCleanup@3
+  #           displayName: 'Clean Agent Directories'
+
+############### Build Image ####################
+
+  - stage: 'Build'
+    displayName: 'Build container pipeline '
+    # dependsOn: BuildAndTest
+    jobs: 
+    - job: 'Build'
+      displayName: 'Build job'
+      pool:
+        vmImage: 'ubuntu-latest'
+      variables:
+        - group: Clarity-Liteweb-BuildandValidation-TEST
+      steps:
+          - task: DockerInstaller@0
+            displayName: 'Install Docker 17.09.0-ce'
+          - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+            displayName: 'Replace tokens in Dockerfile'
+            inputs:
+              targetFiles: Dockerfile
+              tokenPrefix: '__'
+              tokenSuffix: '__'
+          - task: Docker@2
+            displayName: buildAndPush
+            inputs:
+              containerRegistry: mycareacr   
+              repository: $(acrrepo)
+              Dockerfile: Dockerfile
+              buildContext: .
+              tags: '$(CUSTOMERWEB)-$(environment)-$(Build.BuildNumber)'
+
+####################### DEPLOY To AKS  ############################
+  - stage: 'Deploy'
+    displayName: 'Deploy to AKS'
+    dependsOn: Build
+    jobs: 
+    - deployment: deployaks
+      environment: TEST                                 
+      displayName: 'Deploy AKS'
+      pool:
+        vmImage: 'ubuntu-latest'
+      variables:
+      - name: image_tag
+        value: '$(CUSTOMERWEB)-$(environment)-$(Build.BuildNumber)'  
+      - group: Clarity-Liteweb-BuildandValidation-TEST
+      strategy:
+       runOnce:
+         deploy:          
+            steps:
+              - checkout: self
+              - download: none
+              - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+                displayName: 'Replace tokens in deployment.yml'
+                inputs:
+                  rootDirectory: '$(System.DefaultWorkingDirectory)'
+                  targetFiles: '**/*.yaml'
+                  escapeType: none
+                  verbosity: detailed
+                  tokenPrefix: '__' 
+                  tokenSuffix: '__'
+
+              - task: HelmInstaller@0
+                displayName: 'Helm Install' 
+                inputs:               
+                  helmVersion: '3.3.2'
+                  checkLatestHelmVersion: false
+                  installKubectl: true
+
+              - task: HelmDeploy@0
+                inputs:
+                  connectionType: 'Kubernetes Service Connection'
+                  kubernetesServiceConnection: 'Clarity-Lite-EastUS-TEST-AKS-APP'      #update aks service connection
+                  command: 'upgrade'
+                  chartType: 'FilePath'
+                  chartPath: '$(System.DefaultWorkingDirectory)/helm'
+                  releaseName: '$(CUSTOMERWEB)'
+                  overrideValues: 'image_tag=$(image_tag)'
+                  arguments: '--timeout 1200s'
