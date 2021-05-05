@@ -23,6 +23,7 @@ const Button = ({
       className={`app-button ${buttonClass} ${className}`}
       onClick={onClick}
       type={type}
+      disabled={disabled}
       {...rest}
     >
       {children || label}
