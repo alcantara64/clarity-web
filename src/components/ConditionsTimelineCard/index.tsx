@@ -49,6 +49,22 @@ const ConidtionsTimelineCardItem = ({ resource }: any) => {
             ))}
         />
       )}
+
+      {resource.criticality && (
+        <TimelineDetailsCardItem
+          label="CRITICALITY"
+          value={`${resource.criticality}`}
+        />
+      )}
+
+      {resource.code?.coding &&
+        resource.code?.coding.length &&
+        resource.code?.coding[0].display && (
+          <TimelineDetailsCardItem
+            label="CODE"
+            value={`${resource.code?.coding[0].display}`}
+          />
+        )}
     </div>
   );
 };
