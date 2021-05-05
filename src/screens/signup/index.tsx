@@ -24,6 +24,7 @@ interface IFormInputs {
   email: string;
   password: string;
   confirmPassword: string;
+  terms: string;
 }
 
 const signUpFormSchema = yup.object().shape({
@@ -34,6 +35,12 @@ const signUpFormSchema = yup.object().shape({
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match"),
+  terms: yup
+    .boolean()
+    .oneOf(
+      [true],
+      "You must agree to the terms and policy in order to proceed"
+    ),
 });
 
 const SignUpPage = () => {
@@ -41,7 +48,7 @@ const SignUpPage = () => {
     register,
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
   } = useForm<IFormInputs>({
     resolver: yupResolver(signUpFormSchema),
     mode: "onChange",
@@ -252,23 +259,37 @@ const SignUpPage = () => {
                   className="terms-container"
                   controlId="formBasicTerms"
                 >
-                  <Form.Check
-                    type="checkbox"
-                    label={
-                      <span className="terms">
-                        I have read and agreed to the{" "}
-                        <Link className="privacy" to={`${ROUTES.signUpPage}`}>
-                          Terms & Privacy Policy
-                        </Link>
-                      </span>
-                    }
+                  <Controller
+                    name="terms"
+                    control={control}
+                    defaultValue={""}
+                    render={({ field: { ref, ...rest }, fieldState }) => (
+                      <Form.Check
+                        type="checkbox"
+                        {...rest}
+                        {...fieldState}
+                        label={
+                          <span className="terms">
+                            I have read and agreed to the{" "}
+                            <Link
+                              className="privacy"
+                              to={`${ROUTES.signUpPage}`}
+                            >
+                              Terms & Privacy Policy
+                            </Link>
+                          </span>
+                        }
+                      />
+                    )}
                   />
+                  <span className="error-text">{errors.terms?.message}</span>
                 </Form.Group>
                 <Button
                   label="Create Account"
                   variant="primary"
                   type="submit"
                   className="create-account-button"
+                  disabled={isDirty && !isValid}
                 />
                 <div className="have-account">
                   Already have an account?{" "}

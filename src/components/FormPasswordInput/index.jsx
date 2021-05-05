@@ -27,7 +27,7 @@ const FormPasswordInput = ({
           setShowPassword(!showPassword);
         }}
       >
-        Show
+        {showPassword ? "Hide" : "Show"}
       </Button>
     </div>
   );
