@@ -8,18 +8,29 @@ const FormPasswordInput = ({
   children = null,
   className = "",
   ...rest
-}) => (
-  <div className="app-password-form-input">
-    <Form.Control
-      className={`form-input-control ${className}`}
-      type={type}
-      onChange={onChange}
-      {...rest}
-    >
-      {children}
-    </Form.Control>
-    <Button className="control-label">Show</Button>
-  </div>
-);
+}) => {
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  return (
+    <div className="app-password-form-input">
+      <Form.Control
+        className={`form-input-control ${className}`}
+        type={showPassword ? "text" : "password"}
+        onChange={onChange}
+        {...rest}
+      >
+        {children}
+      </Form.Control>
+      <Button
+        className="control-label"
+        onClick={() => {
+          setShowPassword(!showPassword);
+        }}
+      >
+        Show
+      </Button>
+    </div>
+  );
+};
 
 export default FormPasswordInput;
