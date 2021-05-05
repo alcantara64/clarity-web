@@ -25,15 +25,18 @@ import TimelineList from "../../components/TimelineList";
 import { useHistory } from "react-router";
 import { ROUTES } from "../../constants/routes";
 import { getTimelineNameResource } from "../../factories/utils";
+import { observer } from "mobx-react-lite";
 
-const TimeLine = () => {
+const TimeLine = observer(() => {
   const { patientStore, payerStore } = useStores();
+
+  const { selectedResource } = patientStore;
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [currentResource, setCurrentResource] = useState(
-    "ExplanationOfBenefit"
-  );
+  // const [currentResource, setCurrentResource] = useState(
+  //   patientStore.selectedResource
+  // );
 
   const [resourceData, setResourceData]: any = useState(null);
 
@@ -45,7 +48,7 @@ const TimeLine = () => {
       const defaultPayer = payerStore.defaultPayer();
 
       const resp = await patientStore
-        .getFhirData(currentResource, defaultPayer?._id)
+        .getFhirData(selectedResource, defaultPayer?._id)
         .catch(() => {});
 
       if (resp.kind == "ok") {
@@ -56,7 +59,7 @@ const TimeLine = () => {
 
       setIsLoading(false);
     })();
-  }, [currentResource]);
+  }, [patientStore.selectedResource]);
 
   const getResourceImage = (resourceName: string) => {
     if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.allergy) return alergyIcon;
@@ -114,12 +117,9 @@ const TimeLine = () => {
     });
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <div id="app-timeline">
+      {isLoading && <Loading />}
       <div className="resource-container">
         {TimelineResources.map((item) => (
           <ResourceItem
@@ -127,9 +127,9 @@ const TimeLine = () => {
             resourceName={item.resource}
             name={item.name}
             color={item.color}
-            selected={currentResource == item.resource}
+            selected={selectedResource == item.resource}
             onClick={() => {
-              setCurrentResource(item.resource);
+              patientStore.setSelectedResource(item.resource);
             }}
           />
         ))}
@@ -137,7 +137,7 @@ const TimeLine = () => {
 
       <div className="timeline-content">
         <h5 className="timeline-title">
-          {getTimelineNameResource(currentResource)}
+          {getTimelineNameResource(selectedResource)}
         </h5>
 
         <TimelineList
@@ -147,6 +147,6 @@ const TimeLine = () => {
       </div>
     </div>
   );
-};
+});
 
 export default TimeLine;

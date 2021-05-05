@@ -6,9 +6,9 @@ import TimelineDetailsCardDropdown from "../TimelineDetailsCardDropdown";
 import TimelineDetailsCardItem from "../TimelineDetailsCardItem";
 import "./index.less";
 
-const ConidtionsTimelineCardItem = ({ resource }: any) => {
+const DiagnosticReportTimelineCard = ({ resource }: any) => {
   return (
-    <div id="conditions-timeline-card">
+    <div id="diagnostic-report-timeline-card">
       {!!resource.identifier?.length && (
         <TimelineDetailsCardDropdown
           header="Identifiers"
@@ -17,18 +17,19 @@ const ConidtionsTimelineCardItem = ({ resource }: any) => {
           ))}
         />
       )}
-      {resource.clinicalStatus &&
-        resource.clinicalStatus.coding &&
-        resource.clinicalStatus.coding.length &&
-        resource.clinicalStatus.coding[0].display && (
+
+      {resource.code &&
+        resource.code.coding &&
+        resource.code.coding.length &&
+        (resource.code.coding[0].display || resource.code.coding[0].code) && (
           <TimelineDetailsCardItem
-            label="Clinical Status"
+            label="CODE"
             value={
-              resource.clinicalStatus.coding[0].display ||
-              resource.clinicalStatus.coding[0].code
+              resource.code.coding[0].display || resource.code.coding[0].code
             }
           />
         )}
+
       {resource.type && resource.type && (
         <TimelineDetailsCardItem label="Type" value={resource.type} />
       )}
@@ -41,7 +42,7 @@ const ConidtionsTimelineCardItem = ({ resource }: any) => {
               (item: any) =>
                 item.coding && item.coding.length && item.coding[0].display
             )
-            ?.map((x: any) => (
+            .map((x: any) => (
               <TimelineDetailsCardItem
                 label="Value"
                 value={x.coding[0].display}
@@ -74,16 +75,17 @@ const ConidtionsTimelineCardItem = ({ resource }: any) => {
           ))}
         />
       )}
-      {resource.onsetDateTime && (
+
+      {resource.effectiveDateTime && (
         <TimelineDetailsCardItem
-          label="ONSET"
-          value={formatDatePeriod(resource.onsetDateTime)}
+          label="EFFECTIVE"
+          value={formatDatePeriod(resource.effectiveDateTime)}
         />
       )}
-      {resource.recordedDate && (
+      {resource.issued && (
         <TimelineDetailsCardItem
-          label="RECORDED DATE"
-          value={formatDatePeriod(resource.recordedDate)}
+          label="ISSUED"
+          value={formatDatePeriod(resource.issued)}
         />
       )}
       {resource.recorder &&
@@ -95,53 +97,16 @@ const ConidtionsTimelineCardItem = ({ resource }: any) => {
           />
         )}
 
-      {!!resource.note?.length && (
+      {!!resource.performer?.length && (
         <TimelineDetailsCardDropdown
-          header="Notes"
-          items={resource.note.map((item: any) => (
-            <TimelineDetailsCardItem label="Text" value={item.text || ""} />
+          header="PERFORMER"
+          items={resource.performer.map((item: any) => (
+            <TimelineDetailsCardItem label="Text" value={item?.display || ""} />
           ))}
-        />
-      )}
-
-      {!!resource.reaction?.length && (
-        <TimelineDetailsCardDropdown
-          header="Reaction"
-          items={resource.reaction.map((item: any) => {
-            const resultItems = [];
-
-            if (
-              !!item.substance?.length &&
-              item.substance[0].coding &&
-              item.substance[0].coding.length &&
-              item.substance[0].coding.display
-            ) {
-              resultItems.push(
-                <TimelineDetailsCardItem
-                  label="SUBSTANCE"
-                  value={item.substance[0].coding.display}
-                />
-              );
-            }
-
-            if (
-              !!item.manifestation?.length &&
-              item.manifestation[0].coding &&
-              item.manifestation[0].coding.length &&
-              item.manifestation[0].coding.display
-            ) {
-              resultItems.push(
-                <TimelineDetailsCardItem
-                  label="MANIFESTATION"
-                  value={item.manifestation[0].coding.display}
-                />
-              );
-            }
-          })}
         />
       )}
     </div>
   );
 };
 
-export default ConidtionsTimelineCardItem;
+export default DiagnosticReportTimelineCard;

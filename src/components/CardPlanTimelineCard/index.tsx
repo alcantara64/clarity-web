@@ -6,9 +6,9 @@ import TimelineDetailsCardDropdown from "../TimelineDetailsCardDropdown";
 import TimelineDetailsCardItem from "../TimelineDetailsCardItem";
 import "./index.less";
 
-const ConidtionsTimelineCardItem = ({ resource }: any) => {
+const CarePlanTimelineCard = ({ resource }: any) => {
   return (
-    <div id="conditions-timeline-card">
+    <div id="careplan-timeline-card">
       {!!resource.identifier?.length && (
         <TimelineDetailsCardDropdown
           header="Identifiers"
@@ -17,10 +17,12 @@ const ConidtionsTimelineCardItem = ({ resource }: any) => {
           ))}
         />
       )}
+
       {resource.clinicalStatus &&
         resource.clinicalStatus.coding &&
         resource.clinicalStatus.coding.length &&
-        resource.clinicalStatus.coding[0].display && (
+        (resource.clinicalStatus.coding[0].display ||
+          resource.clinicalStatus.coding[0].code) && (
           <TimelineDetailsCardItem
             label="Clinical Status"
             value={
@@ -29,8 +31,13 @@ const ConidtionsTimelineCardItem = ({ resource }: any) => {
             }
           />
         )}
-      {resource.type && resource.type && (
-        <TimelineDetailsCardItem label="Type" value={resource.type} />
+
+      {resource.status && resource.status.length > 0 && (
+        <TimelineDetailsCardItem label="STATUS" value={`${resource.status}`} />
+      )}
+
+      {resource.intent && (
+        <TimelineDetailsCardItem label="INTENT" value={resource.intent} />
       )}
 
       {!!resource.category?.length && (
@@ -41,7 +48,7 @@ const ConidtionsTimelineCardItem = ({ resource }: any) => {
               (item: any) =>
                 item.coding && item.coding.length && item.coding[0].display
             )
-            ?.map((x: any) => (
+            .map((x: any) => (
               <TimelineDetailsCardItem
                 label="Value"
                 value={x.coding[0].display}
@@ -74,16 +81,16 @@ const ConidtionsTimelineCardItem = ({ resource }: any) => {
           ))}
         />
       )}
-      {resource.onsetDateTime && (
+      {resource.period && resource.period.start && (
         <TimelineDetailsCardItem
-          label="ONSET"
-          value={formatDatePeriod(resource.onsetDateTime)}
+          label="PERIOD"
+          value={formatDatePeriod(resource.period.start)}
         />
       )}
       {resource.recordedDate && (
         <TimelineDetailsCardItem
           label="RECORDED DATE"
-          value={formatDatePeriod(resource.recordedDate)}
+          value={formatDatePeriod(resource.period.recordedDate)}
         />
       )}
       {resource.recorder &&
@@ -95,15 +102,41 @@ const ConidtionsTimelineCardItem = ({ resource }: any) => {
           />
         )}
 
-      {!!resource.note?.length && (
+      {!!resource.activity?.length && (
         <TimelineDetailsCardDropdown
-          header="Notes"
-          items={resource.note.map((item: any) => (
-            <TimelineDetailsCardItem label="Text" value={item.text || ""} />
-          ))}
+          header="ACTIVITIES"
+          items={resource.activity.map((item: any) => {
+            const resultItems = [];
+
+            if (item?.detail?.code) {
+              resultItems.push(
+                <TimelineDetailsCardItem
+                  label="Code"
+                  value={item?.detail?.code?.text || ""}
+                />
+              );
+            }
+
+            if (item?.detail?.status) {
+              resultItems.push(
+                <TimelineDetailsCardItem
+                  label="STATUS"
+                  value={item?.detail?.status || ""}
+                />
+              );
+            }
+
+            if (item?.detail?.location && item?.detail?.location.display) {
+              resultItems.push(
+                <TimelineDetailsCardItem
+                  label="LOCATION"
+                  value={item?.detail?.location.display || ""}
+                />
+              );
+            }
+          })}
         />
       )}
-
       {!!resource.reaction?.length && (
         <TimelineDetailsCardDropdown
           header="Reaction"
@@ -144,4 +177,4 @@ const ConidtionsTimelineCardItem = ({ resource }: any) => {
   );
 };
 
-export default ConidtionsTimelineCardItem;
+export default CarePlanTimelineCard;

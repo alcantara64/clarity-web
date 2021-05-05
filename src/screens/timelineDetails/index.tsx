@@ -25,6 +25,11 @@ import ProceduresTimelineCard from "../../components/ProceduresTimelineCard";
 import AllergyTimelineCard from "../../components/AlergyTimelineCard";
 import ConidtionsTimelineCardItem from "../../components/ConditionsTimelineCard";
 import ImmunizationsCardItem from "../../components/ImmunizationTimelineCard";
+import MedicationsTimelineCard from "../../components/MedicationsTimelineCard";
+import PrescriptionsTimelineCard from "../../components/PrescriptionsTimelineCard";
+import ObservationsTimelineCard from "../../components/ObservationsTimelineCard";
+import CarePlanTimelineCard from "../../components/CardPlanTimelineCard";
+import DiagnosticReportTimelineCard from "../../components/DiagnosticReportTimelineCard";
 const TimelineDetails = () => {
   const history = useHistory();
 
@@ -106,6 +111,26 @@ const TimelineDetails = () => {
     if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.condition) {
       return <ConidtionsTimelineCardItem resource={resource} />;
     }
+
+    if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.medication) {
+      return <MedicationsTimelineCard resource={resource} />;
+    }
+
+    if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.prescription) {
+      return <PrescriptionsTimelineCard resource={resource} />;
+    }
+
+    if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.observation) {
+      return <ObservationsTimelineCard resource={resource} />;
+    }
+
+    if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.carePlan) {
+      return <CarePlanTimelineCard resource={resource} />;
+    }
+    if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.diagnosticReport) {
+      return <DiagnosticReportTimelineCard resource={resource} />;
+    }
+
     return null;
   };
 

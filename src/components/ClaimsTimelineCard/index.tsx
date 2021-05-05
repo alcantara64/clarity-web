@@ -194,7 +194,7 @@ const ClaimsTimelineCard = ({ resource }: any) => {
       {!!resource.diagnosis?.length && (
         <TimelineDetailsCardDropdown
           header="Diagnosis"
-          items={resource.careTeam.map((item: any) => (
+          items={resource.diagnosis.map((item: any) => (
             <TimelineDetailsCardItem
               label={item.diagnosisCodeableConcept?.coding[0]?.display || ""}
               value={item.diagnosisCodeableConcept?.coding[0]?.code || ""}

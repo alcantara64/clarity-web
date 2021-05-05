@@ -6,9 +6,9 @@ import TimelineDetailsCardDropdown from "../TimelineDetailsCardDropdown";
 import TimelineDetailsCardItem from "../TimelineDetailsCardItem";
 import "./index.less";
 
-const ConidtionsTimelineCardItem = ({ resource }: any) => {
+const ObservationsTimelineCard = ({ resource }: any) => {
   return (
-    <div id="conditions-timeline-card">
+    <div id="observations-timeline-card">
       {!!resource.identifier?.length && (
         <TimelineDetailsCardDropdown
           header="Identifiers"
@@ -17,10 +17,12 @@ const ConidtionsTimelineCardItem = ({ resource }: any) => {
           ))}
         />
       )}
+
       {resource.clinicalStatus &&
         resource.clinicalStatus.coding &&
         resource.clinicalStatus.coding.length &&
-        resource.clinicalStatus.coding[0].display && (
+        (resource.clinicalStatus.coding[0].display ||
+          resource.clinicalStatus.coding[0].code) && (
           <TimelineDetailsCardItem
             label="Clinical Status"
             value={
@@ -33,29 +35,26 @@ const ConidtionsTimelineCardItem = ({ resource }: any) => {
         <TimelineDetailsCardItem label="Type" value={resource.type} />
       )}
 
-      {!!resource.category?.length && (
-        <TimelineDetailsCardDropdown
-          header="Category"
-          items={resource.category
-            .filter(
-              (item: any) =>
-                item.coding && item.coding.length && item.coding[0].display
-            )
-            ?.map((x: any) => (
-              <TimelineDetailsCardItem
-                label="Value"
-                value={x.coding[0].display}
-              />
-            ))}
-        />
-      )}
-
       {resource.criticality && (
         <TimelineDetailsCardItem
           label="CRITICALITY"
           value={`${resource.criticality}`}
         />
       )}
+
+      {resource.status && resource.status.length > 0 && (
+        <TimelineDetailsCardItem label="STATUS" value={`${resource.status}`} />
+      )}
+
+      {resource.category &&
+        resource.category?.length > 0 &&
+        resource.category[0] &&
+        resource.category[0].coding[0] && (
+          <TimelineDetailsCardItem
+            label="CATEGORY"
+            value={`${resource.category[0].coding[0].code}`}
+          />
+        )}
 
       {resource.code?.coding &&
         resource.code?.coding.length &&
@@ -65,6 +64,15 @@ const ConidtionsTimelineCardItem = ({ resource }: any) => {
             value={`${resource.code?.coding[0].display}`}
           />
         )}
+
+      {resource.effectiveDateTime && (
+        <TimelineDetailsCardItem
+          label="EFFECTIVE"
+          value={formatDatePeriod(
+            `${new Date(resource.effectiveDateTime).toDateString()}`
+          )}
+        />
+      )}
 
       {!!resource.encounter?.length && (
         <TimelineDetailsCardDropdown
@@ -144,4 +152,4 @@ const ConidtionsTimelineCardItem = ({ resource }: any) => {
   );
 };
 
-export default ConidtionsTimelineCardItem;
+export default ObservationsTimelineCard;

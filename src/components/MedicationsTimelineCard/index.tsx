@@ -6,9 +6,9 @@ import TimelineDetailsCardDropdown from "../TimelineDetailsCardDropdown";
 import TimelineDetailsCardItem from "../TimelineDetailsCardItem";
 import "./index.less";
 
-const ConidtionsTimelineCardItem = ({ resource }: any) => {
+const MedicationsTimelineCard = ({ resource }: any) => {
   return (
-    <div id="conditions-timeline-card">
+    <div id="medications-timeline-card">
       {!!resource.identifier?.length && (
         <TimelineDetailsCardDropdown
           header="Identifiers"
@@ -17,43 +17,61 @@ const ConidtionsTimelineCardItem = ({ resource }: any) => {
           ))}
         />
       )}
-      {resource.clinicalStatus &&
-        resource.clinicalStatus.coding &&
-        resource.clinicalStatus.coding.length &&
-        resource.clinicalStatus.coding[0].display && (
+
+      {resource.status && (
+        <TimelineDetailsCardItem label="STATUS" value={resource.status} />
+      )}
+      {resource.intent && (
+        <TimelineDetailsCardItem label="INTENT" value={resource.intent} />
+      )}
+      {resource.medicationCodeableConcept?.coding &&
+        resource.medicationCodeableConcept?.coding.length &&
+        resource.medicationCodeableConcept?.coding[0].display && (
           <TimelineDetailsCardItem
-            label="Clinical Status"
-            value={
-              resource.clinicalStatus.coding[0].display ||
-              resource.clinicalStatus.coding[0].code
-            }
+            label="CODEABLECONCENPT "
+            value={`${resource.medicationCodeableConcept?.coding[0].display}`}
           />
         )}
-      {resource.type && resource.type && (
-        <TimelineDetailsCardItem label="Type" value={resource.type} />
+
+      {resource.requester && resource.requester.display && (
+        <TimelineDetailsCardItem
+          label="REQUESTER"
+          value={`${resource.requester.display}`}
+        />
+      )}
+      {resource.authoredOn && (
+        <TimelineDetailsCardItem
+          label="AUTHORED ON"
+          value={formatDatePeriod(resource.authoredOn)}
+        />
+      )}
+      {resource.recorded && (
+        <TimelineDetailsCardItem
+          label="RECORDED"
+          value={formatDatePeriod(resource.recorded)}
+        />
+      )}
+      {resource.route?.coding &&
+        resource.route?.coding.length &&
+        resource.route?.coding[0].display && (
+          <TimelineDetailsCardItem
+            label="ROUTE"
+            value={`${resource.route?.coding[0].display}`}
+          />
+        )}
+      {resource.primarySource && (
+        <TimelineDetailsCardItem
+          label="PRIMARY SOURCE"
+          value={`${resource.primarySource}`}
+        />
       )}
 
       {!!resource.category?.length && (
         <TimelineDetailsCardDropdown
           header="Category"
-          items={resource.category
-            .filter(
-              (item: any) =>
-                item.coding && item.coding.length && item.coding[0].display
-            )
-            ?.map((x: any) => (
-              <TimelineDetailsCardItem
-                label="Value"
-                value={x.coding[0].display}
-              />
-            ))}
-        />
-      )}
-
-      {resource.criticality && (
-        <TimelineDetailsCardItem
-          label="CRITICALITY"
-          value={`${resource.criticality}`}
+          items={resource.category.map((item: any) => (
+            <TimelineDetailsCardItem label="Value" value={item} />
+          ))}
         />
       )}
 
@@ -144,4 +162,4 @@ const ConidtionsTimelineCardItem = ({ resource }: any) => {
   );
 };
 
-export default ConidtionsTimelineCardItem;
+export default MedicationsTimelineCard;
