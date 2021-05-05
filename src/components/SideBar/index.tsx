@@ -89,10 +89,8 @@ const AppSideBar = ({ onSidebartoggle }: any) => {
 
         <SideNav.Nav defaultSelected={`${ROUTES.healthData}`}>
           <NavItem
-            navitemClassName={`nav-item ${isActiveRouteClass(
-              ROUTES.healthData
-            )}`}
-            eventKey={`${ROUTES.healthData}`}
+            navitemClassName={`nav-item ${isActiveRouteClass(ROUTES.timeLine)}`}
+            eventKey={`${ROUTES.timeLine}`}
           >
             <NavIcon>
               <img src={healthDataIcon} />

@@ -35,6 +35,7 @@ const OauthPage = () => {
         const { is_connected } = defaultPayer;
 
         if (is_connected) {
+          setGettingPayer(false);
           history?.push(`${ROUTES.timeLine}`);
         } else {
           if (location?.search) {
@@ -54,13 +55,16 @@ const OauthPage = () => {
               .catch((ex) => {});
 
             if (resp.kind == "ok") {
+              setGettingPayer(false);
               history?.push(`${ROUTES.timeLine}`);
             }
+          } else {
+            setGettingPayer(false);
           }
         }
+      } else {
+        setGettingPayer(false);
       }
-
-      setGettingPayer(false);
     })();
   }, []);
 

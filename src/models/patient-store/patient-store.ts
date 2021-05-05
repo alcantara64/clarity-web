@@ -6,7 +6,6 @@ import { withEnvironment } from "./../extensions/with-environment";
 import { Instance, SnapshotOut, types, flow, getRoot } from "mobx-state-tree";
 import NotificationService from "../../services/NotificationService";
 import { withRootStore } from "../extensions/with-root-store";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 const PatientModel = types.model("PatientModel").props({
   is_connected: types.maybe(types.boolean),

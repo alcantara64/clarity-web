@@ -20,6 +20,7 @@ import SecondaryButton from "../../components/SecondaryButton";
 import Button from "../../components/Button";
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
+import ClaimsTimelineCard from "../../components/ClaimsTimelineCard";
 const TimelineDetails = () => {
   const history = useHistory();
 
@@ -70,7 +71,7 @@ const TimelineDetails = () => {
         scrollable
         className="view-data-modal"
       >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className="header">
           <Modal.Title className="header-title">Raw JSON Output</Modal.Title>
         </Modal.Header>
         <Modal.Body className="modal-body">
@@ -78,6 +79,15 @@ const TimelineDetails = () => {
         </Modal.Body>
       </Modal>
     );
+  };
+
+  const renderDetailsContent = (resource: any) => {
+    const { resourceType } = resource;
+
+    if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.claims) {
+      return <ClaimsTimelineCard resource={resource} />;
+    }
+    return null;
   };
 
   return (
@@ -118,6 +128,7 @@ const TimelineDetails = () => {
           className="header-logo"
         />
       </div>
+      <div className="details-content">{renderDetailsContent(resource)}</div>
     </div>
   );
 };

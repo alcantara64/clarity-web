@@ -98,3 +98,5 @@ export const TimelineResources = [
     screen: "DocumentReferenceScreen",
   },
 ];
+
+export const TimelineDateFormat = "D MMM, YYYY";

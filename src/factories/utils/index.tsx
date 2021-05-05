@@ -79,3 +79,24 @@ export const getNameAlias = (name: string) => {
 export const getTimelineNameResource = (resourceName: string) => {
   return TimelineResources?.find((x) => x.resource == resourceName)?.name;
 };
+
+export const formatDatePeriod = (
+  startDate = "",
+  endDate = "",
+  dateTime = ""
+) => {
+  const format = dateTime ? "D MMM, YYYY, h:mm a" : "D MMM, YYYY";
+
+  if (startDate && endDate)
+    return `${moment(new Date(startDate)).format(format)} - ${moment(
+      new Date(endDate)
+    ).format(format)}}`;
+
+  if (startDate && !endDate)
+    return `${moment(new Date(startDate)).format(format)}`;
+
+  if (!startDate && endDate)
+    return `${moment(new Date(endDate)).format(format)}`;
+
+  return "-";
+};
