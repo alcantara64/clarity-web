@@ -30,5 +30,20 @@
     color: @greenPrimary;
     background-color: transparent;
     border: 0;
+
+    &:active,
+    &:focus {
+      background-color: transparent !important;
+      border: 0;
+      color: @greenPrimary !important;
+      box-shadow: none;
+    }
+  }
+
+  .control-label:focus-visible {
+    background-color: transparent !important;
+    border: 0 !important;
+    color: @greenPrimary !important;
+    box-shadow: none;
   }
 }
