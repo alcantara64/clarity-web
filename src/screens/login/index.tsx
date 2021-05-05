@@ -53,6 +53,7 @@ const Login = () => {
       password: data.password,
       device_type: "android", // temp solution
       device_id: "web", // temp solution
+      platform:'web',
     };
 
     const resp = await authStore.userLogin(payload).catch((ex) => {});
