@@ -23,6 +23,8 @@ import { Modal } from "react-bootstrap";
 import ClaimsTimelineCard from "../../components/ClaimsTimelineCard";
 import ProceduresTimelineCard from "../../components/ProceduresTimelineCard";
 import AllergyTimelineCard from "../../components/AlergyTimelineCard";
+import ConidtionsTimelineCardItem from "../../components/ConditionsTimelineCard";
+import ImmunizationsCardItem from "../../components/ImmunizationTimelineCard";
 const TimelineDetails = () => {
   const history = useHistory();
 
@@ -95,6 +97,14 @@ const TimelineDetails = () => {
     }
     if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.procedure) {
       return <ProceduresTimelineCard resource={resource} />;
+    }
+
+    if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.immunization) {
+      return <ImmunizationsCardItem resource={resource} />;
+    }
+
+    if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.condition) {
+      return <ConidtionsTimelineCardItem resource={resource} />;
     }
     return null;
   };
