@@ -80,7 +80,7 @@ stages:
       pool:
         vmImage: 'ubuntu-latest'
       variables:
-        - group: Clarity-Liteweb-BuildandValidation-TEST
+        - group: Carefirst-Clarity-Liteweb-BuildandValidation-TEST
       steps:
           - task: DockerInstaller@0
             displayName: 'Install Docker 17.09.0-ce'
@@ -112,7 +112,7 @@ stages:
       variables:
       - name: image_tag
         value: '$(CUSTOMERWEB)-$(environment)-$(Build.BuildNumber)'  
-      - group: Clarity-Liteweb-BuildandValidation-TEST
+      - group: Carefirst-Clarity-Liteweb-BuildandValidation-TEST
       strategy:
        runOnce:
          deploy:          
@@ -139,8 +139,8 @@ stages:
               - task: HelmDeploy@0
                 inputs:
                   connectionType: 'Kubernetes Service Connection'
-                  kubernetesServiceConnection: 'Clarity-Lite-EastUS-TEST-AKS-APP'      #update aks service connection
-                  command: 'upgrade'
+                  kubernetesServiceConnection: 'Carefirst-Clarity-EastUS-TEST-AKS-APP'      #update aks service connection
+                  command: 'install'
                   chartType: 'FilePath'
                   chartPath: '$(System.DefaultWorkingDirectory)/helm'
                   releaseName: '$(CUSTOMERWEB)'
