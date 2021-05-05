@@ -21,6 +21,8 @@ import Button from "../../components/Button";
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
 import ClaimsTimelineCard from "../../components/ClaimsTimelineCard";
+import ProceduresTimelineCard from "../../components/ProceduresTimelineCard";
+import AllergyTimelineCard from "../../components/AlergyTimelineCard";
 const TimelineDetails = () => {
   const history = useHistory();
 
@@ -86,6 +88,13 @@ const TimelineDetails = () => {
 
     if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.claims) {
       return <ClaimsTimelineCard resource={resource} />;
+    }
+
+    if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.allergy) {
+      return <AllergyTimelineCard resource={resource} />;
+    }
+    if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.procedure) {
+      return <ProceduresTimelineCard resource={resource} />;
     }
     return null;
   };
