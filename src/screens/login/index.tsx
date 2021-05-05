@@ -51,6 +51,7 @@ const Login = () => {
     const payload = {
       email: data.email,
       password: data.password,
+      isLite: true,
       device_type: "android", // temp solution
       device_id: "web", // temp solution
       platform:'web',
