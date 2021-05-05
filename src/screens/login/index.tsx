@@ -9,10 +9,18 @@ import FormPasswordInput from "../../components/FormPasswordInput";
 import Button from "../../components/Button";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 import "./index.less";
 import { useStores } from "../../models";
 import Loading from "../../components/Loading";
+
+interface IFormInputs {
+  email: string;
+  password: string;
+}
 
 const Login = () => {
   const location = useLocation();
@@ -23,25 +31,26 @@ const Login = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const loginFormSchema = yup.object().shape({
+    email: yup.string().email().required(),
+    password: yup.string().required(),
+  });
 
-  const onEmailChange = (e: any) => {
-    setEmail(e.target.value);
-  };
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<IFormInputs>({
+    resolver: yupResolver(loginFormSchema),
+    mode: "onChange",
+  });
 
-  const onPasswordChange = (e: any) => {
-    setPassword(e.target.value);
-  };
-
-  const submit = async (event: any) => {
-    event.preventDefault();
-
+  const onSubmit = async (data: IFormInputs) => {
     setIsLoading(true);
 
     const payload = {
-      email,
-      password,
+      email: data.email,
+      password: data.password,
       device_type: "android", // temp solution
       device_id: "web", // temp solution
     };
@@ -69,23 +78,41 @@ const Login = () => {
 
         <div className="login-form-container">
           <h4 className="title">Login to Clarity</h4>
-          <Form onSubmit={(e) => submit(e)}>
+          <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group className="form-group" controlId="formBasicEmail">
               <FormLabel>Email address</FormLabel>
-              <FormInput
-                type="email"
-                placeholder="Enter email"
-                onChange={onEmailChange}
+              <Controller
+                name="email"
+                control={control}
+                defaultValue=""
+                render={({ field: { ref, ...rest }, fieldState }) => (
+                  <FormInput
+                    type="email"
+                    placeholder="Enter email"
+                    {...rest}
+                    {...fieldState}
+                  />
+                )}
               />
+              <span className="error-text">{errors.email?.message}</span>
             </Form.Group>
 
             <Form.Group className="form-group" controlId="formBasicPassword">
               <FormLabel>Password</FormLabel>
-              <FormPasswordInput
-                type="password"
-                placeholder="Password"
-                onChange={onPasswordChange}
+              <Controller
+                name="password"
+                control={control}
+                defaultValue=""
+                render={({ field: { ref, ...rest }, fieldState }) => (
+                  <FormPasswordInput
+                    type="password"
+                    placeholder="Password"
+                    {...rest}
+                    {...fieldState}
+                  />
+                )}
               />
+              <span className="error-text">{errors.password?.message}</span>
             </Form.Group>
 
             <Button label="Login" variant="primary" type="submit" />

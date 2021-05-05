@@ -44,7 +44,7 @@ const SignUpPage = () => {
     formState: { errors },
   } = useForm<IFormInputs>({
     resolver: yupResolver(signUpFormSchema),
-    mode: "onBlur",
+    mode: "onChange",
   });
 
   const { userStore } = useStores();
