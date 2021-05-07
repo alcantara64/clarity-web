@@ -30,6 +30,7 @@ import PrescriptionsTimelineCard from "../../components/PrescriptionsTimelineCar
 import ObservationsTimelineCard from "../../components/ObservationsTimelineCard";
 import CarePlanTimelineCard from "../../components/CardPlanTimelineCard";
 import DiagnosticReportTimelineCard from "../../components/DiagnosticReportTimelineCard";
+import JSONTree from 'react-json-tree'
 const TimelineDetails = () => {
   const history = useHistory();
 
@@ -84,7 +85,19 @@ const TimelineDetails = () => {
           <Modal.Title className="header-title">Raw JSON Output</Modal.Title>
         </Modal.Header>
         <Modal.Body className="modal-body">
-          <div className="body-content">{content}</div>
+          <div className="body-content">
+          <JSONTree data={content}                  
+           theme={{
+                    extend: "monokai",
+                    tree: {
+                      backgroundColor: '#F3F6F9',
+                    },
+                    valueText: {
+                      flex: 1,
+                      flexWrap: 'wrap',
+                    },
+                  }}></JSONTree>
+          </div>
         </Modal.Body>
       </Modal>
     );
@@ -139,7 +152,7 @@ const TimelineDetails = () => {
       {
         <RawDataView
           show={showRawData}
-          content={resource && JSON.stringify(resource)}
+          content={resource}
           handleClose={() => {
             setShowRawData(false);
           }}

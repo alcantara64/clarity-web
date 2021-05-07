@@ -82,6 +82,7 @@ const SignUpPage = () => {
       device_type: "web", // temp solution
       device_id: "web", // temp solution
       regCode: "46677757",
+      platform:'web',
     };
 
     const resp = await userStore.userSignUp(payload).catch((ex) => {});
