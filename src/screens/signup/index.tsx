@@ -31,10 +31,13 @@ const signUpFormSchema = yup.object().shape({
   firstName: yup.string().required(),
   lastName: yup.string().required(),
   email: yup.string().email().required(),
-  password: yup.string().required().matches(
-    /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-    "Password must contain at least 8 characters, one uppercase, one number and one special case character"
-  ),
+  password: yup
+    .string()
+    .required()
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+      "Password must contain minimum eight characters, at least one uppercase letter, one lowercase letter and one number"
+    ),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match"),
@@ -51,7 +54,7 @@ const SignUpPage = () => {
     register,
     handleSubmit,
     control,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isValid },
   } = useForm<IFormInputs>({
     resolver: yupResolver(signUpFormSchema),
     mode: "onChange",
@@ -274,12 +277,13 @@ const SignUpPage = () => {
                         label={
                           <span className="terms">
                             I have read and agreed to the{" "}
-                            <Link
+                            <a
                               className="privacy"
-                              to={`${ROUTES.signUpPage}`}
+                              href={`https://mycareapi-test.mycareai.com/api/v1/privacy_policy`}
+                              target="_blank"
                             >
                               Terms & Privacy Policy
-                            </Link>
+                            </a>
                           </span>
                         }
                       />
@@ -292,7 +296,7 @@ const SignUpPage = () => {
                   variant="primary"
                   type="submit"
                   className="create-account-button"
-                  disabled={isDirty && !isValid}
+                  disabled={!isValid}
                 />
                 <div className="have-account">
                   Already have an account?{" "}

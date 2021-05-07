@@ -20,3 +20,53 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.form-check-label {
+  padding-top: 5px;
+}
+.form-check {
+  display: inline-flex;
+  cursor: pointer;
+  position: relative;
+}
+
+.form-check > span {
+  color: #34495e;
+  padding: 0.5rem 0.25rem;
+}
+
+.form-check > input {
+  height: 25px;
+  width: 25px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border: 1px solid #34495e;
+  border-radius: 4px;
+  outline: none;
+  transition-duration: 0.3s;
+  background-color: @white;
+  cursor: pointer;
+}
+
+.form-check > input:checked {
+  border: 1px solid #41b883;
+  // background-color: #34495e;
+}
+
+.form-check > input:checked::before {
+  content: "\2713";
+  display: block;
+  text-align: center;
+  color: @white;
+  position: absolute;
+  background-color: @white;
+  // left: 0.7rem;
+  width: 100%;
+  // top: 0.2rem;
+}
+
+.form-check > input:active {
+  border: 2px solid #34495e;
+}
