@@ -13,7 +13,6 @@ const OauthStep1 = ({ onConnect = () => {} }) => {
     <div id="oauth-step-1">
       <img src={oauthStep1} alt="oauth step1" className="logo" />
       <p className="glad-text">We’re glad you’re here,</p>
-      <p className="todo-text">What would you like to do first?</p>
 
       <div>
         <img src={todoHand} alt="logo-hand" className="logo-hand" />{" "}

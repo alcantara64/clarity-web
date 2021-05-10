@@ -39,7 +39,7 @@ const Login = () => {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<IFormInputs>({
     resolver: yupResolver(loginFormSchema),
     mode: "onChange",
@@ -117,7 +117,12 @@ const Login = () => {
               <span className="error-text">{errors.password?.message}</span>
             </Form.Group>
 
-            <Button label="Login" variant="primary" type="submit" />
+            <Button
+              label="Login"
+              variant="primary"
+              type="submit"
+              disabled={!isValid}
+            />
 
             <div className="footer">
               Don’t have an account?{" "}

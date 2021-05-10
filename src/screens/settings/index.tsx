@@ -32,7 +32,7 @@ const SettingsPage = () => {
   const AboutUs = () => {
     return (
       <div className="about-us-container ">
-        <h2 className="header-title">About myCareAI</h2>
+        <h2 className="header-title">About Clarity</h2>
 
         <div className="logo-container">
           <img src={appLogo} />
@@ -40,9 +40,9 @@ const SettingsPage = () => {
         </div>
 
         <div className="description-container">
-          MyCareAI is a standards-based, consumer-controlled health data
+          Clarity is a standards-based, consumer-controlled health data
           convergence hub that seamlessly and securely connects patient,
-          provider, and payer. Consumers empowered with the myCareAI app for
+          provider, and payer. Consumers empowered with the claity app for
           smartphones can access and share all their most complete, up-to-date
           healthcare records with their doctors and trusted partners. Building
           on the rights of consumers to access and aggregate their healthcare
@@ -50,7 +50,7 @@ const SettingsPage = () => {
           promise of value-based payment: Better health outcomes provided at a
           lower cost.{" "}
           <a href="#" className="visit-link">
-            Visit myCare website
+            Visit clarity website
           </a>
         </div>
 
@@ -93,7 +93,7 @@ const SettingsPage = () => {
         <Row className="settings-content">
           <Col md={4}>
             <OptionItem
-              name="About myCareAI"
+              name="About Clarity"
               selected={selectedItem == 0}
               onClick={() => {
                 setSelectedItem(0);
@@ -129,7 +129,7 @@ const SettingsPage = () => {
                   selectedItem == 0
                 )}`}
               >
-                <span className="title">About myCareAI</span>
+                <span className="title">About Clarity</span>
                 <div className="icon-container">
                   {(selectedItem == 0 && (
                     <FontAwesomeIcon icon={faAngleDown} className="icon-down" />

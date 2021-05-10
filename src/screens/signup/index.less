@@ -3,8 +3,8 @@
 
 #signup-page {
   width: 90%;
-  padding-top: 80px;
-  padding-bottom: 20px;
+  padding-top: 30px;
+  padding-bottom: 10px;
   background-color: @black6;
   width: 100%;
   padding-left: 30px;
@@ -24,11 +24,11 @@
     }
 
     .signup-form-container {
-      padding: 32px 48px;
+      padding: 10px 48px;
       background-color: @white;
       box-shadow: 0px 10px 50px rgba(1, 83, 85, 0.05);
       border-radius: 20px;
-      margin-top: 30px;
+      margin-top: 10px;
       .form-group {
         margin-bottom: 24px;
       }
@@ -102,6 +102,16 @@
         margin-top: 32px;
       }
     }
+  }
+
+  .form-check-input:before {
+    background-color: green;
+  }
+
+  .custom-checkbox
+    .custom-control-input:checked
+    ~ .custom-control-label::before {
+    background-color: black;
   }
 
   @media only screen and (max-width: 600px) {
