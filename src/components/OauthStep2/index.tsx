@@ -7,8 +7,8 @@ import "./index.less";
 import Button from "../Button";
 
 const OauthStep2 = ({ onBackClick = () => {}, onContinueClick = () => {} }) => {
-  return (
-    <div id="oauth-step-2">
+  const APP_NAMe = process.env.REACT_APP_NAME;
+ return ( <div id="oauth-step-2">
       <SecondaryButton
         label="Back"
         className="back-button"
@@ -19,7 +19,7 @@ const OauthStep2 = ({ onBackClick = () => {}, onContinueClick = () => {} }) => {
       <div className="header-container ">
         <img src={padLock} />
         <div className="d-inline-block header-right-container">
-          <h5 className="header-title">You are now leaving the myCareAl app</h5>
+          <h5 className="header-title">You are now leaving the {APP_NAMe} app</h5>
           <p className="header-title-sub">
             You’ll return back to the app after connection
           </p>
@@ -34,14 +34,14 @@ const OauthStep2 = ({ onBackClick = () => {}, onContinueClick = () => {} }) => {
         </p>
 
         <p>
-          NOTE: You must have an account with the healh plans/ provider member
+          NOTE: You must have an account with the health plans/ provider member
           portal you intend to connect to
         </p>
 
-        <p>3. Allow your health plans to share information with myCareAI.</p>
+        <p>3. Allow your health plans to share information with {APP_NAMe}.</p>
 
         <p>
-          4. Sign in to the myCareAI app again with your myCareAI account email
+          4. Sign in to the {APP_NAMe} app again with your {APP_NAMe} account email
           and password.
         </p>
 
