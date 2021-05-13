@@ -55,6 +55,7 @@ const Login = () => {
       device_type: "android", // temp solution
       device_id: "web", // temp solution
       platform:'web',
+      tenantId: process.env.REACT_APP_TENANT_ID,
     };
 
     const resp = await authStore.userLogin(payload).catch((ex) => {});
