@@ -18,7 +18,7 @@ const ProtectedRoute = ({
 
   const {
     authStore: { token },
-    payerStore
+    payerStore,
   } = useStores();
 
   const defaultPayer = payerStore.defaultPayer();
@@ -27,17 +27,19 @@ const ProtectedRoute = ({
     <Route
       {...rest}
       render={(props) => {
-        console.log('location ==>', props.location.pathname === ROUTES.timeLine)
-        if (!token)
-          return (
-            <Redirect
-              to={{
-                pathname: ROUTES.loginPage,
-                state: { from: props.location },
-              }}
-            />
-          );
-        if (!defaultPayer?.is_connected && props.location.pathname === ROUTES.timeLine)
+        // if (!token)
+        //   return (
+        //     <Redirect
+        //       to={{
+        //         pathname: ROUTES.loginPage,
+        //         state: { from: props.location },
+        //       }}
+        //     />
+        //   );
+        if (
+          !defaultPayer?.is_connected &&
+          props.location.pathname === ROUTES.timeLine
+        )
           return (
             <Redirect
               to={{

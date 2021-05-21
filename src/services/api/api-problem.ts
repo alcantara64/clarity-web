@@ -2,6 +2,7 @@
 import * as storage from "../../factories/utils/storage";
 import { AxiosResponse } from "axios";
 import { ROUTES } from "../../constants/routes";
+import NotificationService from "../NotificationService";
 
 export type GeneralApiProblem =
   /**
@@ -19,7 +20,7 @@ export type GeneralApiProblem =
   /**
    * We're not allowed because we haven't identified ourself. This is 401.
    */
-  | { kind: "unauthorized"; data: null }
+  | { kind: "unauthorized"; data: {} }
   /**
    * We don't have access to perform that request. This is 403.
    */
@@ -60,8 +61,15 @@ export function getGeneralApiProblem(
       return { kind: "bad-data", data: response.data };
     case 401:
       window.localStorage.clear();
-      window.location.href = ROUTES.loginPage;
-      return { kind: "unauthorized", data: response.data };
+      // window.location.href = ROUTES.loginPage;
+      // NotificationService.show(
+      //   "Your login session has expired, please login again",
+      //   "error"
+      // );
+      return {
+        kind: "unauthorized",
+        data: { data: "Your login session has expired, please login again" },
+      };
     case 403:
       return { kind: "forbidden", data: response.data };
     case 404:

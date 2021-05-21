@@ -49,7 +49,11 @@ const SettingsPage = () => {
           data, all the stakeholders in the healthcare system can realize the
           promise of value-based payment: Better health outcomes provided at a
           lower cost.{" "}
-          <a href="#" className="visit-link">
+          <a
+            href="https://www.onyxhealth.io/clarity/"
+            target="_blank"
+            className="visit-link"
+          >
             Visit clarity website
           </a>
         </div>
