@@ -83,6 +83,7 @@ const SignUpPage = () => {
       device_id: "web", // temp solution
       regCode: "46677757",
       platform: "web",
+      tenantId: process.env.REACT_APP_TENANT_ID,
     };
 
     const resp = await userStore.userSignUp(payload).catch((ex) => {});

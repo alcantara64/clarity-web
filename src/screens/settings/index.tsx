@@ -30,19 +30,20 @@ const SettingsPage = () => {
   };
 
   const AboutUs = () => {
+    const APP_NAMe = process.env.REACT_APP_NAME;
     return (
       <div className="about-us-container ">
-        <h2 className="header-title">About Clarity</h2>
+        <h2 className="header-title">About {APP_NAMe}</h2>
 
         <div className="logo-container">
           <img src={appLogo} />
-          <span className="title">Clarity</span>
+          <span className="title">{APP_NAMe}</span>
         </div>
 
         <div className="description-container">
-          Clarity is a standards-based, consumer-controlled health data
+          {APP_NAMe} is a standards-based, consumer-controlled health data
           convergence hub that seamlessly and securely connects patient,
-          provider, and payer. Consumers empowered with the claity app for
+          provider, and payer. Consumers empowered with the {APP_NAMe} app for
           smartphones can access and share all their most complete, up-to-date
           healthcare records with their doctors and trusted partners. Building
           on the rights of consumers to access and aggregate their healthcare
@@ -54,7 +55,7 @@ const SettingsPage = () => {
             target="_blank"
             className="visit-link"
           >
-            Visit clarity website
+            Visit {APP_NAMe} website
           </a>
         </div>
 
@@ -90,14 +91,14 @@ const SettingsPage = () => {
 
     return optionItemClass;
   };
-
+  const APP_NAMe = process.env.REACT_APP_NAME;
   return (
     <div id="settings-page">
       <BrowserView>
         <Row className="settings-content">
           <Col md={4}>
             <OptionItem
-              name="About Clarity"
+              name={"About" + APP_NAMe}
               selected={selectedItem == 0}
               onClick={() => {
                 setSelectedItem(0);

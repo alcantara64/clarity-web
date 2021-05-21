@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: __CUSTOMERWEB__
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: __CUSTOMERWEB__
+  template:
+    metadata:
+      labels:
+        app: __CUSTOMERWEB__
+    spec:
+      containers:
+      - name: __CUSTOMERWEB__
+        image: __ACR_DOMAIN__/__acrrepo__:{{ .Values.image_tag }}
+        resources:
+          requests:
+            cpu: 100m
+            memory: 1Gi
+          limits:
+            cpu: 250m
+            memory: 1Gi
+        ports:
+        - containerPort: 3000
+      imagePullSecrets:
+      - name: regcred1
