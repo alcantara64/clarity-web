@@ -61,7 +61,7 @@ export function getGeneralApiProblem(
       return { kind: "bad-data", data: response.data };
     case 401:
       window.localStorage.clear();
-      // window.location.href = ROUTES.loginPage;
+      window.location.href = ROUTES.loginPage;
       // NotificationService.show(
       //   "Your login session has expired, please login again",
       //   "error"

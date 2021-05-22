@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 
-import React from "react";
+import React, { useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -10,6 +10,19 @@ import { rootStore, RootStoreProvider } from "./models";
 import { ToastContainer } from "react-toastify";
 
 function App() {
+
+
+
+  setTimeout(function () {
+    document.documentElement.style.setProperty("--greenPrimary", "red");
+
+    console.log("colored changed");
+  }, 5000);
+
+
+ 
+
+ 
   return (
     <Router>
       <RootStoreProvider value={rootStore}>
