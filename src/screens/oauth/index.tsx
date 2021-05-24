@@ -29,7 +29,7 @@ const OauthPage = () => {
 
       const defaultPayer = payerStore.defaultPayer();
 
-      console.log(defaultPayer);
+      console.log('default payer',!defaultPayer);
 
       if (defaultPayer) {
         const { is_connected } = defaultPayer;
@@ -87,6 +87,7 @@ const OauthPage = () => {
       {!isLoading && oauthStep == 0 && (
         <div className="oauth-step1-container">
           <OauthStep1
+            noDefaultPayer={!payerStore.defaultPayer()}
             onConnect={() => {
               setOauthStep(1);
             }}
