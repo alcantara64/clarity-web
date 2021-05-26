@@ -6,7 +6,7 @@ import * as storage from "../../factories/utils/storage";
 /**
  * The key we'll be saving our state as within async storage.
  */
-const ROOT_STATE_STORAGE_KEY = "Traferium";
+const ROOT_STATE_STORAGE_KEY = "clarity";
 
 /**
  * Setup the environment that all the models will be sharing.
