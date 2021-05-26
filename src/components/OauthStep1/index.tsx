@@ -8,7 +8,7 @@ import Button from "../Button";
 
 import "./index.less";
 
-const OauthStep1 = ({ onConnect = () => {} }) => {
+const OauthStep1 = ({ onConnect = () => {}, noDefaultPayer= false, }) => {
   return (
     <div id="oauth-step-1">
       <img src={oauthStep1} alt="oauth step1" className="logo" />
@@ -25,6 +25,7 @@ const OauthStep1 = ({ onConnect = () => {} }) => {
         label="Connect"
         className="connect-button"
         Icon={<img src={connectIcon} alt="connect icon" />}
+        disabled={noDefaultPayer}
         onClick={(event: any) => {
           event.stopPropagation();
           onConnect();
