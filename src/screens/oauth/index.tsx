@@ -10,7 +10,7 @@ import { ROUTES } from "../../constants/routes";
 import queryString from "query-string";
 
 const OauthPage = () => {
-  const { payerStore } = useStores();
+  const { payerStore, notificationStore } = useStores();
 
   const [gettingPayer, setGettingPayer] = useState(true);
 
@@ -21,6 +21,13 @@ const OauthPage = () => {
   const history = useHistory();
 
   const location = useLocation();
+
+  useEffect(() =>{
+    ( async ()=>{
+     await notificationStore.getNotifications().catch((error) => {console.log('notification error', error)})
+     console.log('user notifications', notificationStore.notifications)
+    })()
+    }, [])
 
   useEffect(() => {
     (async () => {

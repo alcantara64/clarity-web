@@ -10,7 +10,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 const PayerModel = types.model("PayerModel").props({
   is_connected: types.maybe(types.boolean),
-  _id: types.maybe(types.string),
+  _id: types.string,
   name: types.maybe(types.string),
   is_default: types.maybe(types.boolean),
   desc: types.maybe(types.string),
@@ -83,6 +83,31 @@ export const PayerStoreModel = types
         console.log(result);
         NotificationService.show(
          "Fetching Data failed" || result?.data?.message || result?.data,
+          "error"
+        );
+      }
+      return result;
+    }),
+    refreshUserToken: flow(function* (connectionId:any) {
+      const { authStore } = self.rootStore;
+
+      const payerService: PayerService = new PayerService();
+
+      const result = yield payerService.refreshToken(authStore.token, connectionId );
+
+      if (result && result.kind == "ok") {
+        if (result.data) {
+         // self.setPayers(result.data);
+         NotificationService.show(
+          result?.data?.message || result?.data,"success"
+        );
+        } else {
+          console.log(result);
+        }
+      } else {
+        console.log(result);
+        NotificationService.show(
+          result?.data?.message || result?.data || 'We could not refresh this token',
           "error"
         );
       }

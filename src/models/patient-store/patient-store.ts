@@ -1,10 +1,7 @@
 import { PatientService } from "./../../services/patient/patientService";
-import { AuthService } from "./../../services/authentication/authService";
-import { RootStoreModel } from "./../root-store/root-store";
 
 import { withEnvironment } from "./../extensions/with-environment";
-import { Instance, SnapshotOut, types, flow, getRoot } from "mobx-state-tree";
-import NotificationService from "../../services/NotificationService";
+import { Instance, SnapshotOut, types, flow } from "mobx-state-tree";
 import { withRootStore } from "../extensions/with-root-store";
 
 export const PatientStoreModel = types

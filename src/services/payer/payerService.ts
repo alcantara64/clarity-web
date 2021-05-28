@@ -54,4 +54,12 @@ export class PayerService {
       }
     );
   }
+  async refreshToken(token:string, connectionId:string){
+    const httpService: HttpService = new HttpService();
+    return await httpService.get(`/user/token_refresh/${connectionId}`,null,      {
+    headers: {
+      Authorization: `JWT ${token}`,
+    },
+  } )
+  }
 }

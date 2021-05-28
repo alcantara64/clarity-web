@@ -1,13 +1,15 @@
 import * as React from "react";
 
 import emptyResourceLogo from "../../images/empty-resource.png";
+import refreshIcon from "../../images/refreshicon.svg";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 import "./index.less";
+import Button from "../Button";
 
-const TimelineList = ({ data, itemClick = (item: any) => {} }: any) => {
+const TimelineList = ({ data, itemClick = (item: any) => {}, shouldRefreshToken, refreshToken, }: any,) => {
   const getItemDisplay = (entry: any) => {
     let resourceDate = "";
     if (
@@ -108,8 +110,20 @@ const TimelineList = ({ data, itemClick = (item: any) => {} }: any) => {
       </div>
     );
   };
+  const  RefreshTokenView = () => {
+    return (
+      <div id="timeline-list">
+        <div className="refresh-token-container">
+       <h5 className="refresh-token-text">It seems your token may have expired. Please try again</h5>
+        
+       <Button onClick={refreshToken} Icon={<img src={refreshIcon} alt="refresh icon" className="refresh-token-image" />} className="refresh-token-button" label="Refresh"/>
+       </div>
+      </div>
+    )
+  }
 
-  const TimelineItem = ({ item, onClick = () => {} }: any) => {
+
+  const TimelineItem = ({ item, onClick = () => {}, }: any) => {
     return (
       <div className="timeline-item" onClick={onClick}>
         <p className="timeline-date">{getItemDisplay(item)}</p>
@@ -125,7 +139,9 @@ const TimelineList = ({ data, itemClick = (item: any) => {} }: any) => {
       </div>
     );
   };
-
+  if(shouldRefreshToken){
+    return <RefreshTokenView />
+  }
   if (!data.length) {
     return <EmptyResourceView />;
   }

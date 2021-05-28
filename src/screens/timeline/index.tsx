@@ -28,31 +28,45 @@ import { getTimelineNameResource } from "../../factories/utils";
 import { observer } from "mobx-react-lite";
 
 const TimeLine = observer(() => {
-  const { patientStore, payerStore } = useStores();
+  const { patientStore, payerStore, notificationStore } = useStores();
 
   const { selectedResource } = patientStore;
 
   const [isLoading, setIsLoading] = useState(false);
+  const { notifications} = notificationStore;
 
   // const [currentResource, setCurrentResource] = useState(
   //   patientStore.selectedResource
   // );
 
   const [resourceData, setResourceData]: any = useState(null);
-
+  const [shouldRefreshToken, setShouldRefreshToken]: any = useState(false);
+  const [hasRefreshToken, setHasRefreshToken]: any = useState(false);
+  const defaultPayer = payerStore.defaultPayer();
   const history = useHistory();
   useEffect(() =>{
-    const defaultPayer = payerStore.defaultPayer();
+   
     if(!defaultPayer?.is_connected){
       history.push(ROUTES.oauth)
     }
   },[])
 
+  useEffect(() =>{
+    ( async ()=>{
+     await notificationStore.getNotifications().catch((error) => {console.log('notification error', error)})
+    })()
+    }, [shouldRefreshToken])
   useEffect(() => {
     (async () => {
       setIsLoading(true);
       const defaultPayer = payerStore.defaultPayer();
-
+     const payerNotification = notifications.find(x=>x.name === defaultPayer?.name);
+     if(payerNotification){
+       setShouldRefreshToken(true)
+       if(payerNotification.hasRefreshToken){
+       setHasRefreshToken(true)
+       }
+     }
       const resp = await patientStore
         .getFhirData(selectedResource, defaultPayer?._id)
         .catch(() => {});
@@ -65,8 +79,7 @@ const TimeLine = observer(() => {
 
       setIsLoading(false);
     })();
-  }, [patientStore.selectedResource]);
-
+  }, [patientStore.selectedResource, shouldRefreshToken]);
   const getResourceImage = (resourceName: string) => {
     if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.allergy) return alergyIcon;
     else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.carePlan)
@@ -122,6 +135,23 @@ const TimeLine = observer(() => {
       timelineData: item,
     });
   };
+  const performOauth = () => {
+    if (!defaultPayer) return;
+
+    window.open(defaultPayer?.oauth_url, "_self", "width=500,height=500");
+
+    setIsLoading(true);
+  };
+  const refreshToken = async () => {
+    const defaultPayer = payerStore.defaultPayer();
+    const resp = await payerStore
+    .refreshUserToken(defaultPayer?._id)
+  if(resp?.kind == "ok"){
+    setShouldRefreshToken(false)
+  }else{
+    performOauth()
+  }
+  }
 
   return (
     <div id="app-timeline">
@@ -147,8 +177,11 @@ const TimeLine = observer(() => {
         </h5>
 
         <TimelineList
+          shouldRefreshToken={shouldRefreshToken}
           data={resourceData?.entry || []}
           itemClick={onTimelineClick}
+          refreshToken= {refreshToken}
+          
         />
       </div>
     </div>
