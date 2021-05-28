@@ -10,19 +10,12 @@ import { rootStore, RootStoreProvider } from "./models";
 import { ToastContainer } from "react-toastify";
 
 function App() {
-
-
-
   setTimeout(function () {
     document.documentElement.style.setProperty("--greenPrimary", "red");
 
     console.log("colored changed");
   }, 5000);
 
-
- 
-
- 
   return (
     <Router>
       <RootStoreProvider value={rootStore}>
