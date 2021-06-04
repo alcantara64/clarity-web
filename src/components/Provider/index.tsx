@@ -14,10 +14,6 @@ const Provider = ({ name, isConnected, onClick = () => {} }: any) => {
         {isConnected ? "Connected" : "Connect"}{" "}
         <FontAwesomeIcon icon={faCheckCircle} className="icon" />
       </div>
-      <div className="status-container">
-        {isConnected ? "Connected" : "Connect"}{" "}
-        <FontAwesomeIcon icon={faCheckCircle} className="icon" />
-      </div>
     </div>
   );
 };
