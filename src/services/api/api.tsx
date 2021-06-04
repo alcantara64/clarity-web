@@ -1,9 +1,5 @@
 import { ApiConfig, DEFAULT_API_CONFIG } from "./api-config";
 import axios, { AxiosInstance } from "axios";
-import { getGeneralApiProblem, processErrorResponse } from "./api-problem";
-import { AxiosResponse } from "axios";
-import { Modal } from "react-bootstrap";
-import * as React from "react";
 
 export class Api {
   /**

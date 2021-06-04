@@ -1,14 +1,17 @@
 
 import  {Modal} from 'react-bootstrap';
 import Button from '../Button'
+import './index.less'
 function CustomModal(props:ModalProps) {
-    const { headerText, bodyText, size, } = props
+    const { headerText, bodyText, size, showModal, showSecondButton, leftButtonClassName, rightButtonClassName, primaryButtonText} = props
     return (
       <Modal
+       show ={showModal}
         {...props}
         size={size}
-        aria-labelledby="contained-modal-title-vcenter"
+        aria-labelledby="contained-modal-title-vc"
         centered
+        className="app-Modal"
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
@@ -19,8 +22,8 @@ function CustomModal(props:ModalProps) {
          {bodyText}
         </Modal.Body>
         <Modal.Footer >
-          <Button label="Close" onClick={props.onHide} />
-          <Button label="Save changes" onClick={props.oK} />
+          {showSecondButton && (<Button label="Close" className={leftButtonClassName} onClick={props.onHide} />)}
+          {(<Button label={primaryButtonText|| "Save Changes"} onClick={props.oK} className={rightButtonClassName}/>)}
         </Modal.Footer>
       </Modal>
     );
@@ -31,7 +34,13 @@ function CustomModal(props:ModalProps) {
       oK:any,
       headerText?:string,
       centered:true,
-      bodyText:string
+      bodyText:string,
+      showModal:boolean,
+      showSecondButton?:false,
+      leftButtonClassName?:string,
+      rightButtonClassName?:string
+      primaryButtonText?:string
+
 
   }
   export default CustomModal;

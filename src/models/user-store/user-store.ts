@@ -3,6 +3,7 @@ import { withRootStore } from "./../extensions/with-root-store";
 import { Instance, SnapshotOut, types, flow, getRoot } from "mobx-state-tree";
 import { withEnvironment } from "../extensions/with-environment";
 import NotificationService from "../../services/NotificationService";
+import { DATA_SOURCE } from "./../../enums/dataSource";
 
 const UserProfile = types.model("UserProfile").props({
   _id: types.maybe(types.string),
@@ -70,6 +71,31 @@ export const UserStoreModel = types
       if (result && result.kind == "ok") {
         if (result.data) {
           self.setUser(result.data);
+        } else {
+          console.log(result);
+        }
+      } else {
+        console.log(result);
+        NotificationService.show(
+          result?.data?.message || result?.data,
+          "error"
+        );
+      }
+      return result;
+    }),
+    disconnectFromDataSource: flow(function* (dataSourceId:string, type:DATA_SOURCE) {
+      const { authStore } = self.rootStore;
+
+      const userService: UserService = new UserService();
+
+      const result = yield userService.disconnectFromDataSource(authStore.token, dataSourceId, type);
+
+      if (result && result.kind == "ok") {
+        if (result.data) {
+          NotificationService.show(
+            result?.data?.message || result?.data,
+            "success"
+          );
         } else {
           console.log(result);
         }
