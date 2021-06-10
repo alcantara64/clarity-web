@@ -90,4 +90,25 @@ export class HttpService {
 
     return response;
   }
+  async delete(
+    url: string,
+    payload?: any,
+    options?: AxiosRequestConfig
+  ): Promise<ApiResponse> {
+    let response: ApiResponse;
+
+    try {
+      const result: any = await this.httpInstance?.delete(
+        `${url}`,
+        payload,
+      );
+      // console.log("newold "+result)
+
+      response = new ApiResponse("ok", result?.statusText, result?.data);
+    } catch (ex) {
+      response = processErrorResponse(ex);
+    }
+
+    return response;
+  }
 }
