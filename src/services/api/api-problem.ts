@@ -60,12 +60,16 @@ export function getGeneralApiProblem(
     case 400:
       return { kind: "bad-data", data: response.data };
     case 401:
-      window.localStorage.clear();
-      window.location.href = ROUTES.loginPage;
-      // NotificationService.show(
-      //   "Your login session has expired, please login again",
-      //   "error"
-      // );
+      NotificationService.show(
+        "Your login session has expired, please login again",
+        "error"
+      );
+
+      setTimeout(() => {
+        window.localStorage.clear();
+        window.location.href = ROUTES.loginPage;
+      }, 2500);
+
       return {
         kind: "unauthorized",
         data: { data: "Your login session has expired, please login again" },

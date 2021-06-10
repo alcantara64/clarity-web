@@ -19,11 +19,8 @@ const forgotPasswordFormStep3Schema = yup.object().shape({
   password: yup
     .string()
     .required()
-    .lowercase()
-    .uppercase()
-    .length(8)
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
       "Password must contain minimum eight characters, at least one uppercase letter, one lowercase letter and one number"
     ),
   confirmPassword: yup
