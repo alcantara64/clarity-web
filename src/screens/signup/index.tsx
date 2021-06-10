@@ -35,7 +35,7 @@ const signUpFormSchema = yup.object().shape({
     .string()
     .required()
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+      /((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,40})/,
       "Password must contain minimum eight characters, at least one uppercase letter, one lowercase letter and one number"
     ),
   confirmPassword: yup
