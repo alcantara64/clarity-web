@@ -41,7 +41,7 @@ const SettingsPage = () => {
         </div>
 
         <div className="description-container">
-         {APP_NAMe} is a standards-based, consumer-controlled health data
+          {APP_NAMe} is a standards-based, consumer-controlled health data
           convergence hub that seamlessly and securely connects patient,
           provider, and payer. Consumers empowered with the {APP_NAMe} app for
           smartphones can access and share all their most complete, up-to-date
@@ -50,7 +50,11 @@ const SettingsPage = () => {
           data, all the stakeholders in the healthcare system can realize the
           promise of value-based payment: Better health outcomes provided at a
           lower cost.{" "}
-          <a href="#" className="visit-link">
+          <a
+            href="https://www.onyxhealth.io/clarity/"
+            target="_blank"
+            className="visit-link"
+          >
             Visit {APP_NAMe} website
           </a>
         </div>
@@ -94,7 +98,7 @@ const SettingsPage = () => {
         <Row className="settings-content">
           <Col md={4}>
             <OptionItem
-              name={'About' + APP_NAMe}
+              name={"About" + APP_NAMe}
               selected={selectedItem == 0}
               onClick={() => {
                 setSelectedItem(0);

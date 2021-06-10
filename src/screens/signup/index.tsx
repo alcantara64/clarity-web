@@ -35,7 +35,7 @@ const signUpFormSchema = yup.object().shape({
     .string()
     .required()
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
       "Password must contain minimum eight characters, at least one uppercase letter, one lowercase letter and one number"
     ),
   confirmPassword: yup
@@ -82,7 +82,7 @@ const SignUpPage = () => {
       device_type: "web", // temp solution
       device_id: "web", // temp solution
       regCode: "46677757",
-      platform:'web',
+      platform: "web",
       tenantId: process.env.REACT_APP_TENANT_ID,
     };
 

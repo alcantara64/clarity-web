@@ -25,11 +25,15 @@
   .status-container {
     display: inline-block;
     .body1Text();
-    color: @activeGreen;
+    color: @notConnectedGreen;
 
     .icon {
       margin-left: 10px;
     }
+  }
+
+  .status-connected {
+    color: @activeGreen;
   }
   .disconnect {
     color: @failRed;

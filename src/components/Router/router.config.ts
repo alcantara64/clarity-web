@@ -30,6 +30,15 @@ export const userRouter = [
     showInMenu: false,
     exact: true,
   },
+  {
+    path: ROUTES.forgotPasswordPage,
+    name: "ForgotPassword",
+    title: "forgotPassword",
+    component: LoadableComponent(() => import("../../screens/forgotPassword")),
+    isLayout: false,
+    showInMenu: false,
+    exact: true,
+  },
 ];
 
 export const appRouters = [
