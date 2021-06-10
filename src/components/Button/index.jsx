@@ -5,7 +5,7 @@ import { Button as BSButton } from "react-bootstrap";
 import classNames from "classnames";
 
 const Button = ({
-  label,
+  label = null,
   Icon = null,
   type = null,
   className = "",

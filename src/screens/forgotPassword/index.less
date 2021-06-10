@@ -1,0 +1,53 @@
+@import "../../theme/variables.less";
+@import "../../theme/typography.less";
+
+#forgotPassword-page {
+  height: 100%;
+  .forgot-password-container {
+    width: 60%;
+    .logo-container {
+      text-align: center;
+    }
+
+    .header {
+      .h4Text();
+      color: @greenPrimary;
+      display: inline-block;
+      margin-left: 10px;
+      text-align: center;
+    }
+  }
+
+  .success-banner {
+    text-align: center;
+    margin-top: 20px;
+    .success-banner-content {
+      background-color: @white;
+      box-shadow: 0px 10px 50px rgba(1, 83, 85, 0.05);
+      border-radius: 20px;
+      padding-left: 80px;
+      padding-right: 80px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      text-align: center;
+
+      margin-left: auto;
+      margin-right: auto;
+
+      .message {
+        .h5Text();
+        margin-top: 30px;
+      }
+
+      .proceed-button {
+        margin-top: 32px;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    .forgot-password-container {
+      width: 90%;
+    }
+  }
+}

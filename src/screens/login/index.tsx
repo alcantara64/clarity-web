@@ -54,7 +54,7 @@ const Login = () => {
       isLite: true,
       device_type: "android", // temp solution
       device_id: "web", // temp solution
-      platform:'web',
+      platform: "web",
       tenantId: process.env.REACT_APP_TENANT_ID,
     };
 
@@ -124,6 +124,13 @@ const Login = () => {
               type="submit"
               disabled={!isValid}
             />
+
+            <Link
+              className="forgot-password"
+              to={`${ROUTES.forgotPasswordPage}`}
+            >
+              Forgot Password?
+            </Link>
 
             <div className="footer">
               Don’t have an account?{" "}

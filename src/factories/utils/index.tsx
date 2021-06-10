@@ -2,9 +2,11 @@ import * as React from "react";
 
 import { Route, Switch } from "react-router-dom";
 import moment from "moment";
-import { APPNAME } from "../../constants";
+
 import { TimelineResources } from "../../constants/constants";
 const { routers } = require("../../components/Router/router.config");
+
+const APPNAME = process.env.REACT_APP_NAME || "";
 
 export const getRoute = (path: any) => {
   return routers.filter((route: any) => route.path === path)[0];

@@ -82,7 +82,7 @@ const SignUpPage = () => {
       device_type: "web", // temp solution
       device_id: "web", // temp solution
       regCode: "46677757",
-      platform:'web',
+      platform: "web",
       tenantId: process.env.REACT_APP_TENANT_ID,
     };
 

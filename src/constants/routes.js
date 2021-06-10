@@ -2,6 +2,7 @@ export const ROUTES = {
   userBase: "/user",
   loginPage: "/user/login",
   signUpPage: "/user/signup",
+  forgotPasswordPage: "/user/forgot-password",
 
   appBase: "/app",
   dashboard: "/app/dashboard",
