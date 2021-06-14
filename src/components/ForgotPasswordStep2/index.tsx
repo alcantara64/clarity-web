@@ -14,7 +14,7 @@ interface IFormInputs {
 }
 
 const forgotPasswordFormStep2Schema = yup.object().shape({
-  pin: yup.string().required(),
+  pin: yup.string().required().max(5),
 });
 
 const ForgotPasswordStep2 = ({

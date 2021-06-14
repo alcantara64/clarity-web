@@ -20,19 +20,44 @@ const ForgotPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [currentStep, setCurrentStep] = useState(0);
+  const [resetToken, setResetToken] = useState<string>('');
+  const [resetCode, setResetCode] = useState<string>('');
 
-  const onForgotPasswordStep1Submit = (data: any) => {
+  const onForgotPasswordStep1Submit = async (data: any) => {
+    const response =  await userStore.forgotPassword(data.email);
+
+    if(response.kind === "ok"){
+    setResetToken(response?.data?.token)
     setCurrentStep(1);
+    }
   };
 
-  const onForgotPasswordStep2Submit = (data: any) => {
-    setCurrentStep(2);
+  const onForgotPasswordStep2Submit = async (data: any) => {
+    const payload = {
+      token:resetToken,
+      code:data.pin,
+      device_id:navigator.userAgent
+    }
+    const response =  await userStore.verifyResetCode(payload);
+    if(response.kind === "ok"){
+      setResetCode(payload.code)
+      setCurrentStep(2);
+    }
+    
   };
 
-  const onForgotPasswordStep3Submit = (data: any) => {
-    //submit form
-
-    setCurrentStep(3);
+  const onForgotPasswordStep3Submit = async (data: any) => {
+    const payload = {
+      token:resetToken,
+      code:resetCode,
+      device_id:navigator.userAgent,
+      newPassword:data.password,
+      verifyPassword: data.confirmPassword
+    }
+    const response =  await userStore.resetPassword(payload);
+    if(response.kind === "ok"){
+      setCurrentStep(3);
+    }
   };
 
   const SuccessBanner = () => {

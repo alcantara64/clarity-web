@@ -108,6 +108,82 @@ export const UserStoreModel = types
       }
       return result;
     }),
+    forgotPassword: flow(function* (email:string) {
+      const { authStore } = self.rootStore;
+
+      const userService: UserService = new UserService();
+
+      const result = yield userService.forgotPassword(authStore.token, email);
+
+      if (result && result.kind == "ok") {
+        if (result.data) {
+          NotificationService.show(
+            result?.data?.message || result?.data,
+            "success"
+          );
+        } else {
+          console.log(result);
+        }
+      } else {
+        console.log(result);
+        NotificationService.show(
+          result?.data?.message || result?.data,
+          "error"
+        );
+      }
+      return result;
+    }),
+    resetPassword: flow(function* (payload: {token:string, code:string, newPassword:string, verifyPassword:string }) {
+     
+      const { authStore } = self.rootStore;
+
+      const userService: UserService = new UserService();
+
+      const result = yield userService.resetPassword(authStore.token, payload);
+
+      if (result && result.kind == "ok") {
+        if (result.data) {
+          NotificationService.show(
+            result?.data?.message || result?.data,
+            "success"
+          );
+        } else {
+          console.log(result);
+        }
+      } else {
+        console.log(result);
+        NotificationService.show(
+          result?.data?.message || result?.data,
+          "error"
+        );
+      }
+      return result;
+    }),
+    verifyResetCode: flow(function* (payload: {token:string, code:string, device_id:string }) {
+      const { authStore } = self.rootStore;
+
+      const userService: UserService = new UserService();
+
+      const result = yield userService.verifyResetCode(authStore.token, payload);
+
+      if (result && result.kind == "ok") {
+        if (result.data) {
+          NotificationService.show(
+            result?.data?.message || result?.data,
+            "success"
+          );
+        } else {
+          console.log(result);
+        }
+      } else {
+        console.log(result);
+        NotificationService.show(
+          result?.data?.message || result?.data,
+          "error"
+        );
+      }
+      return result;
+    }),
   }));
 
 type UserStoreType = Instance<typeof UserStoreModel>;
