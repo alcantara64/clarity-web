@@ -1,4 +1,4 @@
-import { PatientService } from "./../../services/patient/patientService";
+import { FhirServerQueryParams, PatientService } from "./../../services/patient/patientService";
 
 import { withEnvironment } from "./../extensions/with-environment";
 import { Instance, SnapshotOut, types, flow } from "mobx-state-tree";
@@ -19,7 +19,7 @@ export const PatientStoreModel = types
     clear: () => {},
   }))
   .actions((self) => ({
-    getFhirData: flow(function* (resource, payerID) {
+    getFhirData: flow(function* (resource, payerID,params:FhirServerQueryParams| null) {
       const { authStore } = self.rootStore;
 
       const payerService: PatientService = new PatientService();
@@ -27,7 +27,8 @@ export const PatientStoreModel = types
       const result = yield payerService.getFhirData(
         authStore.token,
         resource,
-        payerID
+        payerID,
+        params,
       );
 
       if (result && result.kind == "ok") {

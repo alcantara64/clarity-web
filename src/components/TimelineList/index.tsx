@@ -114,9 +114,9 @@ const TimelineList = ({ data, itemClick = (item: any) => {}, shouldRefreshToken,
     return (
       <div id="timeline-list">
         <div className="refresh-token-container">
-       <h5 className="refresh-token-text">It seems your token may have expired. Please try again</h5>
+       <h5 className="refresh-token-text">It seems your token may have expired. Please renew your token</h5>
         
-       <Button onClick={refreshToken} Icon={<img src={refreshIcon} alt="refresh icon" className="refresh-token-image" />} className="refresh-token-button" label="Refresh"/>
+       <Button onClick={refreshToken} Icon={<img src={refreshIcon} alt="refresh icon" className="refresh-token-image" />} className="refresh-token-button" label="Renew"/>
        </div>
       </div>
     )

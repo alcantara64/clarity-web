@@ -1,31 +1,33 @@
-import React, { useEffect, useState } from "react";
-import Loading from "../../components/Loading";
-import { useStores } from "../../models";
+import React, { useEffect, useState } from 'react';
+import Loading from '../../components/Loading';
+import { useStores } from '../../models';
 
-import claimsIcon from "../../images/claims-icon.svg";
-import alergyIcon from "../../images/alergy-icon.svg";
-import proceduresIcon from "../../images/procedures-icon.svg";
-import immunizationIcon from "../../images/immunisation-icon.svg";
-import conditionsIcon from "../../images/conditions-icon.svg";
-import medicationsIcon from "../../images/medications-icon.svg";
-import prescriptionsIcon from "../../images/prescription-icon.svg";
-import observationIcon from "../../images/observation-icon.svg";
-import carePlanIcon from "../../images/careplan-icon.svg";
-import diagnosticIcon from "../../images/diagnostic-icon.svg";
-import documentIcon from "../../images/document-icon.svg";
-import encounterIcon from "../../images/encounter-icon.svg";
+import claimsIcon from '../../images/claims-icon.svg';
+import alergyIcon from '../../images/alergy-icon.svg';
+import proceduresIcon from '../../images/procedures-icon.svg';
+import immunizationIcon from '../../images/immunisation-icon.svg';
+import conditionsIcon from '../../images/conditions-icon.svg';
+import medicationsIcon from '../../images/medications-icon.svg';
+import prescriptionsIcon from '../../images/prescription-icon.svg';
+import observationIcon from '../../images/observation-icon.svg';
+import carePlanIcon from '../../images/careplan-icon.svg';
+import diagnosticIcon from '../../images/diagnostic-icon.svg';
+import documentIcon from '../../images/document-icon.svg';
+import rollingSpinner from '../../images/rolling-spinner.svg';
 
 import {
   CLAIMS_AND_CLINICAL_RESOURCE,
   TimelineResources,
-} from "../../constants/constants";
+} from '../../constants/constants';
 
-import "./index.less";
-import TimelineList from "../../components/TimelineList";
-import { useHistory } from "react-router";
-import { ROUTES } from "../../constants/routes";
-import { getTimelineNameResource } from "../../factories/utils";
-import { observer } from "mobx-react-lite";
+import './index.less';
+import TimelineList from '../../components/TimelineList';
+import { useHistory } from 'react-router';
+import { ROUTES } from '../../constants/routes';
+import { getTimelineNameResource } from '../../factories/utils';
+import { observer } from 'mobx-react-lite';
+import Button from '../../components/Button';
+import NotificationService from '../../services/NotificationService';
 
 const TimeLine = observer(() => {
   const { patientStore, payerStore, notificationStore } = useStores();
@@ -33,45 +35,73 @@ const TimeLine = observer(() => {
   const { selectedResource } = patientStore;
 
   const [isLoading, setIsLoading] = useState(false);
-  const { notifications} = notificationStore;
+  const [isLoadingMoreData, setIsLoadingMoreData] = useState(false);
+  const { notifications } = notificationStore;
 
   // const [currentResource, setCurrentResource] = useState(
   //   patientStore.selectedResource
   // );
 
-  const [resourceData, setResourceData]: any = useState(null);
+  const [resourceData, setResourceData] =
+    useState<{ nextLink: string; entry: Array<any>; total?: number } | null>(
+      null
+    );
   const [shouldRefreshToken, setShouldRefreshToken]: any = useState(false);
   const [hasRefreshToken, setHasRefreshToken]: any = useState(false);
   const defaultPayer = payerStore.defaultPayer();
   const history = useHistory();
-  useEffect(() =>{
-   
-    if(!defaultPayer?.is_connected){
-      history.push(ROUTES.oauth)
-    }
-  },[])
 
-  useEffect(() =>{
-    ( async ()=>{
-     await notificationStore.getNotifications().catch((error) => {console.log('notification error', error)})
-    })()
-    }, [shouldRefreshToken])
+  useEffect(() => {
+    if (!defaultPayer?.is_connected) {
+      history.push(ROUTES.oauth);
+    }
+  }, []);
+
+  const getNextRecords = async () => {
+    setIsLoading(true);
+    setIsLoadingMoreData(true);
+    const params = { next_link: resourceData?.nextLink || '', startIndex: '0' };
+
+    const resp = await patientStore
+      .getFhirData(selectedResource, defaultPayer?._id, params)
+      .catch(() => {});
+
+    if (resp.kind === 'ok') {
+      if (resourceData?.entry) {
+        resp.data.entry = [...resourceData?.entry, ...resp.data.entry];
+      }
+      setResourceData(resp.data);
+    } else {
+      NotificationService.show(
+        'We could not fetch data for the next page, you are still viewing the first set of data',
+        'warning'
+      );
+    }
+    setIsLoadingMoreData(false);
+    setIsLoading(false);
+  };
   useEffect(() => {
     (async () => {
       setIsLoading(true);
+      await notificationStore.getNotifications().catch((error) => {
+        console.log('notification error', error);
+      });
       const defaultPayer = payerStore.defaultPayer();
-     const payerNotification = notifications.find(x=>x.name === defaultPayer?.name);
-     if(payerNotification){
-       setShouldRefreshToken(true)
-       if(payerNotification.hasRefreshToken){
-       setHasRefreshToken(true)
-       }
-     }
+      const payerNotification = notifications.find(
+        (x) => x.name === defaultPayer?.name
+      );
+      if (payerNotification) {
+        setShouldRefreshToken(true);
+        if (payerNotification.hasRefreshToken) {
+          setHasRefreshToken(true);
+        }
+      }
       const resp = await patientStore
-        .getFhirData(selectedResource, defaultPayer?._id)
+        .getFhirData(selectedResource, defaultPayer?._id, null)
         .catch(() => {});
 
-      if (resp.kind == "ok") {
+      if (resp.kind === 'ok') {
+        console.log(resp.data);
         setResourceData(resp.data);
       } else {
         setResourceData(null);
@@ -81,29 +111,30 @@ const TimeLine = observer(() => {
     })();
   }, [patientStore.selectedResource, shouldRefreshToken]);
   const getResourceImage = (resourceName: string) => {
-    if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.allergy) return alergyIcon;
-    else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.carePlan)
+    if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.allergy)
+      return alergyIcon;
+    else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.carePlan)
       return carePlanIcon;
-    else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.claims)
+    else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.claims)
       return claimsIcon;
-    else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.condition)
+    else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.condition)
       return conditionsIcon;
-    else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.diagnosticReport)
+    else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.diagnosticReport)
       return diagnosticIcon;
-    else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.documentReference)
+    else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.documentReference)
       return documentIcon;
-    else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.immunization)
+    else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.immunization)
       return immunizationIcon;
-    else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.medication)
+    else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.medication)
       return medicationsIcon;
-    else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.observation)
+    else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.observation)
       return observationIcon;
-    else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.prescription)
+    else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.prescription)
       return prescriptionsIcon;
-    else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.procedure)
+    else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.procedure)
       return proceduresIcon;
 
-    return "";
+    return '';
   };
 
   const ResourceItem = ({
@@ -116,7 +147,7 @@ const TimeLine = observer(() => {
     return (
       <div
         className="resource-item"
-        style={{ backgroundColor: selected ? "#F5F6F8" : "transparent" }}
+        style={{ backgroundColor: selected ? '#F5F6F8' : 'transparent' }}
         onClick={onClick}
       >
         <div
@@ -138,20 +169,21 @@ const TimeLine = observer(() => {
   const performOauth = () => {
     if (!defaultPayer) return;
 
-    window.open(defaultPayer?.oauth_url, "_self", "width=500,height=500");
+    window.open(defaultPayer?.oauth_url, '_self', 'width=500,height=500');
 
     setIsLoading(true);
   };
   const refreshToken = async () => {
+    setIsLoading(true);
     const defaultPayer = payerStore.defaultPayer();
-    const resp = await payerStore
-    .refreshUserToken(defaultPayer?._id)
-  if(resp?.kind == "ok"){
-    setShouldRefreshToken(false)
-  }else{
-    performOauth()
-  }
-  }
+    const resp = await payerStore.refreshUserToken(defaultPayer?._id);
+    if (resp?.kind == 'ok') {
+      setShouldRefreshToken(false);
+    } else {
+      performOauth();
+    }
+    setIsLoading(false);
+  };
 
   return (
     <div id="app-timeline">
@@ -180,9 +212,23 @@ const TimeLine = observer(() => {
           shouldRefreshToken={shouldRefreshToken}
           data={resourceData?.entry || []}
           itemClick={onTimelineClick}
-          refreshToken= {refreshToken}
-          
+          refreshToken={refreshToken}
         />
+        {resourceData?.nextLink && (
+          <div className="pagination-container">
+            {!isLoadingMoreData ? (
+              <Button
+                onClick={() => {
+                  getNextRecords();
+                }}
+                className="pagination-btn next"
+                label="load more"
+              />
+            ) : (
+              <img src={rollingSpinner} alt="rolling spinner" />
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

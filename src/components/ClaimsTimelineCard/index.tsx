@@ -160,7 +160,7 @@ const ClaimsTimelineCard = ({ resource }: any) => {
             .filter(
               (item: any) =>
                 item.category.coding[0].code &&
-                item.amount.value &&
+                (item.amount.value !== undefined) &&
                 item.amount.currency
             )
             ?.map((x: any) => (
