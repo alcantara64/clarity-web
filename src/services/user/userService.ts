@@ -29,7 +29,7 @@ export class UserService {
   }
   async disconnectFromDataSource(token:string, dataSourceId:string, type:DATA_SOURCE): Promise<ApiResponse> {
     const httpService: HttpService = new HttpService();
-    const response = await httpService.delete("/data/disconnect", null, {
+    const response = await httpService.delete("/data/disconnect", {
       headers: {
         Authorization: `JWT ${token}`,
       },

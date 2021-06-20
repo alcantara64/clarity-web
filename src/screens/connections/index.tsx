@@ -20,17 +20,21 @@ const ConnectionsPage = observer(() => {
 
   const { payerStore, userStore } = useStores();
 
+  const getPayer = async () => {
+    setIsLoading(true)
+    await payerStore.getPayer().catch((ex) => {});
+    setIsLoading(false);
+  }
+
   useEffect(() => {
     (async () => {
-      setIsLoading(true);
-      await payerStore.getPayer().catch((ex) => {});
-
-      setIsLoading(false);
+      await getPayer();
     })();
   }, []);
 
  const disconnect = async () => {
   await userStore.disconnectFromDataSource(selectedProvider._id,DATA_SOURCE.payer)
+   await getPayer();
   setShowModal(false)
  }
 
@@ -48,7 +52,7 @@ const ConnectionsPage = observer(() => {
 
   return (
     <div id="connections-page">
-      {oauthStep == -1 &&
+      {oauthStep === -1 &&
         payerStore?.payers?.map((item) => (
           <Provider
             key={item._id}
@@ -68,7 +72,7 @@ const ConnectionsPage = observer(() => {
           />
         ))}
 
-      {oauthStep == 1 && (
+      {oauthStep === 1 && (
         <div className="oauth-step2-container">
           <OauthStep2
             onBackClick={() => {

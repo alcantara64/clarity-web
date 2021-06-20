@@ -87,10 +87,9 @@ export const UserStoreModel = types
       const { authStore } = self.rootStore;
 
       const userService: UserService = new UserService();
-
       const result = yield userService.disconnectFromDataSource(authStore.token, dataSourceId, type);
 
-      if (result && result.kind == "ok") {
+      if (result && result.kind === "ok") {
         if (result.data) {
           NotificationService.show(
             result?.data?.message || result?.data,
