@@ -2,60 +2,101 @@
 @import "../../theme/typography.less";
 
 #app-timeline {
-  padding-top: 30px;
-  .resource-container {
-    background-color: @white;
-    box-shadow: 0px 10px 50px rgba(1, 83, 85, 0.05);
-    border-radius: 20px 0px 0px 20px;
-    padding: 24px;
+	padding-top: 30px;
 
-    display: flex;
-    overflow-x: scroll;
+	.app-timeline-dropdown {
+		padding: 1rem;
+		align-items: center;
+		display: flex;
+	}
+	.app-timeline-dropdown-title {
+		margin-right: 5vw;
+		//styleName: Body 1 - 16pt;
+		font-family: Questrial;
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 20px;
+		letter-spacing: 0.005em;
+		text-align: left;
+	}
+	#dropdown-basic-button {
+		background-color: #ffffff;
+		color: #151515;
+		font-family: Questrial;
+		font-weight: 400;
+		line-height: 20px;
+		padding: 16px;
+		border-radius: 10px;
+		//width: 36rem;
+		width: 360px;
+		height: 56px;
+		display: flex;
+		text-align: center;
+		align-items: center;
+		border: none;
+	}
 
-    .resource-item {
-      margin-right: 10px;
-      text-align: center;
+	.dropdown-menu.show {
+		width: 100%;
+		padding: 2rem;
 
-      padding-left: 20px;
-      padding-right: 20px;
-      padding-top: 5px;
-      padding-bottom: 5px;
+		.dropdown-item:hover {
+			background: #b7fdff;
+		}
+	}
+	.dropdown-toggle::after {
+		margin-left: auto;
+	}
+	.resource-container {
+		background-color: @white;
+		box-shadow: 0px 10px 50px rgba(1, 83, 85, 0.05);
+		border-radius: 20px 0px 0px 20px;
+		padding: 24px;
+		display: flex;
+		overflow-x: scroll;
 
-      cursor: pointer;
-      .resource-image-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 64px;
-        height: 65px;
-        margin-left: auto;
-        margin-right: auto;
-      }
+		.resource-item {
+			margin-right: 10px;
+			text-align: center;
 
-      .resource-name {
-        .body2Text();
-        margin-top: 10px;
-      }
-    }
-  }
+			padding-left: 20px;
+			padding-right: 20px;
+			padding-top: 5px;
+			padding-bottom: 5px;
 
-  .timeline-content {
-    padding-top: 60px;
-    .timeline-title {
-      .h5Text();
-    }
-  }
-  .pagination-container{
-    display: flex;
-    justify-content: center;
+			cursor: pointer;
+			.resource-image-container {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 64px;
+				height: 65px;
+				margin-left: auto;
+				margin-right: auto;
+			}
 
-    .pagination-btn {
-      width: 100px;
-      margin-right: 5px;
-      height: 50px;
-    }
+			.resource-name {
+				.body2Text();
+				margin-top: 10px;
+			}
+		}
+	}
 
-  }
+	.timeline-content {
+		padding-top: 60px;
+		.timeline-title {
+			.h5Text();
+		}
+	}
+	.pagination-container {
+		display: flex;
+		justify-content: center;
 
+		.pagination-btn {
+			width: 100px;
+			margin-right: 5px;
+			height: 50px;
+		}
+	}
 }
-
