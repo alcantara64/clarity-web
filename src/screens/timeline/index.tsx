@@ -31,17 +31,8 @@ import { Dropdown, DropdownButton } from "react-bootstrap";
 
 const TimeLine = observer(() => {
 	const { patientStore, payerStore, notificationStore } = useStores();
-	//My code
-	// const [value, setValue] = useState<string>("Carin BB");
-	// console.log(value);
-
 	const [selectValue, setSelectValue] = useState<string>("Carin BB");
-	console.log(selectValue);
-
-	console.log(TimelineResources);
-
 	const { selectedResource } = patientStore;
-
 	const [isLoading, setIsLoading] = useState(false);
 	const [isLoadingMoreData, setIsLoadingMoreData] = useState(false);
 	const { notifications } = notificationStore;
@@ -153,6 +144,7 @@ const TimeLine = observer(() => {
 		color,
 		resourceName,
 		selected,
+
 		onClick = () => {},
 	}: any) => {
 		return (
@@ -163,14 +155,6 @@ const TimeLine = observer(() => {
 			>
 				<div
 					className="resource-image-container"
-					// style={{
-					// 	backgroundColor:
-					// 		selectValue === "Carin BB"
-					// 			? "opacity-0.3"
-					// 			: selectValue === "US Core"
-					// 			? "opacity-1"
-					// 			: color,
-					// }}
 					style={{ backgroundColor: color }}
 				>
 					<img src={getResourceImage(resourceName)} alt={name} />
@@ -210,13 +194,13 @@ const TimeLine = observer(() => {
 				<h2 className="app-timeline-dropdown-title"> Client </h2>{" "}
 				{/* <DropdownButton
 					id="dropdown-basic-button"
-					onChange={(e: React.FormEvent<HTMLInputElement>) => {
-						const newValue = e.currentTarget.value;
-						setValue(newValue);
-					}}
-					//title={`${value}`}
-					title="Carin BB"
+					value={selectValue}
+					onChange={(ev: React.ChangeEvent<HTMLSelectElement>): void =>
+						setSelectValue(ev.target.value)
+					}
+					title={`${selectValue}`}
 				>
+					<Dropdown.Item value="Carin BB"> Carin BB</Dropdown.Item>
 					<Dropdown.Item value="US Core"> US Core</Dropdown.Item>
 				</DropdownButton> */}
 				<select
@@ -230,48 +214,41 @@ const TimeLine = observer(() => {
 					<option value="Carin BB">Carin BB</option>
 					<option value="US Core">US Core</option>
 				</select>
-				{/* <select
-					value={selectValue}
-					onChange={(ev: React.ChangeEvent<HTMLSelectElement>): void =>
-						setSelectValue(ev.target.value)
-					}
-				>
-					<option value="optionA">Option A</option>
-					<option value="optionB">Option B</option>
-					<option value="optionC">Option C</option>
-				</select> */}
 			</div>
 			{isLoading && <Loading />}
-			{/* <div className="resource-container">
-			 
-					TimelineResources.map((item) => (
-						<ResourceItem
-							key={item.name}
-							resourceName={item.resource}
-							name={item.name}
-							color={item.color}
-							selected={selectedResource == item.resource}
-							onClick={() => {
-								patientStore.setSelectedResource(item.resource);
-							}}
-						/>
-					 
-			</div> */}
 
 			<div className="resource-container">
-				{selectValue === "Carin BB" &&
-					TimelineResources.map((item) => (
-						<ResourceItem
-							key={item.name}
-							resourceName={item.resource}
-							name={item.name}
-							color={item.color}
-							selected={selectedResource == item.resource}
-							onClick={() => {
-								patientStore.setSelectedResource(item.resource);
-							}}
-						/>
-					))}
+				{selectValue === "Carin BB"
+					? TimelineResources.map((item) => (
+							<div className="carinBB">
+								<ResourceItem
+									key={item.name}
+									resourceName={item.resource}
+									name={item.name}
+									color={item.color}
+									selected={selectedResource == item.resource}
+									onClick={() => {
+										patientStore.setSelectedResource(item.resource);
+									}}
+								/>{" "}
+							</div>
+					  ))
+					: selectValue === "US Core"
+					? TimelineResources.map((item) => (
+							<div className="usCore">
+								<ResourceItem
+									key={item.name}
+									resourceName={item.resource}
+									name={item.name}
+									color={item.color}
+									selected={selectedResource == item.resource}
+									onClick={() => {
+										patientStore.setSelectedResource(item.resource);
+									}}
+								/>
+							</div>
+					  ))
+					: ""}
 			</div>
 
 			<div className="timeline-content">
