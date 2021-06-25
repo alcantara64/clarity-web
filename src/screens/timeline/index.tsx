@@ -191,7 +191,7 @@ const TimeLine = observer(() => {
 	return (
 		<div id='app-timeline'>
 			<div className='app-timeline-dropdown' style={{ display: 'flex' }}>
-				<h2 className='app-timeline-dropdown-title'> Client </h2>{' '}
+				<h2 className='app-timeline-dropdown-title'> Capability Statement </h2>{' '}
 				{/* <DropdownButton
 					id="dropdown-basic-button"
 					value={selectValue}
