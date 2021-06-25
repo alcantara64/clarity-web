@@ -1,37 +1,37 @@
-import React, { useEffect, useState } from "react";
-import Loading from "../../components/Loading";
-import { useStores } from "../../models";
-import claimsIcon from "../../images/claims-icon.svg";
-import alergyIcon from "../../images/alergy-icon.svg";
-import proceduresIcon from "../../images/procedures-icon.svg";
-import immunizationIcon from "../../images/immunisation-icon.svg";
-import conditionsIcon from "../../images/conditions-icon.svg";
-import medicationsIcon from "../../images/medications-icon.svg";
-import prescriptionsIcon from "../../images/prescription-icon.svg";
-import observationIcon from "../../images/observation-icon.svg";
-import carePlanIcon from "../../images/careplan-icon.svg";
-import diagnosticIcon from "../../images/diagnostic-icon.svg";
-import documentIcon from "../../images/document-icon.svg";
-import rollingSpinner from "../../images/rolling-spinner.svg";
+import React, { useEffect, useState } from 'react';
+import Loading from '../../components/Loading';
+import { useStores } from '../../models';
+import claimsIcon from '../../images/claims-icon.svg';
+import alergyIcon from '../../images/alergy-icon.svg';
+import proceduresIcon from '../../images/procedures-icon.svg';
+import immunizationIcon from '../../images/immunisation-icon.svg';
+import conditionsIcon from '../../images/conditions-icon.svg';
+import medicationsIcon from '../../images/medications-icon.svg';
+import prescriptionsIcon from '../../images/prescription-icon.svg';
+import observationIcon from '../../images/observation-icon.svg';
+import carePlanIcon from '../../images/careplan-icon.svg';
+import diagnosticIcon from '../../images/diagnostic-icon.svg';
+import documentIcon from '../../images/document-icon.svg';
+import rollingSpinner from '../../images/rolling-spinner.svg';
 
 import {
 	CLAIMS_AND_CLINICAL_RESOURCE,
 	TimelineResources,
-} from "../../constants/constants";
+} from '../../constants/constants';
 
-import "./index.less";
-import TimelineList from "../../components/TimelineList";
-import { useHistory } from "react-router";
-import { ROUTES } from "../../constants/routes";
-import { getTimelineNameResource } from "../../factories/utils";
-import { observer } from "mobx-react-lite";
-import Button from "../../components/Button";
-import NotificationService from "../../services/NotificationService";
-import { Dropdown, DropdownButton } from "react-bootstrap";
+import './index.less';
+import TimelineList from '../../components/TimelineList';
+import { useHistory } from 'react-router';
+import { ROUTES } from '../../constants/routes';
+import { getTimelineNameResource } from '../../factories/utils';
+import { observer } from 'mobx-react-lite';
+import Button from '../../components/Button';
+import NotificationService from '../../services/NotificationService';
+import { Dropdown, DropdownButton } from 'react-bootstrap';
 
 const TimeLine = observer(() => {
 	const { patientStore, payerStore, notificationStore } = useStores();
-	const [selectValue, setSelectValue] = useState<string>("Carin BB");
+	const [selectValue, setSelectValue] = useState<string>('Carin BB');
 	const { selectedResource } = patientStore;
 	const [isLoading, setIsLoading] = useState(false);
 	const [isLoadingMoreData, setIsLoadingMoreData] = useState(false);
@@ -60,21 +60,21 @@ const TimeLine = observer(() => {
 	const getNextRecords = async () => {
 		setIsLoading(true);
 		setIsLoadingMoreData(true);
-		const params = { next_link: resourceData?.nextLink || "", startIndex: "0" };
+		const params = { next_link: resourceData?.nextLink || '', startIndex: '0' };
 
 		const resp = await patientStore
 			.getFhirData(selectedResource, defaultPayer?._id, params) //add a 3rd arg
 			.catch(() => {});
 
-		if (resp.kind === "ok") {
+		if (resp.kind === 'ok') {
 			if (resourceData?.entry) {
 				resp.data.entry = [...resourceData?.entry, ...resp.data.entry];
 			}
 			setResourceData(resp.data);
 		} else {
 			NotificationService.show(
-				"We could not fetch data for the next page, you are still viewing the first set of data",
-				"warning"
+				'We could not fetch data for the next page, you are still viewing the first set of data',
+				'warning'
 			);
 		}
 		setIsLoadingMoreData(false);
@@ -84,7 +84,7 @@ const TimeLine = observer(() => {
 		(async () => {
 			setIsLoading(true);
 			await notificationStore.getNotifications().catch((error) => {
-				console.log("notification error", error);
+				console.log('notification error', error);
 			});
 			const defaultPayer = payerStore.defaultPayer();
 			const payerNotification = notifications.find(
@@ -102,7 +102,7 @@ const TimeLine = observer(() => {
 				.catch(() => {});
 			console.log(selectedResource);
 
-			if (resp.kind === "ok") {
+			if (resp.kind === 'ok') {
 				console.log(resp.data);
 				setResourceData(resp.data);
 			} else {
@@ -136,7 +136,7 @@ const TimeLine = observer(() => {
 		else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.procedure)
 			return proceduresIcon;
 
-		return "";
+		return '';
 	};
 
 	const ResourceItem = ({
@@ -149,17 +149,17 @@ const TimeLine = observer(() => {
 	}: any) => {
 		return (
 			<div
-				className="resource-item"
-				style={{ backgroundColor: selected ? "#F5F6F8" : "transparent" }}
+				className='resource-item'
+				style={{ backgroundColor: selected ? '#F5F6F8' : 'transparent' }}
 				onClick={onClick}
 			>
 				<div
-					className="resource-image-container"
+					className='resource-image-container'
 					style={{ backgroundColor: color }}
 				>
 					<img src={getResourceImage(resourceName)} alt={name} />
 				</div>
-				<span className="resource-name"> {name}</span>
+				<span className='resource-name'> {name}</span>
 			</div>
 		);
 	};
@@ -172,7 +172,7 @@ const TimeLine = observer(() => {
 	const performOauth = () => {
 		if (!defaultPayer) return;
 
-		window.open(defaultPayer?.oauth_url, "_self", "width=500,height=500");
+		window.open(defaultPayer?.oauth_url, '_self', 'width=500,height=500');
 
 		setIsLoading(true);
 	};
@@ -180,7 +180,7 @@ const TimeLine = observer(() => {
 		setIsLoading(true);
 		const defaultPayer = payerStore.defaultPayer();
 		const resp = await payerStore.refreshUserToken(defaultPayer?._id);
-		if (resp?.kind == "ok") {
+		if (resp?.kind == 'ok') {
 			setShouldRefreshToken(false);
 		} else {
 			performOauth();
@@ -189,9 +189,9 @@ const TimeLine = observer(() => {
 	};
 
 	return (
-		<div id="app-timeline">
-			<div className="app-timeline-dropdown" style={{ display: "flex" }}>
-				<h2 className="app-timeline-dropdown-title"> Client </h2>{" "}
+		<div id='app-timeline'>
+			<div className='app-timeline-dropdown' style={{ display: 'flex' }}>
+				<h2 className='app-timeline-dropdown-title'> Client </h2>{' '}
 				{/* <DropdownButton
 					id="dropdown-basic-button"
 					value={selectValue}
@@ -204,23 +204,23 @@ const TimeLine = observer(() => {
 					<Dropdown.Item value="US Core"> US Core</Dropdown.Item>
 				</DropdownButton> */}
 				<select
-					id="dropdown-basic-button"
+					id='dropdown-basic-button'
 					value={selectValue}
 					onChange={(ev: React.ChangeEvent<HTMLSelectElement>): void =>
 						setSelectValue(ev.target.value)
 					}
 					title={`${selectValue}`}
 				>
-					<option value="Carin BB">Carin BB</option>
-					<option value="US Core">US Core</option>
+					<option value='Carin BB'>Carin BB</option>
+					<option value='US Core'>US Core</option>
 				</select>
 			</div>
 			{isLoading && <Loading />}
 
-			<div className="resource-container">
-				{selectValue === "Carin BB"
+			<div className='resource-container'>
+				{selectValue === 'Carin BB'
 					? TimelineResources.map((item) => (
-							<div className="carinBB">
+							<div className='carinBB'>
 								<ResourceItem
 									key={item.name}
 									resourceName={item.resource}
@@ -230,12 +230,12 @@ const TimeLine = observer(() => {
 									onClick={() => {
 										patientStore.setSelectedResource(item.resource);
 									}}
-								/>{" "}
+								/>{' '}
 							</div>
 					  ))
-					: selectValue === "US Core"
+					: selectValue === 'US Core'
 					? TimelineResources.map((item) => (
-							<div className="usCore">
+							<div className='usCore'>
 								<ResourceItem
 									key={item.name}
 									resourceName={item.resource}
@@ -248,11 +248,11 @@ const TimeLine = observer(() => {
 								/>
 							</div>
 					  ))
-					: ""}
+					: ''}
 			</div>
 
-			<div className="timeline-content">
-				<h5 className="timeline-title">
+			<div className='timeline-content'>
+				<h5 className='timeline-title'>
 					{getTimelineNameResource(selectedResource)}
 				</h5>
 
@@ -264,17 +264,17 @@ const TimeLine = observer(() => {
 				/>
 
 				{resourceData?.nextLink && (
-					<div className="pagination-container">
+					<div className='pagination-container'>
 						{!isLoadingMoreData ? (
 							<Button
 								onClick={() => {
 									getNextRecords();
 								}}
-								className="pagination-btn next"
-								label="load more"
+								className='pagination-btn next'
+								label='load more'
 							/>
 						) : (
-							<img src={rollingSpinner} alt="rolling spinner" />
+							<img src={rollingSpinner} alt='rolling spinner' />
 						)}
 					</div>
 				)}
