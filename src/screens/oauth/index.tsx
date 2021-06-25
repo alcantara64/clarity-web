@@ -8,6 +8,7 @@ import OauthLoading from "../../components/OauthLoading";
 import { useHistory, useLocation, useParams } from "react-router";
 import { ROUTES } from "../../constants/routes";
 import queryString from "query-string";
+import NotificationService from "../../services/NotificationService";
 
 const OauthPage = () => {
   const { payerStore, notificationStore } = useStores();
@@ -47,7 +48,15 @@ const OauthPage = () => {
         } else {
           if (location?.search) {
             const query = queryString.parse(location.search);
-            const { code } = query;
+            const { code, error } = query;
+            debugger
+           if(!code || code === 'undefined'){
+
+             NotificationService.show(error?.toString() || 'IDP sent and invalid response', 'error')
+            setGettingPayer(false);
+             return
+           }
+
             delete query.code;
 
             const payload = {

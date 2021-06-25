@@ -27,12 +27,51 @@ import { getTimelineNameResource } from '../../factories/utils';
 import { observer } from 'mobx-react-lite';
 import Button from '../../components/Button';
 import NotificationService from '../../services/NotificationService';
-import { Dropdown, DropdownButton } from 'react-bootstrap';
+import { CapabilityStatement } from '../../typesDefinitions/CapabilityStatement';
+import Select from '../../components/Select';
+const capability_statement: Array<CapabilityStatement> = [
+	{
+		name: 'Carin Blue Button',
+		endpoint: 'carin-bb',
+		value: 'carin',
+	},
+	{
+		name: 'PDEX Server',
+		endpoint: 'uscore',
+		value: 'uscore',
+	},
+	{
+		name: 'Carin Blue Button Pharmacy',
+		endpoint: 'carin-bb-pharmacy',
+		value: 'carin',
+	},
+	{
+		name: 'US Core Server Pharmacy',
+		endpoint: 'uscore-pharmacy',
+		value: 'uscore',
+	},
+	{
+		name: 'Secure US Drug Formulary Server',
+		endpoint: 'secure-formulary',
+		value: 'formulary',
+	},
+	{
+		name: 'Formulary Network',
+		endpoint: 'formulary-net',
+		value: 'formulary',
+	},
+	{
+		name: 'Plan-Net',
+		endpoint: 'provider-directory',
+		value: 'provider',
+	},
+];
 
 const TimeLine = observer(() => {
 	const { patientStore, payerStore, notificationStore } = useStores();
-	const [selectValue, setSelectValue] = useState<string>('Carin BB');
+
 	const { selectedResource } = patientStore;
+
 	const [isLoading, setIsLoading] = useState(false);
 	const [isLoadingMoreData, setIsLoadingMoreData] = useState(false);
 	const { notifications } = notificationStore;
@@ -63,7 +102,7 @@ const TimeLine = observer(() => {
 		const params = { next_link: resourceData?.nextLink || '', startIndex: '0' };
 
 		const resp = await patientStore
-			.getFhirData(selectedResource, defaultPayer?._id, params) //add a 3rd arg
+			.getFhirData(selectedResource, defaultPayer?._id, params)
 			.catch(() => {});
 
 		if (resp.kind === 'ok') {
@@ -98,9 +137,7 @@ const TimeLine = observer(() => {
 			}
 			const resp = await patientStore
 				.getFhirData(selectedResource, defaultPayer?._id, null)
-
 				.catch(() => {});
-			console.log(selectedResource);
 
 			if (resp.kind === 'ok') {
 				console.log(resp.data);
@@ -144,7 +181,6 @@ const TimeLine = observer(() => {
 		color,
 		resourceName,
 		selected,
-
 		onClick = () => {},
 	}: any) => {
 		return (
@@ -190,65 +226,28 @@ const TimeLine = observer(() => {
 
 	return (
 		<div id='app-timeline'>
-			<div className='app-timeline-dropdown' style={{ display: 'flex' }}>
-				<h2 className='app-timeline-dropdown-title'> Capability Statement </h2>{' '}
-				{/* <DropdownButton
-					id="dropdown-basic-button"
-					value={selectValue}
-					onChange={(ev: React.ChangeEvent<HTMLSelectElement>): void =>
-						setSelectValue(ev.target.value)
-					}
-					title={`${selectValue}`}
-				>
-					<Dropdown.Item value="Carin BB"> Carin BB</Dropdown.Item>
-					<Dropdown.Item value="US Core"> US Core</Dropdown.Item>
-				</DropdownButton> */}
-				<select
-					id='dropdown-basic-button'
-					value={selectValue}
-					onChange={(ev: React.ChangeEvent<HTMLSelectElement>): void =>
-						setSelectValue(ev.target.value)
-					}
-					title={`${selectValue}`}
-				>
-					<option value='Carin BB'>Carin BB</option>
-					<option value='US Core'>US Core</option>
-				</select>
-			</div>
 			{isLoading && <Loading />}
-
+			<div>
+				<Select
+					onChange={(e) => {
+						console.log('capability ==>', e);
+					}}
+					items={capability_statement}
+				/>
+			</div>
 			<div className='resource-container'>
-				{selectValue === 'Carin BB'
-					? TimelineResources.map((item) => (
-							<div className='carinBB'>
-								<ResourceItem
-									key={item.name}
-									resourceName={item.resource}
-									name={item.name}
-									color={item.color}
-									selected={selectedResource == item.resource}
-									onClick={() => {
-										patientStore.setSelectedResource(item.resource);
-									}}
-								/>{' '}
-							</div>
-					  ))
-					: selectValue === 'US Core'
-					? TimelineResources.map((item) => (
-							<div className='usCore'>
-								<ResourceItem
-									key={item.name}
-									resourceName={item.resource}
-									name={item.name}
-									color={item.color}
-									selected={selectedResource == item.resource}
-									onClick={() => {
-										patientStore.setSelectedResource(item.resource);
-									}}
-								/>
-							</div>
-					  ))
-					: ''}
+				{TimelineResources.map((item) => (
+					<ResourceItem
+						key={item.name}
+						resourceName={item.resource}
+						name={item.name}
+						color={item.color}
+						selected={selectedResource == item.resource}
+						onClick={() => {
+							patientStore.setSelectedResource(item.resource);
+						}}
+					/>
+				))}
 			</div>
 
 			<div className='timeline-content'>
@@ -262,7 +261,6 @@ const TimeLine = observer(() => {
 					itemClick={onTimelineClick}
 					refreshToken={refreshToken}
 				/>
-
 				{resourceData?.nextLink && (
 					<div className='pagination-container'>
 						{!isLoadingMoreData ? (
