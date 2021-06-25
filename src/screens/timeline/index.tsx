@@ -28,6 +28,47 @@ import { getTimelineNameResource } from '../../factories/utils';
 import { observer } from 'mobx-react-lite';
 import Button from '../../components/Button';
 import NotificationService from '../../services/NotificationService';
+import { CapabilityStatement } from '../../typesDefinitions/CapabilityStatement';
+import Select from '../../components/Select';
+const capability_statement :Array<CapabilityStatement> = [
+  {
+    name: "Carin Blue Button",
+    endpoint: 'carin-bb',
+    value:'carin'
+  },
+  {
+    name:"PDEX Server",
+    endpoint:"uscore",
+    value:"uscore"
+  },
+  {
+    name:"Carin Blue Button Pharmacy",
+    endpoint:"carin-bb-pharmacy",
+    value:"carin"
+  },
+  {
+    name:"US Core Server Pharmacy",
+    endpoint:"uscore-pharmacy",
+    value:"uscore"
+  },
+  {
+    name:"Secure US Drug Formulary Server",
+    endpoint:"secure-formulary",
+    value:"formulary"
+  },
+  {
+    name:"Formulary Network",
+    endpoint:"formulary-net",
+    value:"formulary"
+  },
+  {
+    name:"Plan-Net",
+    endpoint:"provider-directory",
+    value:"provider"
+  },
+  
+
+]
 
 const TimeLine = observer(() => {
   const { patientStore, payerStore, notificationStore } = useStores();
@@ -188,6 +229,11 @@ const TimeLine = observer(() => {
   return (
     <div id="app-timeline">
       {isLoading && <Loading />}
+      <div >
+        <Select onChange={(e) =>{
+          console.log('capability ==>',e)
+        }} items={capability_statement} />
+        </div>
       <div className="resource-container">
         {TimelineResources.map((item) => (
           <ResourceItem

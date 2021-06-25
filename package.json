@@ -56,7 +56,8 @@
     "build:qual": "env-cmd -f environments/qual.env craco build",
     "start": "env-cmd -f environments/.env craco start",
     "build": "craco build",
-    "test": "craco test",
+    "test": "jest -u",
+    "test:coverage": "jest -u --coverage",
     "eject": "craco eject"
   },
   "eslintConfig": {
@@ -80,6 +81,8 @@
   "devDependencies": {
     "@types/react-document-title": "^2.0.4",
     "@types/react-loadable": "^5.5.5",
-    "@types/react-router-dom": "^5.1.7"
+    "@types/react-router-dom": "^5.1.7",
+    "@types/react-test-renderer": "^17.0.1",
+    "react-test-renderer": "^17.0.2"
   }
 }
