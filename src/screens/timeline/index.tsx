@@ -11,6 +11,14 @@ import prescriptionsIcon from '../../images/prescription-icon.svg';
 import observationIcon from '../../images/observation-icon.svg';
 import carePlanIcon from '../../images/careplan-icon.svg';
 import diagnosticIcon from '../../images/diagnostic-icon.svg';
+import encounterIcon from '../../images/encounter-icon.svg';
+import insuranceIcon from '../../images/insurance-icon.svg';
+import healthcareIcon from '../../images/healthcare-icon.svg';
+import organizationIcon from '../../images/organization-icon.svg';
+import practicionerIcon from '../../images/practicioner-icon.svg';
+import affiliationIcon from '../../images/affiliation-icon.svg';
+import locationIcon from '../../images/location-icon.svg';
+import roleIcon from '../../images/role-icon.svg';
 import documentIcon from '../../images/document-icon.svg';
 import rollingSpinner from '../../images/rolling-spinner.svg';
 
@@ -29,6 +37,8 @@ import Button from '../../components/Button';
 import NotificationService from '../../services/NotificationService';
 import { CapabilityStatement } from '../../typesDefinitions/CapabilityStatement';
 import Select from '../../components/Select';
+import { Col, Row } from 'react-bootstrap';
+import styled from 'styled-components';
 const capability_statement: Array<CapabilityStatement> = [
 	{
 		name: 'Carin Blue Button',
@@ -58,7 +68,7 @@ const capability_statement: Array<CapabilityStatement> = [
 	{
 		name: 'Formulary Network',
 		endpoint: 'formulary-net',
-		value: 'formulary',
+		value: 'formulary-net',
 	},
 	{
 		name: 'Plan-Net',
@@ -69,16 +79,21 @@ const capability_statement: Array<CapabilityStatement> = [
 
 const TimeLine = observer(() => {
 	const { patientStore, payerStore, notificationStore } = useStores();
+	const [selected, setSelected] = useState('carin');
+	const [viewState, setViewState] = useState(TimelineResources);
+
+	const totalLengthForCarinStatement =
+		viewState.filter((category) => category.category === 'a').length + 1;
+	const totalLengthForUScoreStatement =
+		viewState.filter((category) => category.category === 'b').length + 1;
+	const totalLengthForFormularyNetworkStatement =
+		viewState.filter((category) => category.category === 'c').length + 1;
 
 	const { selectedResource } = patientStore;
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [isLoadingMoreData, setIsLoadingMoreData] = useState(false);
 	const { notifications } = notificationStore;
-
-	// const [currentResource, setCurrentResource] = useState(
-	//   patientStore.selectedResource
-	// );
 
 	const [resourceData, setResourceData] = useState<{
 		nextLink: string;
@@ -149,31 +164,71 @@ const TimeLine = observer(() => {
 			setIsLoading(false);
 		})();
 	}, [patientStore.selectedResource, shouldRefreshToken]);
-	const getResourceImage = (resourceName: string) => {
-		if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.allergy)
-			return alergyIcon;
-		else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.carePlan)
-			return carePlanIcon;
-		else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.claims)
-			return claimsIcon;
-		else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.condition)
-			return conditionsIcon;
-		else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.diagnosticReport)
-			return diagnosticIcon;
-		else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.documentReference)
-			return documentIcon;
-		else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.immunization)
-			return immunizationIcon;
-		else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.medication)
-			return medicationsIcon;
-		else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.observation)
-			return observationIcon;
-		else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.prescription)
-			return prescriptionsIcon;
-		else if (resourceName === CLAIMS_AND_CLINICAL_RESOURCE.procedure)
-			return proceduresIcon;
 
-		return '';
+	const getResourceImage = (resourceName: string) => {
+		switch (resourceName) {
+			case CLAIMS_AND_CLINICAL_RESOURCE.allergy:
+				return alergyIcon;
+				break;
+			case CLAIMS_AND_CLINICAL_RESOURCE.carePlan:
+				return carePlanIcon;
+				break;
+			case CLAIMS_AND_CLINICAL_RESOURCE.claims:
+				return claimsIcon;
+				break;
+
+			case CLAIMS_AND_CLINICAL_RESOURCE.condition:
+				return conditionsIcon;
+				break;
+			case CLAIMS_AND_CLINICAL_RESOURCE.diagnosticReport:
+				return diagnosticIcon;
+				break;
+			case CLAIMS_AND_CLINICAL_RESOURCE.documentReference:
+				return documentIcon;
+				break;
+			case CLAIMS_AND_CLINICAL_RESOURCE.immunization:
+				return immunizationIcon;
+				break;
+			case CLAIMS_AND_CLINICAL_RESOURCE.medication:
+				return medicationsIcon;
+				break;
+			case CLAIMS_AND_CLINICAL_RESOURCE.observation:
+				return observationIcon;
+				break;
+			case CLAIMS_AND_CLINICAL_RESOURCE.prescription:
+				return prescriptionsIcon;
+				break;
+			case CLAIMS_AND_CLINICAL_RESOURCE.procedure:
+				return proceduresIcon;
+				break;
+			case CLAIMS_AND_CLINICAL_RESOURCE.encounter:
+				return encounterIcon;
+				break;
+			case CLAIMS_AND_CLINICAL_RESOURCE.insurance:
+				return insuranceIcon;
+				break;
+			case CLAIMS_AND_CLINICAL_RESOURCE.healthcare:
+				return healthcareIcon;
+				break;
+			case CLAIMS_AND_CLINICAL_RESOURCE.organization:
+				return organizationIcon;
+				break;
+			case CLAIMS_AND_CLINICAL_RESOURCE.practicioner:
+				return practicionerIcon;
+				break;
+			case CLAIMS_AND_CLINICAL_RESOURCE.role:
+				return roleIcon;
+				break;
+			case CLAIMS_AND_CLINICAL_RESOURCE.location:
+				return locationIcon;
+				break;
+			case CLAIMS_AND_CLINICAL_RESOURCE.affiliation:
+				return affiliationIcon;
+				break;
+
+			default:
+				break;
+		}
 	};
 
 	const ResourceItem = ({
@@ -224,30 +279,87 @@ const TimeLine = observer(() => {
 		setIsLoading(false);
 	};
 
+	const handleSelected = (e: string) => setSelected(e);
+
+	const OpacityDivA = styled.div`
+		:nth-child(n + ${totalLengthForCarinStatement}) {
+			opacity: 0.4;
+		}
+	`;
+	const OpacityDivB = styled.div`
+		:nth-child(n + ${totalLengthForUScoreStatement}) {
+			opacity: 0.4;
+		}
+	`;
+
+	const OpacityDivC = styled.div`
+		:nth-child(n + ${totalLengthForFormularyNetworkStatement}) {
+			opacity: 0.4;
+		}
+	`;
+
 	return (
 		<div id='app-timeline'>
 			{isLoading && <Loading />}
-			<div>
-				<Select
-					onChange={(e) => {
-						console.log('capability ==>', e);
-					}}
-					items={capability_statement}
-				/>
-			</div>
+			<Row>
+				<Col md={6} sm={12}>
+					<Select onChange={handleSelected} items={capability_statement} />
+				</Col>
+			</Row>
+
 			<div className='resource-container'>
-				{TimelineResources.map((item) => (
-					<ResourceItem
-						key={item.name}
-						resourceName={item.resource}
-						name={item.name}
-						color={item.color}
-						selected={selectedResource == item.resource}
-						onClick={() => {
-							patientStore.setSelectedResource(item.resource);
-						}}
-					/>
-				))}
+				{selected === 'carin'
+					? TimelineResources?.sort((a, b) =>
+							a.category === 'a' ? -1 : 1
+					  ).map((item) => (
+							<OpacityDivA>
+								<ResourceItem
+									key={item.name}
+									resourceName={item.resource}
+									name={item.name}
+									color={item.color}
+									selected={selectedResource == item.resource}
+									onClick={() => {
+										patientStore.setSelectedResource(item.resource);
+									}}
+								/>{' '}
+							</OpacityDivA>
+					  ))
+					: selected === 'uscore'
+					? TimelineResources.sort((a, b) => (a.category === 'b' ? -1 : 1)).map(
+							(item) => (
+								<OpacityDivB>
+									<ResourceItem
+										key={item.name}
+										resourceName={item.resource}
+										name={item.name}
+										color={item.color}
+										selected={selectedResource == item.resource}
+										onClick={() => {
+											patientStore.setSelectedResource(item.resource);
+										}}
+									/>
+								</OpacityDivB>
+							)
+					  )
+					: selected === 'formulary-net'
+					? TimelineResources.sort((a, b) => (a.category === 'c' ? -1 : 1)).map(
+							(item) => (
+								<OpacityDivC>
+									<ResourceItem
+										key={item.name}
+										resourceName={item.resource}
+										name={item.name}
+										color={item.color}
+										selected={selectedResource == item.resource}
+										onClick={() => {
+											patientStore.setSelectedResource(item.resource);
+										}}
+									/>
+								</OpacityDivC>
+							)
+					  )
+					: ''}
 			</div>
 
 			<div className='timeline-content'>
