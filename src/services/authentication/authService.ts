@@ -1,6 +1,5 @@
 import { ApiResponse } from "./../api/apiResponse";
 import { HttpService } from "./../httpService";
-import { Api } from "../api";
 
 export class AuthService {
   async userLogin(payload: any): Promise<ApiResponse> {

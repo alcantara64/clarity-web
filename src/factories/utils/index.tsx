@@ -1,4 +1,3 @@
-import * as React from "react";
 
 import { Route, Switch } from "react-router-dom";
 import moment from "moment";
@@ -79,7 +78,7 @@ export const getNameAlias = (name: string) => {
 };
 
 export const getTimelineNameResource = (resourceName: string) => {
-  return TimelineResources?.find((x) => x.resource == resourceName)?.name;
+  return TimelineResources?.find((x) => x.resource === resourceName)?.name;
 };
 
 export const formatDatePeriod = (

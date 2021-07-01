@@ -12,7 +12,10 @@ import Button from "../Button";
 const TimelineList = ({ data, itemClick = (item: any) => {}, shouldRefreshToken, refreshToken, }: any,) => {
   const getItemDisplay = (entry: any) => {
     let resourceDate = "";
-    if (
+    if(entry.resource && entry.resource.created){
+      resourceDate = entry.resource.created;
+    }
+    if (!resourceDate &&
       entry.resource.item?.length &&
       entry.resource.item[0].servicedPeriod?.start
     ) {
@@ -51,7 +54,10 @@ const TimelineList = ({ data, itemClick = (item: any) => {}, shouldRefreshToken,
       resourceDate = entry.resource.period.start;
       console.log(resourceDate);
     }
-
+    if (!resourceDate && entry.resource.date) {
+      resourceDate = entry.resource.date;
+      console.log(resourceDate);
+    }
     if (resourceDate) {
       const dateObject = new Date(resourceDate);
       if (isNaN(dateObject.getTime())) {

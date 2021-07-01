@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Loading from "../../components/Loading";
 import Provider from "../../components/Provider";
 import { useStores } from "../../models";
 import { observer } from "mobx-react-lite";
 
 import "./index.less";
-import OauthStep1 from "../../components/OauthStep1";
 import OauthStep2 from "../../components/OauthStep2";
 import Modal from '../../components/Modal'
-import { disconnect } from "node:process";
 import { DATA_SOURCE } from "../../enums/dataSource";
 
 const ConnectionsPage = observer(() => {
@@ -84,7 +82,7 @@ const ConnectionsPage = observer(() => {
           />
         </div>
       )}
-      <Modal size="sm" primaryButtonText="Disconnect" rightButtonClassName="modal-button" showModal={showModal} onHide={() => setShowModal(false)}  oK={disconnect} headerText="Disconnect Provider?" centered bodyText="Are you sure you want to disconnect this provider? Payer information will be kept and can be reconnected at anytime." />
+      <Modal size="sm" primaryButtonText="Disconnect" rightButtonClassName="modal-button" showModal={showModal} onHide={() => setShowModal(false)}  oK={disconnect} headerText="Disconnect Payer?" centered bodyText="Are you sure you want to disconnect this provider? Payer information will be kept and can be reconnected at anytime." />
     </div>
   );
 });

@@ -1,5 +1,4 @@
 
-import { AUTH_GRANT_TYPES } from "./../../constants/constants";
 import { ApiResponse } from "./../api/apiResponse";
 import { HttpService } from "./../httpService";
 import { DATA_SOURCE } from "./../../enums/dataSource";

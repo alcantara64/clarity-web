@@ -31,7 +31,7 @@ export const PatientStoreModel = types
         params,
       );
 
-      if (result && result.kind == "ok") {
+      if (result && result.kind === "ok") {
         if (result.data) {
           // self.setPatients(result.data);
         } else {

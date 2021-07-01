@@ -36,7 +36,7 @@ const SettingsPage = () => {
         <h2 className="header-title">About {APP_NAMe}</h2>
 
         <div className="logo-container">
-          <img src={appLogo} />
+          <img src={appLogo}  alt="logo"/>
           <span className="title">{APP_NAMe}</span>
         </div>
 
@@ -54,6 +54,7 @@ const SettingsPage = () => {
             href="https://www.onyxhealth.io/clarity/"
             target="_blank"
             className="visit-link"
+            rel="noreferrer"
           >
             Visit {APP_NAMe} website
           </a>
@@ -61,7 +62,7 @@ const SettingsPage = () => {
 
         <div className="brand-container">
           <h5 className="power-text">Powered By</h5>
-          <img src={onyxLogo} />
+          <img src={onyxLogo} alt="app logo" />
         </div>
       </div>
     );
@@ -99,22 +100,22 @@ const SettingsPage = () => {
           <Col md={4}>
             <OptionItem
               name={"About" + APP_NAMe}
-              selected={selectedItem == 0}
+              selected={selectedItem === 0}
               onClick={() => {
                 setSelectedItem(0);
               }}
             />
             <OptionItem
               name="Privacy policy & Terms of service"
-              selected={selectedItem == 1}
+              selected={selectedItem === 1}
               onClick={() => {
                 setSelectedItem(1);
               }}
             />
           </Col>
           <Col md={8}>
-            {selectedItem == 0 && <AboutUs />}
-            {selectedItem == 1 && <Privacy />}
+            {selectedItem === 0 && <AboutUs />}
+            {selectedItem === 1 && <Privacy />}
           </Col>
         </Row>
       </BrowserView>
@@ -131,12 +132,12 @@ const SettingsPage = () => {
             >
               <div
                 className={`toggle-header ${getSelectedClass(
-                  selectedItem == 0
+                  selectedItem === 0
                 )}`}
               >
                 <span className="title">About Clarity</span>
                 <div className="icon-container">
-                  {(selectedItem == 0 && (
+                  {(selectedItem === 0 && (
                     <FontAwesomeIcon icon={faAngleDown} className="icon-down" />
                   )) || (
                     <FontAwesomeIcon
@@ -163,12 +164,12 @@ const SettingsPage = () => {
             >
               <div
                 className={`toggle-header ${getSelectedClass(
-                  selectedItem == 1
+                  selectedItem === 1
                 )}`}
               >
                 <span className="title">Privacy policy & Terms of service</span>
                 <div className="icon-container">
-                  {(selectedItem == 1 && (
+                  {(selectedItem === 1 && (
                     <FontAwesomeIcon icon={faAngleDown} className="icon-down" />
                   )) || (
                     <FontAwesomeIcon

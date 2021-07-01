@@ -1,13 +1,9 @@
-import * as React from "react";
 import "./index.less";
-import { Route, Switch, useLocation, NavLink } from "react-router-dom";
-import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
-import appLogo from "../../images/app-logo.svg";
+import { Route, Switch, useLocation } from "react-router-dom";
 
 import ProtectedRoute from "./ProtectedRoute";
 import { getPageTitle, getRoute } from "../../factories/utils";
 import { ROUTES } from "../../constants/routes";
-import defaulProfile from "../../images/default-profile.svg";
 import DocumentTitle from "react-document-title";
 
 const AppRouter = () => {

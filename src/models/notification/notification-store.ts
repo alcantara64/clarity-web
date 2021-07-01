@@ -40,7 +40,7 @@ export const NotificationStoreModel = types
       const notificationService = new NotificationService();
 
       const result = yield notificationService.getNotifications(authStore.token);
-      if (result && result.kind == "ok") {
+      if (result && result.kind === "ok") {
         if (result.data) {
           self.setNotifications(result.data);
         } else {

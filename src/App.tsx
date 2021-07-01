@@ -1,8 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 
-import React, { useEffect } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import AppRouter from "./components/Router";

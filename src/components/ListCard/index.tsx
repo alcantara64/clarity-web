@@ -1,12 +1,12 @@
-import { formatDatePeriod } from "../../factories/utils";
-import TimelineDetailsCardDropdown from "../TimelineDetailsCardDropdown";
+import { formatDatePeriod } from '../../factories/utils';
+import TimelineDetailsCardDropdown from '../TimelineDetailsCardDropdown';
 
-import TimelineDetailsCardItem from "../TimelineDetailsCardItem";
-import "./index.less";
+import TimelineDetailsCardItem from '../TimelineDetailsCardItem';
+import './index.less';
 
-const ImmunizationsCardItem = ({ resource }: any) => {
+const ListCardItem = ({ resource }: any) => {
   return (
-    <div id="immunization-timeline-card">
+    <div id="list-timeline-card">
       {!!resource.identifier?.length && (
         <TimelineDetailsCardDropdown
           header="Identifiers"
@@ -18,12 +18,19 @@ const ImmunizationsCardItem = ({ resource }: any) => {
       {resource.status && (
         <TimelineDetailsCardItem label="STATUS" value={resource.status} />
       )}
-      {resource.statusReason?.coding &&
-        resource.statusReason?.coding.length &&
-        resource.statusReason?.coding[0].display && (
+      {resource.mode && (
+        <TimelineDetailsCardItem label="MODE" value={resource.mode} />
+      )}
+      {resource.title && (
+        <TimelineDetailsCardItem label="TITLE" value={resource.title} />
+      )}
+
+      {resource.code?.coding &&
+        resource.code?.coding.length &&
+        resource.code?.coding[0].display && (
           <TimelineDetailsCardItem
-            label="STATUS REASON"
-            value={`${resource.statusReason?.coding[0].display}`}
+            label="CODE"
+            value={`${resource.code?.coding[0].display}`}
           />
         )}
 
@@ -41,44 +48,13 @@ const ImmunizationsCardItem = ({ resource }: any) => {
           value={formatDatePeriod(resource.occurrenceDateTime)}
         />
       )}
-      {resource.recorded && (
+      {resource.date && (
         <TimelineDetailsCardItem
-          label="RECORDED"
-          value={formatDatePeriod(resource.recorded)}
+          label="DATE"
+          value={formatDatePeriod(resource.date)}
         />
       )}
-      {resource.route?.coding &&
-        resource.route?.coding.length &&
-        resource.route?.coding[0].display && (
-          <TimelineDetailsCardItem
-            label="ROUTE"
-            value={`${resource.route?.coding[0].display}`}
-          />
-        )}
-      {resource.primarySource && (
-        <TimelineDetailsCardItem
-          label="PRIMARY SOURCE"
-          value={`${resource.primarySource}`}
-        />
-      )}
-
-      {!!resource.category?.length && (
-        <TimelineDetailsCardDropdown
-          header="Category"
-          items={resource.category.map((item: any) => (
-            <TimelineDetailsCardItem label="Value" value={item} />
-          ))}
-        />
-      )}
-
-      {resource.code?.coding &&
-        resource.code?.coding.length &&
-        resource.code?.coding[0].display && (
-          <TimelineDetailsCardItem
-            label="CODE"
-            value={`${resource.code?.coding[0].display}`}
-          />
-        )}
+      {/* stopped here */}
 
       {!!resource.encounter?.length && (
         <TimelineDetailsCardDropdown
@@ -113,7 +89,7 @@ const ImmunizationsCardItem = ({ resource }: any) => {
         <TimelineDetailsCardDropdown
           header="Notes"
           items={resource.note.map((item: any) => (
-            <TimelineDetailsCardItem label="Text" value={item.text || ""} />
+            <TimelineDetailsCardItem label="Text" value={item.text || ''} />
           ))}
         />
       )}
@@ -121,4 +97,4 @@ const ImmunizationsCardItem = ({ resource }: any) => {
   );
 };
 
-export default ImmunizationsCardItem;
+export default ListCardItem;

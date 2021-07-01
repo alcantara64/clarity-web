@@ -24,12 +24,14 @@ const ForgotPassword = () => {
   const [resetCode, setResetCode] = useState<string>('');
 
   const onForgotPasswordStep1Submit = async (data: any) => {
+    setIsLoading(true)
     const response =  await userStore.forgotPassword(data.email);
 
     if(response.kind === "ok"){
     setResetToken(response?.data?.token)
     setCurrentStep(1);
     }
+    setIsLoading(false)
   };
 
   const onForgotPasswordStep2Submit = async (data: any) => {
@@ -88,12 +90,12 @@ const ForgotPassword = () => {
 
       <div className="forgot-password-container">
         <div className="logo-container">
-          <img src={appLogo} />
+          <img src={appLogo} alt="" />
 
           <h1 className="header">Clarity</h1>
         </div>
 
-        {currentStep == 0 && (
+        {currentStep === 0 && (
           <ForgotPasswordStep1
             onBackPress={() => {
               history.push(ROUTES.loginPage);
@@ -102,7 +104,7 @@ const ForgotPassword = () => {
           />
         )}
 
-        {currentStep == 1 && (
+        {currentStep === 1 && (
           <ForgotPasswordStep2
             onBackPress={() => {
               setCurrentStep(0);
@@ -111,7 +113,7 @@ const ForgotPassword = () => {
           />
         )}
 
-        {currentStep == 2 && (
+        {currentStep === 2 && (
           <ForgotPasswordStep3
             onBackPress={() => {
               setCurrentStep(1);
@@ -120,7 +122,7 @@ const ForgotPassword = () => {
           />
         )}
 
-        {currentStep == 3 && <SuccessBanner />}
+        {currentStep === 3 && <SuccessBanner />}
       </div>
     </div>
   );

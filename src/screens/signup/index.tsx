@@ -51,7 +51,6 @@ const signUpFormSchema = yup.object().shape({
 
 const SignUpPage = () => {
   const {
-    register,
     handleSubmit,
     control,
     formState: { errors, isValid },
@@ -86,9 +85,9 @@ const SignUpPage = () => {
       tenantId: process.env.REACT_APP_TENANT_ID,
     };
 
-    const resp = await userStore.userSignUp(payload).catch((ex) => {});
+    const resp = await userStore.userSignUp(payload).catch(() => {});
 
-    if (resp.kind == "ok") {
+    if (resp.kind === "ok") {
       await userStore.fetchProfile().catch(() => {});
       setShowSuccess(true);
     }
@@ -100,7 +99,7 @@ const SignUpPage = () => {
     return (
       <div className="success-banner">
         <div className="signup-logo-container">
-          <img src={appLogo} />
+          <img src={appLogo} alt="app logo" />
 
           <h1 className="header">Clarity</h1>
         </div>
@@ -129,7 +128,7 @@ const SignUpPage = () => {
       ) : (
         <div className="signup-container">
           <div className="signup-logo-container">
-            <img src={appLogo} />
+            <img src={appLogo} alt="app logo" />
 
             <h1 className="header">Clarity</h1>
           </div>
@@ -283,6 +282,7 @@ const SignUpPage = () => {
                               className="privacy"
                               href={`https://mycareapi-test.mycareai.com/api/v1/privacy_policy`}
                               target="_blank"
+                              rel="noreferrer"
                             >
                               Terms & Privacy Policy
                             </a>

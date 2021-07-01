@@ -5,7 +5,7 @@ import Loading from "../../components/Loading";
 import OauthStep1 from "../../components/OauthStep1";
 import OauthStep2 from "../../components/OauthStep2";
 import OauthLoading from "../../components/OauthLoading";
-import { useHistory, useLocation, useParams } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { ROUTES } from "../../constants/routes";
 import queryString from "query-string";
 import NotificationService from "../../services/NotificationService";
@@ -70,7 +70,7 @@ const OauthPage = () => {
               .connectPayer(payload)
               .catch((ex) => {});
 
-            if (resp.kind == "ok") {
+            if (resp.kind === "ok") {
               setGettingPayer(false);
               history?.push(`${ROUTES.timeLine}`);
             }else{
@@ -100,7 +100,7 @@ const OauthPage = () => {
 
   return (
     <div id="oauth-page">
-      {!isLoading && oauthStep == 0 && (
+      {!isLoading && oauthStep === 0 && (
         <div className="oauth-step1-container">
           <OauthStep1
             noDefaultPayer={!payerStore.defaultPayer()}
@@ -110,7 +110,7 @@ const OauthPage = () => {
           />
         </div>
       )}
-      {!isLoading && oauthStep == 1 && (
+      {!isLoading && oauthStep === 1 && (
         <div className="oauth-step2-container">
           <OauthStep2
             onBackClick={() => {

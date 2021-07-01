@@ -4,9 +4,9 @@ import TimelineDetailsCardDropdown from "../TimelineDetailsCardDropdown";
 import TimelineDetailsCardItem from "../TimelineDetailsCardItem";
 import "./index.less";
 
-const DiagnosticReportTimelineCard = ({ resource }: any) => {
+const EndpointTimelineCardItem = ({ resource }: any) => {
   return (
-    <div id="diagnostic-report-timeline-card">
+    <div id="endpoint-timeline-card">
       {!!resource.identifier?.length && (
         <TimelineDetailsCardDropdown
           header="Identifiers"
@@ -15,21 +15,23 @@ const DiagnosticReportTimelineCard = ({ resource }: any) => {
           ))}
         />
       )}
-
-      {resource.code &&
-        resource.code.coding &&
-        resource.code.coding.length &&
-        (resource.code.coding[0].display || resource.code.coding[0].code) && (
+       {resource.status && (
+        <TimelineDetailsCardItem label="STATUS" value={resource.status} />
+      )}
+      {resource.connectionType &&
+        resource.connectionType.coding &&
+        resource.connectionType.coding.length &&
+        resource.connectionType.coding[0].display && (
           <TimelineDetailsCardItem
-            label="CODE"
+            label="CONNECTION TYPE"
             value={
-              resource.code.coding[0].display || resource.code.coding[0].code
+              resource.connectionType.coding[0].display ||
+              resource.connectionType.coding[0].code
             }
           />
         )}
-
-      {resource.type && resource.type && (
-        <TimelineDetailsCardItem label="Type" value={resource.type} />
+      {resource.name && (
+        <TimelineDetailsCardItem label="NAME" value={resource.name} />
       )}
 
       {!!resource.category?.length && (
@@ -40,7 +42,7 @@ const DiagnosticReportTimelineCard = ({ resource }: any) => {
               (item: any) =>
                 item.coding && item.coding.length && item.coding[0].display
             )
-            .map((x: any) => (
+            ?.map((x: any) => (
               <TimelineDetailsCardItem
                 label="Value"
                 value={x.coding[0].display}
@@ -51,8 +53,8 @@ const DiagnosticReportTimelineCard = ({ resource }: any) => {
 
       {resource.criticality && (
         <TimelineDetailsCardItem
-          label="CRITICALITY"
-          value={`${resource.criticality}`}
+          label="ADDRESS"
+          value={`${resource.address}`}
         />
       )}
 
@@ -65,25 +67,10 @@ const DiagnosticReportTimelineCard = ({ resource }: any) => {
           />
         )}
 
-      {!!resource.encounter?.length && (
-        <TimelineDetailsCardDropdown
-          header="Encounter"
-          items={resource.encounter.map((item: any) => (
-            <TimelineDetailsCardItem label="" value={item.reference} />
-          ))}
-        />
-      )}
-
-      {resource.effectiveDateTime && (
+      {resource.period && resource.period.start && (
         <TimelineDetailsCardItem
-          label="EFFECTIVE"
-          value={formatDatePeriod(resource.effectiveDateTime)}
-        />
-      )}
-      {resource.issued && (
-        <TimelineDetailsCardItem
-          label="ISSUED"
-          value={formatDatePeriod(resource.issued)}
+          label="PERIOD"
+          value={formatDatePeriod(resource.period.start,resource.period?.end)}
         />
       )}
       {resource.recorder &&
@@ -94,17 +81,8 @@ const DiagnosticReportTimelineCard = ({ resource }: any) => {
             value={resource.recorder.practitioner.name}
           />
         )}
-
-      {!!resource.performer?.length && (
-        <TimelineDetailsCardDropdown
-          header="PERFORMER"
-          items={resource.performer.map((item: any) => (
-            <TimelineDetailsCardItem label="Text" value={item?.display || ""} />
-          ))}
-        />
-      )}
     </div>
   );
 };
 
-export default DiagnosticReportTimelineCard;
+export default EndpointTimelineCardItem;

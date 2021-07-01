@@ -4,15 +4,17 @@ import TimelineDetailsCardDropdown from "../TimelineDetailsCardDropdown";
 import TimelineDetailsCardItem from "../TimelineDetailsCardItem";
 import "./index.less";
 
-const ClaimsTimelineCard = ({ resource }: any) => {
+const HealthCareServiceTimelineCard = ({ resource }: any) => {
   console.log(resource);
 
   return (
-    <div id="claims-timeline-card">
-      {!!(Array.isArray(resource.contained) && resource.contained.length) && (
-        <TimelineDetailsCardItem
-          label="Clinical Status"
-          value={resource.contained[0].status}
+    <div id="health-timeline-card">
+      {!!resource.identifier?.length && (
+        <TimelineDetailsCardDropdown
+          header="Identifiers"
+          items={resource.identifier.map((item: any) => (
+            <TimelineDetailsCardItem label="Value" value={item.value} />
+          ))}
         />
       )}
 
@@ -42,8 +44,8 @@ const ClaimsTimelineCard = ({ resource }: any) => {
           />
         )}
 
-      {!!resource.use && (
-        <TimelineDetailsCardItem label="USE" value={resource.use} />
+      {resource.active && (
+        <TimelineDetailsCardItem label="ACTIVE" value={resource.active} />
       )}
 
       {resource.created && (
@@ -307,4 +309,4 @@ const ClaimsTimelineCard = ({ resource }: any) => {
   );
 };
 
-export default ClaimsTimelineCard;
+export default HealthCareServiceTimelineCard;

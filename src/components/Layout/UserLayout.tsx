@@ -1,6 +1,5 @@
 import "./UserLayout.less";
 
-import * as React from "react";
 
 import { Redirect, Route, Switch } from "react-router-dom";
 // import { observer } from "mobx-react-lite";
@@ -8,7 +7,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import { userRouter } from "../Router/router.config";
 
 import { ROUTES } from "../../constants/routes";
-import { Container, Row, Col, Carousel } from "react-bootstrap";
+import { Container, Carousel } from "react-bootstrap";
 
 import homeSlide1 from "../../images/home_slide_1.png";
 import homeSlide2 from "../../images/home_slide_2.png";

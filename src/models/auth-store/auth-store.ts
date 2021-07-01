@@ -1,11 +1,8 @@
 import { AuthService } from "./../../services/authentication/authService";
-import { RootStoreModel } from "./../root-store/root-store";
 
 import { withEnvironment } from "./../extensions/with-environment";
-import { Instance, SnapshotOut, types, flow, getRoot } from "mobx-state-tree";
+import { Instance, SnapshotOut, types, flow } from "mobx-state-tree";
 import NotificationService from "../../services/NotificationService";
-import { withRootStore } from "../extensions/with-root-store";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export const AuthStoreModel = types
   .model("AuthStore")
@@ -26,7 +23,7 @@ export const AuthStoreModel = types
 
       const result = yield authService.userLogin(payload);
 
-      if (result && result.kind == "ok") {
+      if (result && result.kind === "ok") {
         if (result.data) {
           self.token = result.data.token;
         } else {

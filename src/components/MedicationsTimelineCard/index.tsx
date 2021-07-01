@@ -1,5 +1,3 @@
-import moment from "moment";
-import { TimelineDateFormat } from "../../constants/constants";
 import { formatDatePeriod } from "../../factories/utils";
 import TimelineDetailsCardDropdown from "../TimelineDetailsCardDropdown";
 

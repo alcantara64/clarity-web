@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Form, Spinner } from "react-bootstrap";
+import { useState } from "react";
+import { Form } from "react-bootstrap";
 
 import appLogo from "../../images/app-logo.svg";
 
@@ -7,7 +7,7 @@ import FormLabel from "../../components/FormLabel";
 import FormInput from "../../components/FormInput";
 import FormPasswordInput from "../../components/FormPasswordInput";
 import Button from "../../components/Button";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -23,7 +23,6 @@ interface IFormInputs {
 }
 
 const Login = () => {
-  const location = useLocation();
 
   const history = useHistory();
 
@@ -58,10 +57,10 @@ const Login = () => {
       tenantId: process.env.REACT_APP_TENANT_ID,
     };
 
-    const resp = await authStore.userLogin(payload).catch((ex) => {});
+    const resp = await authStore.userLogin(payload).catch(() => {});
     setIsLoading(false);
-    if (resp.kind == "ok") {
-      userStore.fetchProfile().catch((ex) => {});
+    if (resp.kind === "ok") {
+      userStore.fetchProfile().catch(() => {});
       history.push(ROUTES.oauth);
     }
   };
@@ -74,7 +73,7 @@ const Login = () => {
       {isLoading && <Loading />}
       <div className="login-container">
         <div className="logo-container">
-          <img src={appLogo} />
+          <img src={appLogo} alt="logo" />
 
           <h1 className="header">Clarity</h1>
         </div>

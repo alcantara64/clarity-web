@@ -17,7 +17,7 @@ const ProfilePage = () => {
     (async () => {
       setIsLoading(true);
 
-      const resp = await userStore.fetchProfile().catch((ex) => {});
+      await userStore.fetchProfile().catch((ex) => {});
       setName((userProfile?.firstName || "") + (userProfile?.lastName || ""));
       setIsLoading(false);
     })();

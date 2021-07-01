@@ -1,12 +1,9 @@
 import { PayerService } from "./../../services/payer/payerService";
-import { AuthService } from "./../../services/authentication/authService";
-import { RootStoreModel } from "./../root-store/root-store";
 
 import { withEnvironment } from "./../extensions/with-environment";
-import { Instance, SnapshotOut, types, flow, getRoot } from "mobx-state-tree";
+import { Instance, SnapshotOut, types, flow } from "mobx-state-tree";
 import NotificationService from "../../services/NotificationService";
 import { withRootStore } from "../extensions/with-root-store";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 const PayerModel = types.model("PayerModel").props({
   is_connected: types.maybe(types.boolean),
@@ -51,7 +48,7 @@ export const PayerStoreModel = types
 
       const result = yield payerService.getPayer(authStore.token);
 
-      if (result && result.kind == "ok") {
+      if (result && result.kind === "ok") {
         if (result.data) {
           self.setPayers(result.data);
         } else {
@@ -73,7 +70,7 @@ export const PayerStoreModel = types
 
       const result = yield payerService.connectPayer(authStore.token, payload);
 
-      if (result && result.kind == "ok") {
+      if (result && result.kind === "ok") {
         if (result.data) {
           // self.setPayers(result.data);
         } else {
@@ -95,7 +92,7 @@ export const PayerStoreModel = types
 
       const result = yield payerService.refreshToken(authStore.token, connectionId );
 
-      if (result && result.kind == "ok") {
+      if (result && result.kind === "ok") {
         if (result.data) {
          // self.setPayers(result.data);
          NotificationService.show(

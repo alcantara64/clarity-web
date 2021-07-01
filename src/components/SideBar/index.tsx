@@ -1,6 +1,4 @@
 import SideNav, {
-  Toggle,
-  Nav,
   NavItem,
   NavIcon,
   NavText,
@@ -34,7 +32,7 @@ const AppSideBar = ({ onSidebartoggle }: any) => {
 
   const isActiveRouteClass = (key: string) => {
     return classNames({
-      activeRoute: location.pathname == key,
+      activeRoute: location.pathname === key,
     });
   };
   return (
@@ -72,7 +70,7 @@ const AppSideBar = ({ onSidebartoggle }: any) => {
         <div className="logo-container">
           {!sideBarCollapsed && (
             <>
-              <img src={appLogo} />
+              <img src={appLogo} alt="logo" />
               <h1 className="title">Clarity</h1>
             </>
           )}
@@ -93,24 +91,24 @@ const AppSideBar = ({ onSidebartoggle }: any) => {
             eventKey={`${ROUTES.timeLine}`}
           >
             <NavIcon>
-              <img src={healthDataIcon} />
+              <img src={healthDataIcon} alt="health icon" />
             </NavIcon>
             <NavText>
               <span className="nav-text">MyHealthData</span>
             </NavText>
-            <img src={sideBarIndicatorActive} className="active-indicator" />
+            <img src={sideBarIndicatorActive} alt="indicator" className="active-indicator" />
           </NavItem>
           <NavItem
             navitemClassName={`nav-item ${isActiveRouteClass(ROUTES.profile)}`}
             eventKey={`${ROUTES.profile}`}
           >
             <NavIcon>
-              <img src={sidearProfileIcon} />
+              <img src={sidearProfileIcon} alt="profile" />
             </NavIcon>
             <NavText>
               <span className="nav-text">Profile</span>
             </NavText>
-            <img src={sideBarIndicatorActive} className="active-indicator" />
+            <img src={sideBarIndicatorActive} alt="indicator" className="active-indicator" />
           </NavItem>
           <NavItem
             navitemClassName={`nav-item ${isActiveRouteClass(
@@ -119,24 +117,24 @@ const AppSideBar = ({ onSidebartoggle }: any) => {
             eventKey={`${ROUTES.connections}`}
           >
             <NavIcon>
-              <img src={sideBarConnections} />
+              <img src={sideBarConnections} alt="connections" />
             </NavIcon>
             <NavText>
               <span className="nav-text">Connections</span>
             </NavText>
-            <img src={sideBarIndicatorActive} className="active-indicator" />
+            <img src={sideBarIndicatorActive} alt="" className="active-indicator" />
           </NavItem>
           <NavItem
             navitemClassName={`nav-item ${isActiveRouteClass(ROUTES.settings)}`}
             eventKey={`${ROUTES.settings}`}
           >
             <NavIcon>
-              <img src={sideBarSettingsIcon} />
+              <img src={sideBarSettingsIcon} alt="settings" />
             </NavIcon>
             <NavText>
               <span className="nav-text">Settings</span>
             </NavText>
-            <img src={sideBarIndicatorActive} className="active-indicator" />
+            <img src={sideBarIndicatorActive} alt="" className="active-indicator" />
           </NavItem>
 
           <div className="bottom-container">
@@ -147,12 +145,12 @@ const AppSideBar = ({ onSidebartoggle }: any) => {
               }}
             >
               {!sideBarCollapsed && <span>Log Out</span>}
-              <img src={logoutIcon} />
+              <img src={logoutIcon} alt="logout"/>
             </div>
             {!sideBarCollapsed && (
               <div className="nav-item-power">
                 <h5 className="power-text">Powered By</h5>
-                <img src={onyxLogo} />
+                <img src={onyxLogo} alt="Onyx logo" />
               </div>
             )}
           </div>

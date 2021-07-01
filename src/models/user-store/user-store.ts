@@ -1,6 +1,6 @@
 import { UserService } from "./../../services/user/userService";
 import { withRootStore } from "./../extensions/with-root-store";
-import { Instance, SnapshotOut, types, flow, getRoot } from "mobx-state-tree";
+import { Instance, SnapshotOut, types, flow } from "mobx-state-tree";
 import { withEnvironment } from "../extensions/with-environment";
 import NotificationService from "../../services/NotificationService";
 import { DATA_SOURCE } from "./../../enums/dataSource";
@@ -41,7 +41,7 @@ export const UserStoreModel = types
 
       const result = yield userService.signUp(payload);
 
-      if (result && result.kind == "ok") {
+      if (result && result.kind === "ok") {
         if (result.data) {
           const { token } = result.data;
 
@@ -68,7 +68,7 @@ export const UserStoreModel = types
 
       const result = yield userService.getProfile(authStore.token);
 
-      if (result && result.kind == "ok") {
+      if (result && result.kind === "ok") {
         if (result.data) {
           self.setUser(result.data);
         } else {
@@ -114,7 +114,7 @@ export const UserStoreModel = types
 
       const result = yield userService.forgotPassword(authStore.token, email);
 
-      if (result && result.kind == "ok") {
+      if (result && result.kind === "ok") {
         if (result.data) {
           NotificationService.show(
             result?.data?.message || result?.data,
@@ -140,7 +140,7 @@ export const UserStoreModel = types
 
       const result = yield userService.resetPassword(authStore.token, payload);
 
-      if (result && result.kind == "ok") {
+      if (result && result.kind === "ok") {
         if (result.data) {
           NotificationService.show(
             result?.data?.message || result?.data,
@@ -165,7 +165,7 @@ export const UserStoreModel = types
 
       const result = yield userService.verifyResetCode(authStore.token, payload);
 
-      if (result && result.kind == "ok") {
+      if (result && result.kind === "ok") {
         if (result.data) {
           NotificationService.show(
             result?.data?.message || result?.data,

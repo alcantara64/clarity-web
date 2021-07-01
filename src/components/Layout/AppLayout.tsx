@@ -1,11 +1,10 @@
 import "./AppLayout.less";
 
-import React, { useState } from "react";
+import { useState } from "react";
 
-import { Route, Switch, NavLink, Redirect } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import { appRouters } from "../Router/router.config";
-import { ROUTES } from "../../constants/routes";
 import AppSideBar from "../SideBar";
 import classNames from "classnames";
 import { isMobile } from "react-device-detect";

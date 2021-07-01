@@ -1,36 +1,28 @@
-import { useHistory } from "react-router";
-import { getTimelineNameResource } from "../../factories/utils";
+import { useHistory } from 'react-router';
+import { getTimelineNameResource } from '../../factories/utils';
 
-import claimsIcon from "../../images/claims-icon.svg";
-import alergyIcon from "../../images/alergy-icon.svg";
-import proceduresIcon from "../../images/procedures-icon.svg";
-import immunizationIcon from "../../images/immunisation-icon.svg";
-import conditionsIcon from "../../images/conditions-icon.svg";
-import medicationsIcon from "../../images/medications-icon.svg";
-import prescriptionsIcon from "../../images/prescription-icon.svg";
-import observationIcon from "../../images/observation-icon.svg";
-import carePlanIcon from "../../images/careplan-icon.svg";
-import diagnosticIcon from "../../images/diagnostic-icon.svg";
-import documentIcon from "../../images/document-icon.svg";
-import encounterIcon from "../../images/encounter-icon.svg";
+//import encounterIcon from "../../images/encounter-icon.svg";
 
-import "./index.less";
-import { CLAIMS_AND_CLINICAL_RESOURCE } from "../../constants/constants";
-import SecondaryButton from "../../components/SecondaryButton";
-import Button from "../../components/Button";
-import { useState } from "react";
-import { Modal } from "react-bootstrap";
-import ClaimsTimelineCard from "../../components/ClaimsTimelineCard";
-import ProceduresTimelineCard from "../../components/ProceduresTimelineCard";
-import AllergyTimelineCard from "../../components/AlergyTimelineCard";
-import ConidtionsTimelineCardItem from "../../components/ConditionsTimelineCard";
-import ImmunizationsCardItem from "../../components/ImmunizationTimelineCard";
-import MedicationsTimelineCard from "../../components/MedicationsTimelineCard";
-import PrescriptionsTimelineCard from "../../components/PrescriptionsTimelineCard";
-import ObservationsTimelineCard from "../../components/ObservationsTimelineCard";
-import CarePlanTimelineCard from "../../components/CardPlanTimelineCard";
-import DiagnosticReportTimelineCard from "../../components/DiagnosticReportTimelineCard";
-import JSONTree from 'react-json-tree'
+import './index.less';
+import { CLAIMS_AND_CLINICAL_RESOURCE } from '../../constants/constants';
+import SecondaryButton from '../../components/SecondaryButton';
+import Button from '../../components/Button';
+import { useState } from 'react';
+import { Modal } from 'react-bootstrap';
+import ClaimsTimelineCard from '../../components/ClaimsTimelineCard';
+import ProceduresTimelineCard from '../../components/ProceduresTimelineCard';
+import AllergyTimelineCard from '../../components/AlergyTimelineCard';
+import ConidtionsTimelineCardItem from '../../components/ConditionsTimelineCard';
+import ImmunizationsCardItem from '../../components/ImmunizationTimelineCard';
+import MedicationsTimelineCard from '../../components/MedicationsTimelineCard';
+import PrescriptionsTimelineCard from '../../components/PrescriptionsTimelineCard';
+import ObservationsTimelineCard from '../../components/ObservationsTimelineCard';
+import CarePlanTimelineCard from '../../components/CardPlanTimelineCard';
+import DiagnosticReportTimelineCard from '../../components/DiagnosticReportTimelineCard';
+import JSONTree from 'react-json-tree';
+import { getResourceImage } from '../../util/Timeline.util';
+import HealthCareServiceTimelineCard from '../../components/HealthCareServiceCard';
+import ListCardItem from '../../components/ListCard';
 const TimelineDetails = () => {
   const history = useHistory();
 
@@ -40,34 +32,9 @@ const TimelineDetails = () => {
 
   const [showRawData, setShowRawData] = useState(false);
 
-  const getResourceImage = (resourceName: string) => {
-    if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.allergy) return alergyIcon;
-    else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.carePlan)
-      return carePlanIcon;
-    else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.claims)
-      return claimsIcon;
-    else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.condition)
-      return conditionsIcon;
-    else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.diagnosticReport)
-      return diagnosticIcon;
-    else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.documentReference)
-      return documentIcon;
-    else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.immunization)
-      return immunizationIcon;
-    else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.medication)
-      return medicationsIcon;
-    else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.observation)
-      return observationIcon;
-    else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.prescription)
-      return prescriptionsIcon;
-    else if (resourceName == CLAIMS_AND_CLINICAL_RESOURCE.procedure)
-      return proceduresIcon;
-
-    return "";
-  };
 
   const RawDataView = ({
-    content = "",
+    content = '',
     show = false,
     handleClose = () => {},
   }) => {
@@ -86,17 +53,19 @@ const TimelineDetails = () => {
         </Modal.Header>
         <Modal.Body className="modal-body">
           <div className="body-content">
-          <JSONTree data={content}                  
-           theme={{
-                    extend: "monokai",
-                    tree: {
-                      backgroundColor: '#F3F6F9',
-                    },
-                    valueText: {
-                      flex: 1,
-                      flexWrap: 'wrap',
-                    },
-                  }}></JSONTree>
+            <JSONTree
+              data={content}
+              theme={{
+                extend: 'monokai',
+                tree: {
+                  backgroundColor: '#F3F6F9',
+                },
+                valueText: {
+                  flex: 1,
+                  flexWrap: 'wrap',
+                },
+              }}
+            ></JSONTree>
           </div>
         </Modal.Body>
       </Modal>
@@ -105,46 +74,34 @@ const TimelineDetails = () => {
 
   const renderDetailsContent = (resource: any) => {
     const { resourceType } = resource;
-
-    if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.claims) {
-      return <ClaimsTimelineCard resource={resource} />;
+    switch (resourceType) {
+      case CLAIMS_AND_CLINICAL_RESOURCE.claims:
+        return <ClaimsTimelineCard resource={resource} />;
+      case CLAIMS_AND_CLINICAL_RESOURCE.allergy:
+        return <AllergyTimelineCard resource={resource} />;
+      case CLAIMS_AND_CLINICAL_RESOURCE.procedure:
+        return <ProceduresTimelineCard resource={resource} />;
+      case CLAIMS_AND_CLINICAL_RESOURCE.immunization:
+        return <ImmunizationsCardItem resource={resource} />;
+      case CLAIMS_AND_CLINICAL_RESOURCE.condition:
+        return <ConidtionsTimelineCardItem resource={resource} />;
+      case CLAIMS_AND_CLINICAL_RESOURCE.medication:
+        return <MedicationsTimelineCard resource={resource} />;
+      case CLAIMS_AND_CLINICAL_RESOURCE.prescription:
+        return <PrescriptionsTimelineCard resource={resource} />;
+      case CLAIMS_AND_CLINICAL_RESOURCE.observation:
+        return <ObservationsTimelineCard resource={resource} />;
+      case CLAIMS_AND_CLINICAL_RESOURCE.carePlan:
+        return <CarePlanTimelineCard resource={resource} />;
+      case CLAIMS_AND_CLINICAL_RESOURCE.diagnosticReport:
+        return <DiagnosticReportTimelineCard resource={resource} />;
+      case CLAIMS_AND_CLINICAL_RESOURCE.healthcare:
+        return <HealthCareServiceTimelineCard resource={resource} />;
+      case CLAIMS_AND_CLINICAL_RESOURCE.list:
+        return <ListCardItem resource={resource} />;
+      default:
+        return null;
     }
-
-    if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.allergy) {
-      return <AllergyTimelineCard resource={resource} />;
-    }
-    if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.procedure) {
-      return <ProceduresTimelineCard resource={resource} />;
-    }
-
-    if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.immunization) {
-      return <ImmunizationsCardItem resource={resource} />;
-    }
-
-    if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.condition) {
-      return <ConidtionsTimelineCardItem resource={resource} />;
-    }
-
-    if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.medication) {
-      return <MedicationsTimelineCard resource={resource} />;
-    }
-
-    if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.prescription) {
-      return <PrescriptionsTimelineCard resource={resource} />;
-    }
-
-    if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.observation) {
-      return <ObservationsTimelineCard resource={resource} />;
-    }
-
-    if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.carePlan) {
-      return <CarePlanTimelineCard resource={resource} />;
-    }
-    if (resourceType == CLAIMS_AND_CLINICAL_RESOURCE.diagnosticReport) {
-      return <DiagnosticReportTimelineCard resource={resource} />;
-    }
-
-    return null;
   };
 
   return (
@@ -183,6 +140,7 @@ const TimelineDetails = () => {
         <img
           src={getResourceImage(resource?.resourceType)}
           className="header-logo"
+          alt="resource"
         />
       </div>
       <div className="details-content">{renderDetailsContent(resource)}</div>

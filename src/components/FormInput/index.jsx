@@ -1,7 +1,5 @@
 import "./index.less";
-import * as React from "react";
 import { Form } from "react-bootstrap";
-import classNames from "classnames";
 
 const FormInput = ({
   onChange = (e) => {},

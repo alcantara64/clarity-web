@@ -12,12 +12,14 @@ export const CLAIMS_AND_CLINICAL_RESOURCE = {
 	observation: 'Observation',
 	encounter: 'Encounter',
 	insurance: 'Insurance',
-	healthcare: 'Healthcare',
+	healthcare: 'HealthcareService',
 	organization: 'Organization',
-	practicioner: 'Practicioner',
+	practitioner: 'Practitioner',
 	location: 'Location',
-	role: 'Role',
+	role: 'PractitionerRole',
 	affiliation: 'Affiliation',
+	list: 'List',
+	knowledge: 'MedicationKnowledge',
 };
 
 export const AUTH_GRANT_TYPES = {
@@ -26,6 +28,10 @@ export const AUTH_GRANT_TYPES = {
 	clientCredentials: 'client_credentials',
 	implicit: 'implicit',
 };
+export const CLINICAL_CATEGORY = ['AllergyIntolerance','Procedures', 'Immunization', 'Condition', 'Medication', 'Practitioner','MedicationStatement','MedicationRequest', 'DocumentReference', 'Observation', 'CarePlan', 'CareTeam','Coverage', 'Device', 'DiagnosticReport'];
+export const CLAIMS_CATEGORY = ['ExplanationOfBenefit', 'Organization', 'Practitioner'];
+export const SECURE_US_DRUG = ['List', 'MedicationKnowledge'];
+export const FORMULARY_NET = ['Practitioner', 'HealthcareService', 'Organization','Location','OrganizationAffiliation', 'Insurance'];
 
 export const TimelineResources = [
 	{
@@ -34,7 +40,7 @@ export const TimelineResources = [
 		resource: 'ExplanationOfBenefit',
 		displayKeys: ['Substance', 'Date'],
 		screen: 'ClaimsScreen',
-		category: 'a',
+		category: CLAIMS_CATEGORY,
 	},
 	{
 		name: 'Allergy',
@@ -42,7 +48,7 @@ export const TimelineResources = [
 		resource: 'AllergyIntolerance',
 		displayKeys: ['Substance', 'Date'],
 		screen: 'AllergyScreen',
-		category: 'a',
+		category: CLINICAL_CATEGORY,
 	},
 	{
 		name: 'Procedures',
@@ -50,7 +56,7 @@ export const TimelineResources = [
 		resource: 'Procedures',
 		displayKeys: ['Name', 'Date Performed'],
 		screen: 'ProcedureScreen',
-		category: 'a',
+		category: CLINICAL_CATEGORY,
 	},
 	{
 		name: 'Immunizations',
@@ -58,7 +64,7 @@ export const TimelineResources = [
 		resource: 'Immunization',
 		displayKeys: ['Vaccine Code', 'Date Administered'],
 		screen: 'ImmunizationScreen',
-		category: 'a',
+		category: CLINICAL_CATEGORY,
 	},
 	{
 		name: 'Conditions',
@@ -66,7 +72,7 @@ export const TimelineResources = [
 		resource: 'Condition',
 		displayKeys: ['Condition', 'Date'],
 		screen: 'ConditionScreen',
-		category: 'a',
+		category: CLINICAL_CATEGORY,
 	},
 	{
 		name: 'Medication',
@@ -74,7 +80,7 @@ export const TimelineResources = [
 		resource: 'MedicationStatement',
 		displayKeys: ['Medication', 'Date Prescribed'],
 		screen: 'MedicationScreen',
-		category: 'a',
+		category: CLINICAL_CATEGORY,
 	},
 	{
 		name: 'Prescription',
@@ -82,7 +88,7 @@ export const TimelineResources = [
 		resource: 'MedicationRequest',
 		displayKeys: ['Medication', 'Date Prescribed'],
 		screen: 'PrescriptionScreen',
-		category: 'a',
+		category: CLINICAL_CATEGORY,
 	},
 	{
 		name: 'Observation',
@@ -90,7 +96,7 @@ export const TimelineResources = [
 		resource: 'Observation',
 		displayKeys: ['Date observed', ''],
 		screen: 'ObservationScreen',
-		category: 'b',
+		category: CLINICAL_CATEGORY,
 	},
 	{
 		name: 'CarePlan',
@@ -98,7 +104,7 @@ export const TimelineResources = [
 		resource: 'CarePlan',
 		displayKeys: ['Activities', 'Timing'],
 		screen: 'CareplanScreen',
-		category: 'b',
+		category: CLINICAL_CATEGORY,
 	},
 	{
 		name: 'DiagnosticReport',
@@ -106,7 +112,7 @@ export const TimelineResources = [
 		resource: 'DiagnosticReport',
 		displayKeys: ['Category', 'Date'],
 		screen: 'DiagnosticReportScreen',
-		category: 'b',
+		category: CLINICAL_CATEGORY,
 	},
 	{
 		name: 'DocumentReference',
@@ -114,7 +120,7 @@ export const TimelineResources = [
 		resource: 'DocumentReference',
 		displayKeys: ['Category', 'Date Created'],
 		screen: 'DocumentReferenceScreen',
-		category: 'b',
+		category: CLINICAL_CATEGORY,
 	},
 	{
 		name: 'Encounter',
@@ -122,7 +128,7 @@ export const TimelineResources = [
 		resource: 'Encounter',
 		displayKeys: ['Category', 'Date Created'],
 		screen: 'DocumentReferenceScreen',
-		category: 'b',
+		category: CLINICAL_CATEGORY,
 	},
 	{
 		name: 'Insurance',
@@ -130,15 +136,15 @@ export const TimelineResources = [
 		resource: 'Insurance',
 		displayKeys: ['Category', 'Date Created'],
 		screen: 'DocumentReferenceScreen',
-		category: 'b',
+		category: FORMULARY_NET,
 	},
 	{
 		name: 'Healthcare',
 		color: '#FF7C53',
-		resource: 'Healthcare',
+		resource: 'HealthcareService',
 		displayKeys: ['Category', 'Date Created'],
 		screen: 'DocumentReferenceScreen',
-		category: 'b',
+		category: FORMULARY_NET,
 	},
 	{
 		name: 'Organization',
@@ -146,15 +152,15 @@ export const TimelineResources = [
 		resource: 'Organization',
 		displayKeys: ['Category', 'Date Created'],
 		screen: 'DocumentReferenceScreen',
-		category: 'b',
+		category: FORMULARY_NET,
 	},
 	{
-		name: 'Practicioner',
+		name: 'Practitioner',
 		color: '#A56BD2',
-		resource: 'Practicioner',
+		resource: 'Practitioner',
 		displayKeys: ['Category', 'Date Created'],
 		screen: 'DocumentReferenceScreen',
-		category: 'c',
+		category: FORMULARY_NET,
 	},
 	{
 		name: 'Location',
@@ -162,23 +168,39 @@ export const TimelineResources = [
 		resource: 'Location',
 		displayKeys: ['Category', 'Date Created'],
 		screen: 'DocumentReferenceScreen',
-		category: 'c',
+		category: FORMULARY_NET,
 	},
 	{
-		name: 'Role',
+		name: 'PractitionerRole',
 		color: '#A56BD2',
-		resource: 'Role',
+		resource: 'PractitionerRole',
 		displayKeys: ['Category', 'Date Created'],
 		screen: 'DocumentReferenceScreen',
-		category: 'c',
+		category: FORMULARY_NET,
 	},
 	{
-		name: 'Affiliation',
+		name: 'Organization Affiliation',
 		color: '#FFC657',
 		resource: 'Affiliation',
 		displayKeys: ['Category', 'Date Created'],
 		screen: 'DocumentReferenceScreen',
-		category: 'c',
+		category: FORMULARY_NET,
+	},
+	{
+		name: 'Knowledge',
+		color: '#F07A51',
+		resource: 'MedicationKnowledge',
+		displayKeys: ['Category', 'Date Created'],
+		screen: 'KnowledgeScreen',
+		category: FORMULARY_NET,
+	},
+	{
+		name: 'List',
+		color: '#6BE38D',
+		resource: 'List',
+		displayKeys: ['Category', 'Date Created'],
+		screen: 'ListScreen',
+		category: FORMULARY_NET,
 	},
 ];
 

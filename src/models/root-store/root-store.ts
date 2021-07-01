@@ -3,7 +3,7 @@ import { PayerStoreModel } from "./../payer-store/payer-store";
 import { AuthStoreModel } from "./../auth-store/auth-store";
 import { EventStoreModel } from "./../event-store/event-store";
 import { UserStoreModel } from "./../user-store/user-store";
-import { types, Instance, onSnapshot, SnapshotOut } from "mobx-state-tree";
+import { types, Instance, SnapshotOut } from "mobx-state-tree";
 import { NotificationStoreModel } from "../notification/notification-store";
 
 // prettier-ignore

@@ -1,4 +1,3 @@
-import * as React from "react";
 import SecondaryButton from "../SecondaryButton";
 
 import padLock from "../../images/padlock.svg";
@@ -17,7 +16,7 @@ const OauthStep2 = ({ onBackClick = () => {}, onContinueClick = () => {} }) => {
         }}
       />
       <div className="header-container ">
-        <img src={padLock} />
+        <img src={padLock} alt="" />
         <div className="d-inline-block header-right-container">
           <h5 className="header-title">You are now leaving the {APP_NAMe} app</h5>
           <p className="header-title-sub">

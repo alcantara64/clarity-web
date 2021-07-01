@@ -1,8 +1,8 @@
 import { ApiResponse } from "./api/apiResponse";
 import { ApiConfig, DEFAULT_API_CONFIG } from "./api/api-config";
-import axios, { AxiosInstance, AxiosInterceptorManager } from "axios";
-import { getGeneralApiProblem, processErrorResponse } from "./api/api-problem";
-import { AxiosResponse, AxiosRequestConfig } from "axios";
+import axios, { AxiosInstance } from "axios";
+import { processErrorResponse } from "./api/api-problem";
+import { AxiosRequestConfig } from "axios";
 import queryString from "query-string";
 
 export class HttpService {

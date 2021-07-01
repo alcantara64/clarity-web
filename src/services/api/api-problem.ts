@@ -1,5 +1,4 @@
 // import ToastService from "../../utils/ToastService"
-import * as storage from "../../factories/utils/storage";
 import { AxiosResponse } from "axios";
 import { ROUTES } from "../../constants/routes";
 import NotificationService from "../NotificationService";

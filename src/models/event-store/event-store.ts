@@ -1,8 +1,6 @@
-import { RootStoreModel } from "./../root-store/root-store";
 
 import { withEnvironment } from "./../extensions/with-environment";
-import { Instance, SnapshotOut, types, flow, getRoot } from "mobx-state-tree";
-import NotificationService from "../../services/NotificationService";
+import { Instance, SnapshotOut, types, flow } from "mobx-state-tree";
 
 export const EventVideo = types.model("EventVideo").props({
   link: types.maybe(types.string),
