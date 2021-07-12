@@ -90,6 +90,28 @@ export class HttpService {
 
     return response;
   }
+  async put(
+    url: string,
+    payload?: any,
+    options?: AxiosRequestConfig
+  ): Promise<ApiResponse> {
+    let response: ApiResponse;
+
+    try {
+      const result: any = await this.httpInstance?.put(
+        `${url}`,
+        payload,
+        options
+      );
+      // console.log("newold "+result)
+
+      response = new ApiResponse("ok", result?.statusText, result?.data);
+    } catch (ex) {
+      response = processErrorResponse(ex);
+    }
+
+    return response;
+  }
   async delete(
     url: string,
     options?: AxiosRequestConfig

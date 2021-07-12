@@ -7,6 +7,7 @@ import {
   CLAIMS_CATEGORY,
   CLINICAL_CATEGORY,
   FORMULARY_NET,
+  IMPLEMENTATION_GUIDE,
   SECURE_US_DRUG,
   TimelineResources,
 } from '../../constants/constants';
@@ -31,54 +32,66 @@ const capability_statement: Array<CapabilityStatement> = [
     endpoint: 'carin-bb',
     value: 'carin-bb',
     category: CLAIMS_CATEGORY,
+    identifier: 'carinBB',
   },
   {
     name: 'PDEX Server',
     endpoint: 'uscore',
     value: 'uscore',
     category: CLINICAL_CATEGORY,
+    identifier: 'pdex',
   },
   {
     name: 'Carin Blue Button Pharmacy',
     endpoint: 'carin-bb-pharmacy',
     value: 'carin-bb-pharmacy',
     category: CLAIMS_CATEGORY,
+    identifier: 'carinBBPharmacy',
   },
   {
     name: 'US Core Server Pharmacy',
     endpoint: 'uscore-pharmacy',
     value: 'uscore-pharmacy',
     category: CLINICAL_CATEGORY,
+    identifier: 'uscorePharmacy',
   },
   {
     name: 'Secure US Drug Formulary Server',
     endpoint: 'secure-formulary',
     value: 'secure-formulary',
     category: SECURE_US_DRUG,
+    identifier: 'secureFormulary',
   },
   {
     name: 'Formulary Network',
     endpoint: 'formulary-net',
     value: 'formulary-net',
     category: FORMULARY_NET,
+    identifier: 'formularyNet',
   },
   {
     name: 'Plan-Net',
     endpoint: 'provider-directory',
     value: 'provider-directory',
     category: FORMULARY_NET,
+    identifier: 'planNet',
   },
 ];
 
 const TimeLine = observer(() => {
-  const { patientStore, payerStore, notificationStore } = useStores();
+  const { patientStore, payerStore, notificationStore, settingStore } =
+    useStores();
+  const [capabilityStatements, setCapabilityStatements] = useState<
+    CapabilityStatement[]
+  >([]);
   const [selectedCapabilityStatement, setSelectedCapabilityStatement] =
-    useState<CapabilityStatement>(capability_statement[0]);
+    useState<CapabilityStatement>(capabilityStatements[0]);
   const { selectedResource } = patientStore;
 
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingMoreData, setIsLoadingMoreData] = useState(false);
   const { notifications } = notificationStore;
+  const { implementationGuid, fetSettings } = settingStore;
 
   const [resourceData, setResourceData] = useState<{
     nextLink: string;
@@ -88,12 +101,42 @@ const TimeLine = observer(() => {
   const [shouldRefreshToken, setShouldRefreshToken]: any = useState(false);
   const defaultPayer = payerStore.defaultPayer();
   const history = useHistory();
+  let filteredCapabilityStatement: Array<CapabilityStatement> =
+    capability_statement;
 
   useEffect(() => {
     if (!defaultPayer?.is_connected) {
       history.push(ROUTES.oauth);
     }
   }, [defaultPayer?.is_connected, history]);
+  useEffect(() => {
+    (async () => {
+      setIsLoading(true);
+      const result = await fetSettings().catch((err) => {
+        console.log(err);
+      });
+      if (
+        result?.kind === 'ok' &&
+        result?.data &&
+        result?.data.find((item: any) => item.type === IMPLEMENTATION_GUIDE)
+      ) {
+        filteredCapabilityStatement = [];
+        const ig = result?.data.find(
+          (item: any) => item.type === IMPLEMENTATION_GUIDE
+        );
+        const parsedValue = JSON.parse(ig.value);
+        for (const item of capability_statement) {
+          if (parsedValue[item.identifier]) {
+            filteredCapabilityStatement.push(item);
+          }
+        }
+      }
+      debugger;
+      setCapabilityStatements(filteredCapabilityStatement);
+      setSelectedCapabilityStatement(filteredCapabilityStatement[0]);
+      setIsLoading(false);
+    })();
+  }, []);
 
   const getNextRecords = async () => {
     setIsLoading(true);
@@ -138,9 +181,10 @@ const TimeLine = observer(() => {
           //setHasRefreshToken(true);
         }
       }
+
       const resp = await patientStore
         .getFhirData(selectedResource, defaultPayer?._id, {
-          resourceEndpoint: selectedCapabilityStatement.value,
+          resourceEndpoint: selectedCapabilityStatement?.value,
           next_link: '',
         })
         .catch(() => {});
@@ -159,8 +203,6 @@ const TimeLine = observer(() => {
     shouldRefreshToken,
     selectedCapabilityStatement,
   ]);
-
-
 
   const ResourceItem = ({
     name,
@@ -228,7 +270,7 @@ const TimeLine = observer(() => {
         <Col md={6} sm={12}>
           <Select
             onChange={handleSelectedEndpoint}
-            items={capability_statement}
+            items={capabilityStatements}
           />
         </Col>
       </Row>
@@ -242,7 +284,7 @@ const TimeLine = observer(() => {
             color={item.color}
             selected={selectedResource === item.resource}
             disable={
-              !selectedCapabilityStatement.category?.includes(item.resource)
+              !selectedCapabilityStatement?.category?.includes(item.resource)
             }
             onClick={() => {
               patientStore.setSelectedResource(item.resource);

@@ -28,10 +28,10 @@ export const AUTH_GRANT_TYPES = {
 	clientCredentials: 'client_credentials',
 	implicit: 'implicit',
 };
-export const CLINICAL_CATEGORY = ['AllergyIntolerance','Procedures', 'Immunization', 'Condition', 'Medication', 'Practitioner','MedicationStatement','MedicationRequest', 'DocumentReference', 'Observation', 'CarePlan', 'CareTeam','Coverage', 'Device', 'DiagnosticReport'];
+export const CLINICAL_CATEGORY = ['AllergyIntolerance', 'Procedures', 'Immunization', 'Condition', 'Medication', 'Practitioner', 'MedicationStatement', 'MedicationRequest', 'DocumentReference', 'Observation', 'CarePlan', 'CareTeam', 'Coverage', 'Device', 'DiagnosticReport'];
 export const CLAIMS_CATEGORY = ['ExplanationOfBenefit', 'Organization', 'Practitioner'];
 export const SECURE_US_DRUG = ['List', 'MedicationKnowledge'];
-export const FORMULARY_NET = ['Practitioner', 'HealthcareService', 'Organization','Location','OrganizationAffiliation', 'Insurance'];
+export const FORMULARY_NET = ['Practitioner', 'HealthcareService', 'Organization', 'Location', 'OrganizationAffiliation', 'Insurance'];
 
 export const TimelineResources = [
 	{
@@ -205,3 +205,4 @@ export const TimelineResources = [
 ];
 
 export const TimelineDateFormat = 'D MMM, YYYY';
+export const IMPLEMENTATION_GUIDE = 'implementation_guide'
