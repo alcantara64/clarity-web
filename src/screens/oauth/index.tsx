@@ -1,14 +1,14 @@
-import "./index.less";
-import { useStores } from "../../models";
-import { useEffect, useState } from "react";
-import Loading from "../../components/Loading";
-import OauthStep1 from "../../components/OauthStep1";
-import OauthStep2 from "../../components/OauthStep2";
-import OauthLoading from "../../components/OauthLoading";
-import { useHistory, useLocation } from "react-router";
-import { ROUTES } from "../../constants/routes";
-import queryString from "query-string";
-import NotificationService from "../../services/NotificationService";
+import './index.less';
+import { useStores } from '../../models';
+import { useEffect, useState } from 'react';
+import Loading from '../../components/Loading';
+import OauthStep1 from '../../components/OauthStep1';
+import OauthStep2 from '../../components/OauthStep2';
+import OauthLoading from '../../components/OauthLoading';
+import { useHistory, useLocation } from 'react-router';
+import { ROUTES } from '../../constants/routes';
+import queryString from 'query-string';
+import NotificationService from '../../services/NotificationService';
 
 const OauthPage = () => {
   const { payerStore, notificationStore } = useStores();
@@ -23,12 +23,14 @@ const OauthPage = () => {
 
   const location = useLocation();
 
-  useEffect(() =>{
-    ( async ()=>{
-     await notificationStore.getNotifications().catch((error) => {console.log('notification error', error)})
-     console.log('user notifications', notificationStore.notifications)
-    })()
-    }, [])
+  useEffect(() => {
+    (async () => {
+      await notificationStore.getNotifications().catch((error) => {
+        console.log('notification error', error);
+      });
+      console.log('user notifications', notificationStore.notifications);
+    })();
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -37,7 +39,7 @@ const OauthPage = () => {
 
       const defaultPayer = payerStore.defaultPayer();
 
-      console.log('default payer',!defaultPayer);
+      console.log('default payer', !defaultPayer);
 
       if (defaultPayer) {
         const { is_connected } = defaultPayer;
@@ -49,13 +51,14 @@ const OauthPage = () => {
           if (location?.search) {
             const query = queryString.parse(location.search);
             const { code, error } = query;
-            debugger
-           if(!code || code === 'undefined'){
-
-             NotificationService.show(error?.toString() || 'IDP sent and invalid response', 'error')
-            setGettingPayer(false);
-             return
-           }
+            if (!code || code === 'undefined') {
+              NotificationService.show(
+                error?.toString() || 'IDP sent and invalid response',
+                'error'
+              );
+              setGettingPayer(false);
+              return;
+            }
 
             delete query.code;
 
@@ -70,10 +73,10 @@ const OauthPage = () => {
               .connectPayer(payload)
               .catch((ex) => {});
 
-            if (resp.kind === "ok") {
+            if (resp.kind === 'ok') {
               setGettingPayer(false);
               history?.push(`${ROUTES.timeLine}`);
-            }else{
+            } else {
               setGettingPayer(false);
             }
           } else {
@@ -89,7 +92,7 @@ const OauthPage = () => {
   const performOauth = async () => {
     const defaultPayer = payerStore.defaultPayer();
 
-    window.open(defaultPayer?.oauth_url, "_self", "width=500,height=500");
+    window.open(defaultPayer?.oauth_url, '_self', 'width=500,height=500');
 
     setIsLoading(true);
   };

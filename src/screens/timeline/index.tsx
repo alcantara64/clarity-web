@@ -131,7 +131,6 @@ const TimeLine = observer(() => {
           }
         }
       }
-      debugger;
       setCapabilityStatements(filteredCapabilityStatement);
       setSelectedCapabilityStatement(filteredCapabilityStatement[0]);
       setIsLoading(false);
@@ -181,22 +180,23 @@ const TimeLine = observer(() => {
           //setHasRefreshToken(true);
         }
       }
+      if (selectedCapabilityStatement?.value) {
+        const resp = await patientStore
+          .getFhirData(selectedResource, defaultPayer?._id, {
+            resourceEndpoint: selectedCapabilityStatement?.value,
+            next_link: '',
+          })
+          .catch(() => {});
 
-      const resp = await patientStore
-        .getFhirData(selectedResource, defaultPayer?._id, {
-          resourceEndpoint: selectedCapabilityStatement?.value,
-          next_link: '',
-        })
-        .catch(() => {});
+        if (resp.kind === 'ok') {
+          console.log(resp.data);
+          setResourceData(resp.data);
+        } else {
+          setResourceData(null);
+        }
 
-      if (resp.kind === 'ok') {
-        console.log(resp.data);
-        setResourceData(resp.data);
-      } else {
-        setResourceData(null);
+        setIsLoading(false);
       }
-
-      setIsLoading(false);
     })();
   }, [
     patientStore.selectedResource,

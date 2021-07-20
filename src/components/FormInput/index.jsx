@@ -1,12 +1,12 @@
-import "./index.less";
-import { Form } from "react-bootstrap";
+import './index.less';
+import { Form } from 'react-bootstrap';
 
 const FormInput = ({
   onChange = (e) => {},
-  type = "",
+  type = '',
   children = null,
 
-  className = "",
+  className = '',
   ...rest
 }) => {
   return (
