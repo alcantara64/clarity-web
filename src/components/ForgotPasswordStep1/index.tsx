@@ -1,13 +1,13 @@
-import React from "react";
-import SecondaryButton from "../SecondaryButton";
-import FormInput from "../FormInput";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import React from 'react';
+import SecondaryButton from '../SecondaryButton';
+import FormInput from '../FormInput';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
-import "./index.less";
-import { Controller, useForm } from "react-hook-form";
-import { Form, FormLabel } from "react-bootstrap";
-import Button from "../Button";
+import './index.less';
+import { Controller, useForm } from 'react-hook-form';
+import { Form, FormLabel } from 'react-bootstrap';
+import Button from '../Button';
 
 interface IFormInputsStep1 {
   email: string;
@@ -27,7 +27,7 @@ const ForgotPasswordStep1 = ({
     formState: { errors, isValid },
   } = useForm<IFormInputsStep1>({
     resolver: yupResolver(forgotPasswordFormStep1Schema),
-    mode: "onChange",
+    mode: 'onChange',
   });
 
   return (

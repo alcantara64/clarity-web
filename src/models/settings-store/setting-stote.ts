@@ -30,7 +30,6 @@ export const SettingStoreModel = types
             const settingService = new SettingService()
             const { authStore } = self.rootStore;
             const { token } = authStore;
-            debugger;
             const result = yield settingService.getSettings(token);
 
             if (result && result.kind === "ok") {
