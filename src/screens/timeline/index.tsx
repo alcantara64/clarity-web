@@ -260,6 +260,10 @@ const TimeLine = observer(() => {
     const capStatement = capability_statement.find((item) => item.value === e);
     if (capStatement) {
       setSelectedCapabilityStatement(capStatement);
+      const resources = TimelineResources.filter((item) =>
+        capStatement.category?.includes(item.resource)
+      );
+      patientStore.setSelectedResource(resources[0].resource);
     }
   };
 
