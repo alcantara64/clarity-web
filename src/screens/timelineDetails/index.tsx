@@ -1,28 +1,28 @@
-import { useHistory } from 'react-router';
-import { getTimelineNameResource } from '../../factories/utils';
+import { useHistory } from "react-router";
+import { getTimelineNameResource } from "../../factories/utils";
 
 //import encounterIcon from "../../images/encounter-icon.svg";
 
-import './index.less';
-import { CLAIMS_AND_CLINICAL_RESOURCE } from '../../constants/constants';
-import SecondaryButton from '../../components/SecondaryButton';
-import Button from '../../components/Button';
-import { useState } from 'react';
-import { Modal } from 'react-bootstrap';
-import ClaimsTimelineCard from '../../components/ClaimsTimelineCard';
-import ProceduresTimelineCard from '../../components/ProceduresTimelineCard';
-import AllergyTimelineCard from '../../components/AlergyTimelineCard';
-import ConidtionsTimelineCardItem from '../../components/ConditionsTimelineCard';
-import ImmunizationsCardItem from '../../components/ImmunizationTimelineCard';
-import MedicationsTimelineCard from '../../components/MedicationsTimelineCard';
-import PrescriptionsTimelineCard from '../../components/PrescriptionsTimelineCard';
-import ObservationsTimelineCard from '../../components/ObservationsTimelineCard';
-import CarePlanTimelineCard from '../../components/CardPlanTimelineCard';
-import DiagnosticReportTimelineCard from '../../components/DiagnosticReportTimelineCard';
-import JSONTree from 'react-json-tree';
-import { getResourceImage } from '../../util/Timeline.util';
-import HealthCareServiceTimelineCard from '../../components/HealthCareServiceCard';
-import ListCardItem from '../../components/ListCard';
+import "./index.less";
+import { CLAIMS_AND_CLINICAL_RESOURCE } from "../../constants/constants";
+import SecondaryButton from "../../components/SecondaryButton";
+import Button from "../../components/Button";
+import { useState } from "react";
+import { Modal } from "react-bootstrap";
+import ClaimsTimelineCard from "../../components/ClaimsTimelineCard";
+import ProceduresTimelineCard from "../../components/ProceduresTimelineCard";
+import AllergyTimelineCard from "../../components/AlergyTimelineCard";
+import ConidtionsTimelineCardItem from "../../components/ConditionsTimelineCard";
+import ImmunizationsCardItem from "../../components/ImmunizationTimelineCard";
+import MedicationsTimelineCard from "../../components/MedicationsTimelineCard";
+import PrescriptionsTimelineCard from "../../components/PrescriptionsTimelineCard";
+import ObservationsTimelineCard from "../../components/ObservationsTimelineCard";
+import CarePlanTimelineCard from "../../components/CardPlanTimelineCard";
+import DiagnosticReportTimelineCard from "../../components/DiagnosticReportTimelineCard";
+import JSONTree from "react-json-tree";
+import { getResourceImage } from "../../util/Timeline.util";
+import HealthCareServiceTimelineCard from "../../components/HealthCareServiceCard";
+import ListCardItem from "../../components/ListCard";
 const TimelineDetails = () => {
   const history = useHistory();
 
@@ -32,9 +32,8 @@ const TimelineDetails = () => {
 
   const [showRawData, setShowRawData] = useState(false);
 
-
   const RawDataView = ({
-    content = '',
+    content = "",
     show = false,
     handleClose = () => {},
   }) => {
@@ -56,13 +55,13 @@ const TimelineDetails = () => {
             <JSONTree
               data={content}
               theme={{
-                extend: 'monokai',
+                extend: "monokai",
                 tree: {
-                  backgroundColor: '#F3F6F9',
+                  backgroundColor: "#F3F6F9",
                 },
                 valueText: {
                   flex: 1,
-                  flexWrap: 'wrap',
+                  flexWrap: "wrap",
                 },
               }}
             ></JSONTree>
@@ -100,7 +99,7 @@ const TimelineDetails = () => {
       case CLAIMS_AND_CLINICAL_RESOURCE.list:
         return <ListCardItem resource={resource} />;
       default:
-        return null;
+        return null || <div>No data found</div>;
     }
   };
 
